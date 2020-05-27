@@ -1,4 +1,4 @@
-module.exports =  levenstein (a, b)=> {
+module.exports = (a, b) => {
 	var tmp;
 	if (a.length === 0) { return b.length; }
 	if (b.length === 0) { return a.length; }

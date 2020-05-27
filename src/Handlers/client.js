@@ -2,11 +2,7 @@ import { Client, Collection } from "discord.js";
 import { readFileSync } from "fs";
 /**
  * @extends {Client}
- * @returns the extended client class
- * @typedef class
  * @example const client = new client({ fetchAllMembers:true })
- * @argument {Object} options the optional client_options object for the discord client interactions
- * @author cheese_strat
  */
 class client extends Client {
 
@@ -39,6 +35,12 @@ class client extends Client {
      */
     get config() {
         return JSON.parse(readFileSync("config.json"))
+    }
+    /**
+     * @returns the
+     */
+    get storage() {
+        return require("../structures/storage.js")
     }
 }
 module.exports = client
