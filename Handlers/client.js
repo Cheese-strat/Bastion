@@ -4,8 +4,7 @@ import { readFileSync } from "fs";
  * @extends {Client}
  * @returns the extended client class
  * @typedef class
- * @example const client = new client({ messageSweepInterval:10000 })
- * @description for creating a new client, with a for extra special features that improve some aspects of its execution
+ * @example const client = new client({ fetchAllMembers:true })
  * @argument {Object} options the optional client_options object for the discord client interactions
  * @author cheese_strat
  */
