@@ -38,9 +38,8 @@ class client extends Client {
      * @param {string} string the key to try and find
      * @returns the config object or the requested value
      */
-    get config(string) {
-        const r = JSON.parse(readFileSync("config.json"))
-        return string ? r[string] : r
+    get config() {
+        return JSON.parse(readFileSync("config.json"))
     }
 }
 module.exports = client
