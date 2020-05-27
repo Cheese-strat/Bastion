@@ -11,7 +11,7 @@ class client extends Client {
      * 
      * @param {Object} options the client options object
      */
-    constructor(options = {}) {
+    constructor(basepath, options = {}) {
         super(options)
         /**
          * the collection of commands read by the bot
@@ -23,6 +23,12 @@ class client extends Client {
          * @type {Collection}
          */
         this.cooldowns = new Collection()
+        /**
+         * @readonly
+         * @type {string}
+         */
+        this.path = basepath
+        this.prefixes = storage("../storage.json")
     }
     /**
      * @returns the
@@ -40,11 +46,12 @@ class client extends Client {
     /**
      * @returns the storage object
      */
-    get storage() {
-        return storage("../storage.json")
+    saveDB() {
+        this.prefixes = storage(`${this.path}/storage.json`)
+        return this.prefixes
     }
-    run(eventFunc, commFunc, token){
-        if (token.split(".").length < 2) throw new Error("an incorrect token was provided")
+    run(eventFunc, commFunc, token) {
+        if (token.split(".").length < 2) throw new Error(`check your token is correct, you provided: ${token}`)
         commFunc(this)
         eventFunc(this)
         this.login(token)
