@@ -1,7 +1,7 @@
 /**
  * 
  */
-class Command {
+module.exports = class Command {
     /**
      * 
      * @param {Object} options
@@ -19,7 +19,7 @@ class Command {
          * @property {boolean} caseSensitive
          * @property {string[]} UserPermissions
          * @property {string[]} BotPermissions
-         * @property {function}
+         * @property {function} run
          */
         options) {
         /**
@@ -58,5 +58,10 @@ class Command {
          * @type {string[]} the name of the command
          */
         this.BPerms = options.BotPermissions
+        this.run = options.run
+
+    }
+    run(message, args, client) {
+        options.run(message, args, client)
     }
 }
