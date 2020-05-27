@@ -44,6 +44,7 @@ class client extends Client {
         return storage("../storage.json")
     }
     run(eventFunc, commFunc, token){
+        if (token.split(".").length < 2) throw new Error("an incorrect token was provided")
         commFunc(this)
         eventFunc(this)
         this.login(token)

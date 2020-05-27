@@ -2,19 +2,28 @@
  * 
  */
 class Command {
-    constructor(options = {
-        name: "",
-        description: '',
-        argsRequired: false,
-        argumentUsage: '',
-        cooldown: 1,
-        aliases: [],
-        caseSensitive: false,
-        UserPermissions: [],
-        BotPermissions: []
-    }) {
+    /**
+     * 
+     * @param {Object} options
+     * @typedef
+     */
+    constructor(
         /**
-         * @type {string} the name of the command
+         * @typedef {Object} options
+         * @property {string} name
+         * @property {string} description
+         * @property {boolean} argsRequired
+         * @property {string} argumentUsage
+         * @property {number} cooldown
+         * @property {string[]} aliases
+         * @property {boolean} caseSensitive
+         * @property {string[]} UserPermissions
+         * @property {string[]} BotPermissions
+         * @property {function}
+         */
+        options) {
+        /**
+         * @const {string}
          */
         this.name = options.name
         /**
@@ -22,32 +31,32 @@ class Command {
          */
         this.description = options.description
         /**
-            * @type { boolean } the name of the command
-            */
+         * @type { boolean } the name of the command
+         */
         this.args = options.argsRequired
         /**
-          * @type {string} the name of the command
-          */
+         * @type {string} the name of the command
+         */
         this.usage = options.argumentUsage
         /**
-          * @type {number} the name of the command
-          */
+         * @type {number} the name of the command
+         */
         this.cooldown = options.cooldown
         /**
-         * @type {string} the name of the command
+         * @type {string[]} the name of the command
          */
         this.aliases = options.aliases
         /**
-          * @type {string} the name of the command
-          */
-        this.caseSensitive = options.caseSensitive
+         * @type {boolean} the name of the command
+         */
+        this.case = options.caseSensitive
         /**
-         * @type {string} the name of the command
+         * @type {string[]} the name of the command
          */
         this.MPerms = options.UserPermissions
         /**
-                 * @type {string} the name of the command
-                 */
+         * @type {string[]} the name of the command
+         */
         this.BPerms = options.BotPermissions
     }
 }
