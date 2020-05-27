@@ -1,5 +1,6 @@
-import { Client, Collection } from "discord.js";
-import { readFileSync } from "fs";
+const { Client, Collection } = require("discord.js")
+const { readFileSync } = require("fs");
+const storage = require("./storage.js")
 /**
  * @extends {Client}
  * @example const client = new client({ fetchAllMembers:true })
@@ -37,10 +38,17 @@ class client extends Client {
         return JSON.parse(readFileSync("config.json"))
     }
     /**
-     * @returns the
+     * @returns the storage object
      */
     get storage() {
-        return require("../structures/storage.js")
+        return storage("../storage.json")
     }
+    run(eventFunc, commFunc, token){
+        commFunc(this)
+        eventFunc(this)
+        this.login(token)
+        return this
+    }
+
 }
 module.exports = client

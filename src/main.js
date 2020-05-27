@@ -1,4 +1,6 @@
 const {readdirSync} = require("fs");
-const client = require("./Handlers/client")();
-readdirSync("./Handlers").forEach(file=>require(`./Handlers/${file}`)(client));
-console.log(`initializing Discord bot`, process.config)
+const Client = require("./structures/client")
+const Commands = require(`./Handlers/commands`)
+const Events  = require(`./Handlers/commands`)
+const client = new Client(Events, Commands)
+console.log(`initializing Discord bot`)
