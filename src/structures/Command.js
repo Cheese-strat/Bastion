@@ -58,6 +58,9 @@ module.exports = class Command {
          * @type {string[]} the name of the command
          */
         this.BPerms = options.BotPermissions
+            /**
+            *@type {function} the execution function
+            */
         this.run = options.run
 
     }
