@@ -61,6 +61,9 @@ module.exports = class Command {
         this.run = options.run
 
     }
+    /**
+    *@param {require("discord.js").Message} message
+    */
     run(message, args, client) {
         options.run(message, args, client)
     }
