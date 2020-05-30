@@ -7,21 +7,7 @@ module.exports = class Command {
      * @param {Object} options
      * @typedef
      */
-    constructor(
-        /**
-         * @typedef {Object} options
-         * @property {string} name
-         * @property {string} description
-         * @property {boolean} argsRequired
-         * @property {string} argumentUsage
-         * @property {number} cooldown
-         * @property {string[]} aliases
-         * @property {boolean} caseSensitive
-         * @property {string[]} UserPermissions
-         * @property {string[]} BotPermissions
-         * @property {function} run
-         */
-        options) {
+    constructor(options) {
         /**
          * @const {string}
          */
@@ -58,11 +44,10 @@ module.exports = class Command {
          * @type {string[]} the name of the command
          */
         this.BPerms = options.BotPermissions
-            /**
-            *@type {function} the execution function
-            */
+        /**
+        *@type {function} the execution function
+        */
         this.run = options.run
-
     }
     /**
     *@param {require("discord.js").Message} message
