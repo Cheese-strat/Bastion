@@ -1,10 +1,1 @@
-const { readdirSync } = require("fs")
-
-module.exports = (client) => {
-    for (const fileName of readdirSync(`./src/events`).filter(f => f.endsWith(".js"))) {
-        const event = require(`${client.path}/events/${fileName}`)
-        const eventName = fileName.slice(0, fileName.length - 3)
-        client.on(eventName, event.bind(null, client))
-        console.log(`found event: ${eventName}`)
-    }
-}
+exports = (client) => require("fs").readdirSync(`./src/events`).filter(f => f.endsWith(".js")).forEach(fileName => client.on(fileName.slice(0, fileName.length - 3), require(`${client.path}/events/${fileName}`).bind(null, client)))
