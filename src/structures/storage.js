@@ -1,14 +1,13 @@
 const { writeFile } = require('fs');
 
-module.exports = (onError) => {
-    const data = require("../storage.json");
+module.exports = (path, data) => {
+    const data = require(`${path}/storage.json`);
     let queue = Promise.resolve();
 
     const write = () => {
         queue = queue.then(() => new Promise(res =>
             writeFile(path, JSON.stringify(data, null, 2), err => {
                 if (!err) return res();
-                if (onError) return onError(err);
                 throw err;
             })
         ))

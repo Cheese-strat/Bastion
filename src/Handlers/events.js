@@ -1,1 +1,9 @@
-exports = (client) => require("fs").readdirSync(`./src/events`).filter(f => f.endsWith(".js")).forEach(fileName => client.on(fileName.slice(0, fileName.length - 3), require(`${client.path}/events/${fileName}`).bind(null, client)))
+exports = (client) => 
+    require("fs").readdirSync(`./src/events`).filter(f =>
+        f.endsWith(".js")).forEach(fileName =>
+            client.on(
+                fileName.split(".")[0],
+                require(`${client.path}/events/${fileName}`)
+                    .bind(null, client)
+            )
+        )
