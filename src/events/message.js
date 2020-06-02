@@ -1,5 +1,5 @@
 const Discord = require(`discord.js`);
-const ez = require("../ez.js");
+import storage from "../storage.json"
 module.exports = (client, data, pokemon, config, msg) => {
   if (msg.guild == undefined) {
     if (!msg.author.bot) {
@@ -39,7 +39,7 @@ module.exports = (client, data, pokemon, config, msg) => {
       "channels": {}
     }
     console.log(`writing ${msg.guild.name} to the file`)
-    ez.update(data)
+    storage("../src/structures/storage.js",data)//src\structures\storage.js
   }
   if (msg.author.bot || !msg.guild.me.permissionsIn(msg.channel).has("SEND_MESSAGES")) return;
   if (data[msg.guild.id].logs.id != "NULL") {

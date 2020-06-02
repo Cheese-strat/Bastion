@@ -28,7 +28,7 @@ class client extends Client {
          * @type {string}
          */
         this.path = basepath
-        this.prefixes = storage("../storage.json")
+        this.prefixes = storage("../storage.json", require("../storage.json"))
     }
     /**
      * @returns the

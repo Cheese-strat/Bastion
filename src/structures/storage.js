@@ -1,7 +1,7 @@
 const { writeFile } = require('fs');
 
 module.exports = (path, data) => {
-    const data = require(`${path}/storage.json`);
+    if (typeof data !== "object") throw new Error(`passed parameter was of type ${typeof data}, expected object`)
     let queue = Promise.resolve();
 
     const write = () => {

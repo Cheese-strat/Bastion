@@ -1,5 +1,4 @@
 const Client = require("./structures/client")
-const Discord = require("discord.js")
 const Commands = require(`./Handlers/commands`)
 const Events  = require(`./Handlers/events`)
 const config = require("../config.json")

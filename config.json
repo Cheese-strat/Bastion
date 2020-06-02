@@ -1,4 +1,13 @@
 {
-    "token":"Njk5ODY4NTgxMzE1NDc3NTA0.Xs6EQg.ibHBJYLoW_hUutTVRJDMJTYRwrY",
-    "client_Options":{}
-}
+    "client_Options":{},
+    "prefix": "b!",
+    "token": "NjI4NDQzNzcyNTkzNjM1MzI4.XaGN1w.oufI3B17BySp-JRoctb_wNjYajc",
+    "name": "Bastion",
+    "version": "4.3.4",
+    "description": "My Discord Bot",
+    "author": "Cheesestrat",
+    "flagprefix":"-",
+    "developers": [
+      "625149330348703744"
+    ]
+  }
