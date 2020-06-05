@@ -1,3 +1,4 @@
+'use strict';
 module.exports = (a, b) => {
 	var tmp;
 	if (a.length === 0) { return b.length; }

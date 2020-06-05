@@ -1,4 +1,5 @@
-module.exports = (client, data, pokemon, config, member) => {
+'use strict';
+module.exports = (client,  member) => {
   return
   if (member.guild.id === `609331117920747521`) {
     if (!member.bot) {

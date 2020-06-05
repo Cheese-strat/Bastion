@@ -1,4 +1,5 @@
-module.exports = (client, data, pokemon, config, oldMessage, newMessage) => {
+'use strict';
+module.exports = (client,  oldMessage, newMessage) => {
   return
   const logs = client.channels.get(data[oldMessage.guild.id].logs.id)
   if (oldMessage.content != newMessage.content) {

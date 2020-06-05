@@ -1,7 +1,7 @@
 'use strict';
 const Discord = require(`discord.js`);
 const storage = require("../storage.json")
-module.exports = (client, data, pokemon, config, msg) => {
+module.exports = (client, msg) => {
   if (msg.guild == undefined) {
     if (!msg.author.bot) {
       client.channels.fetch(`629683449976061971`).then(channel => {

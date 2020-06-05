@@ -1,3 +1,4 @@
+'use strict';
 module.exports = (client) => 
     require("fs").readdirSync(`./src/events`).filter(f =>
         f.endsWith(".js")).forEach(fileName =>

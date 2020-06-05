@@ -1,3 +1,4 @@
+'use strict';
 const { readdirSync } = require("fs")
 module.exports = (client) => {
     for (const fileName of readdirSync(`./src/commands`).filter(f => f.endsWith(".js"))) {

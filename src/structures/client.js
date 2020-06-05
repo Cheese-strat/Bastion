@@ -1,3 +1,4 @@
+'use strict';
 const { Client, Collection } = require("discord.js")
 const { readFileSync } = require("fs");
 const storage = require("./storage.js")
