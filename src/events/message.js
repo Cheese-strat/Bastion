@@ -1,7 +1,7 @@
 'use strict';
 const Discord = require(`discord.js`);
 const data = require("../storage.json")
-const config = client
+const storage = require("../structures/storage.js")
 module.exports = (client, msg) => {
   if (msg.guild == undefined) {
     if (!msg.author.bot) {
@@ -128,7 +128,8 @@ module.exports = (client, msg) => {
     setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
   }
   try {
-    command.execute(msg, args, pokemon, data, client);
+    console.log(command)
+    command.execute(msg, args, client);
     console.log(`executed command: ${command.name}`)
   } catch (error) {
     client.channels.cache.get(`629683449976061971`).send(`<@625149330348703744> \n command: ${msg.content} \n Error: ${error} \n channel: <#${msg.channel.id}> \n server: ${msg.guild.name}`);
