@@ -1,5 +1,6 @@
+'use strict';
 const Discord = require(`discord.js`);
-import storage from "../storage.json"
+const storage = require("../storage.json")
 module.exports = (client, data, pokemon, config, msg) => {
   if (msg.guild == undefined) {
     if (!msg.author.bot) {
@@ -39,7 +40,7 @@ module.exports = (client, data, pokemon, config, msg) => {
       "channels": {}
     }
     console.log(`writing ${msg.guild.name} to the file`)
-    storage("../src/structures/storage.js",data)//src\structures\storage.js
+    storage("../src/structures/storage.js", data)//src\structures\storage.js
   }
   if (msg.author.bot || !msg.guild.me.permissionsIn(msg.channel).has("SEND_MESSAGES")) return;
   if (data[msg.guild.id].logs.id != "NULL") {
@@ -87,12 +88,12 @@ module.exports = (client, data, pokemon, config, msg) => {
   }
   if (command.perms) {
     if (!command.perms.every(permFlag => {
-        msg.guild.me.permissionsIn(msg.channel).has(permFlag)
-      })) return msg.channel.send(`I dont have the correct permissions to use this command`)
+      msg.guild.me.permissionsIn(msg.channel).has(permFlag)
+    })) return msg.channel.send(`I dont have the correct permissions to use this command`)
 
     if (!command.perms.every(permFlag => {
-        msg.member.permissionsIn(msg.channel).has(permFlag)
-      })) return msg.channel.send(`You dont have the correct permissions to use this command`)
+      msg.member.permissionsIn(msg.channel).has(permFlag)
+    })) return msg.channel.send(`You dont have the correct permissions to use this command`)
   }
   if (!msg.guild.me.permissionsIn(msg.channel).has('ADMINISTRATOR') && command.admin) return msg.channel.send(`You must have administrator permission to use this command`)
   if (command.dev && !(config.developers[msg.author.id] >= command.dev)) return msg.channel.send(`only developers can use that command!`)

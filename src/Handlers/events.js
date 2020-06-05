@@ -3,7 +3,7 @@ module.exports = (client) =>
         f.endsWith(".js")).forEach(fileName =>
             client.on(
                 fileName.split(".")[0],
-                require(`${client.path}/events/${fileName}`)
+                (require(`${client.path}/events/${fileName}`))
                     .bind(null, client)
             )
         )
