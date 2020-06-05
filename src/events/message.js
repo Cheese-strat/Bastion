@@ -1,6 +1,7 @@
 'use strict';
 const Discord = require(`discord.js`);
-const storage = require("../storage.json")
+const data = require("../storage.json")
+const config = client
 module.exports = (client, msg) => {
   if (msg.guild == undefined) {
     if (!msg.author.bot) {
@@ -24,6 +25,7 @@ module.exports = (client, msg) => {
     }
     return;
   }
+  const config = client.config
   if (data[msg.guild.id] == undefined) {
     data[msg.guild.id] = {
       logs: {
