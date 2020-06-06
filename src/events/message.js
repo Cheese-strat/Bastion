@@ -98,8 +98,7 @@ module.exports = (client, msg) => {
     })) return msg.channel.send(`You dont have the correct permissions to use this command`)
   }
   if (!msg.guild.me.permissionsIn(msg.channel).has('ADMINISTRATOR') && command.admin) return msg.channel.send(`You must have administrator permission to use this command`)
-  if (command.dev && !(config.developers[msg.author.id] >= command.dev)) return msg.channel.send(`only developers can use that command!`)
-  if (command.specific && command.specific !== msg.author.id) return msg.channel.send("You are not the right user to use this command")
+  if (command.category==="Developer" && !config.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
   if (!command.Case) args.map(x => x.toLowerCase())
   if (command.poke) {
     if (args.length > command.usage.split(`> <`).length) {

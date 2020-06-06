@@ -1,10 +1,20 @@
-const ez = require("../../ez.js")
 module.exports = {
-	name: 'test',
-	description: 'Used by the developers to test certain commands',
-	dev: 1,
-	execute(msg, args, pokemon, data, client) {
-		
+	name: __filename.slice(0, -3),
+	description: "Used by the developers to test certain commands",
+	args: {
+		required: false,
+		case: false,
+		usage: ""
+	},
+	cooldown: 1,
+	aliases: ["pong"],
+	permissions: {
+		bot: [],
+		author: [],
+		mentions: []
+	},
+    execute(msg, args) {
+
 		msg.channel.send(`flags: |${msg.flags}|`)
 		msg.channel.send(`Arguments: |${args}|`)
 

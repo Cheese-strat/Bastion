@@ -1,12 +1,11 @@
-module.exports = {
-    name: __filename.slice(0, -3),
+name: __filename.slice(0, -3),
     description: "",
     args: {
         required: false,
         case: false,
         usage: ""
     },
-    cooldown: 1,
+    cooldown: 3,
     aliases: ["pong"],
     permissions: {
         bot: [
@@ -106,9 +105,4 @@ module.exports = {
             "MANAGE_EMOJIS"
         ]
     },
-    execute(message, a, client) {
-        message.channel.send("pinging...").then(msg => {
-            msg.edit(`Pong! ping is ${message.createdTimestamp - msg.createdTimestamp}ms\napi latency is ${client.ws.ping}ms`)
-        })
-    }
-}
+    execute(msg, args, client) {

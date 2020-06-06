@@ -1,4 +1,4 @@
-const ez = require("../../ez.js")
+//const {correct} = require("../../ez.js")
 module.exports = {
 	name: 'reload',
 	description: 'Reloads a command, developers only.',
@@ -11,12 +11,7 @@ module.exports = {
 		const command = msg.client.commands.get(commandName) || msg.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
 		if (!command) {
-			let ezarray = []
-			msg.client.commands.map(comm => {
-				if (comm.aliases) comm.aliases.forEach(alias => ezarray.push(alias));
-				ezarray.push(comm.name)
-			});
-			let correct = ez.correct(commandName, ezarray);
+			let correct = 1//correct(commandName, msg.client.commands.map(comm => [comm.name].concat(comm.aliases || [])));
 			if (correct) {
 				const command = msg.client.commands.get(correct) || msg.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(correct));
 				return msg.channel.send(`There is no command with name or alias \`${commandName}\`\nDid you mean \`${command.name}\`?`);

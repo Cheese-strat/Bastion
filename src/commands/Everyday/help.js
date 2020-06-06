@@ -1,14 +1,32 @@
 const ez = require("../../ez.js")
 const fs = require("fs")
 module.exports = {
-	name: 'help',
-	description: 'List all of my commands or info about a specific command.',
-	cat: "support",
-	args: false,
+
 	usage: '<command name>',
 	aliases: ['commands', "h"],
 	cooldown: 5,
-	execute(msg, args, p, data, client) {
+	name: __filename.slice(0, -3),
+	description: 'List all of my commands or info about a specific command.',
+	args: {
+		required: false,
+		case: false,
+		usage: '<command name>'
+	},
+	cooldown: 5,
+	aliases: ['commands', "h"],
+	permissions: {
+		bot: [
+			"VIEW_CHANNEL",
+			"SEND_MESSAGES",
+			"EMBED_LINKS",
+		],
+		author: [
+			"VIEW_CHANNEL",
+			"SEND_MESSAGES",
+		],
+		mentions: []
+	},
+	execute(msg, args, client) {
 		args.join(" ")
 		let prefix = data[msg.guild.id].prefix
 		data = [];
