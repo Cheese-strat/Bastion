@@ -9,29 +9,15 @@ module.exports = {
 	},
 	cooldown: 2,
 	aliases: ['pfp', 'profile'],
-	permissions: {
-		bot: [
-			"VIEW_CHANNEL",
-			"SEND_MESSAGES",
-			"EMBED_LINKS",
-			"ATTACH_FILES",
-			"READ_MESSAGE_HISTORY",
-			"VIEW_GUILD_INSIGHTS",
-		],
-		author: [
-			"VIEW_CHANNEL",
-			"SEND_MESSAGES",
-			"READ_MESSAGE_HISTORY",
-			"VIEW_GUILD_INSIGHTS",
-		],
-		mentions: [
-			"VIEW_CHANNEL",
-			"SEND_MESSAGES",
-			"READ_MESSAGE_HISTORY",
-			"VIEW_GUILD_INSIGHTS",
-		]
-	},
-	execute(msg, args) {
+	permissions: [
+		"VIEW_CHANNEL",
+		"SEND_MESSAGES",
+		"EMBED_LINKS",
+		"ATTACH_FILES",
+		"READ_MESSAGE_HISTORY",
+	],
+
+	async execute(msg, args) {
 		let member = await ez.getmember(args.join(" "), msg.guild.members);
 		if (!member && !args.length) member = msg.member
 		if (!member) return msg.channel.send("I couldn't find that target")
