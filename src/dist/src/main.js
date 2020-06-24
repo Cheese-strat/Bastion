@@ -1,0 +1,10 @@
+'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
+const client_1 = require("./structures/client");
+const commands_1 = require("./Handlers/commands");
+const events_1 = require("./Handlers/events");
+const config = require("../config.json");
+const client = new client_1.default(__dirname, config.client_Options);
+console.log(`initializing Discord bot`);
+client.run(events_1.default, commands_1.default, config.token);
+["uncaughtException", "warning", "unhandledRejection"].forEach(p => process.on(p, console.error));
