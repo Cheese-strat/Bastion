@@ -5,11 +5,12 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "git pull && node src/main.js",
-    "r": "node src/main.js"
+    "pretty": "tsc src/main.ts --pretty"
   },
   "author": "Cheese_strat",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^14.0.13",
     "discord.js": "^12.2.0",
     "fs": "0.0.1-security",
     "node-fetch": "^2.6.0",
