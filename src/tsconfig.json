@@ -2,9 +2,12 @@
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./src",
-        "allowJs": false,
+        "allowJs": true,
         "target": "es5",
-        "module": "commonjs"
+        "module": "commonjs",
+        "strict": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true
     },
     "include": [
         "./src/**/**/*",

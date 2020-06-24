@@ -1,9 +1,10 @@
 'use strict';
-var Client = require("./structures/client");
-var Commands = require("./Handlers/commands");
-var Events = require("./Handlers/events");
-var config = require("../config.json");
-var client = new Client(__dirname, config.client_Options);
+exports.__esModule = true;
+var client_1 = require("./structures/client");
+var commands_1 = require("./Handlers/commands");
+var events_1 = require("./Handlers/events");
+var config_json_1 = require("../config.json");
+var client = new client_1["default"](__dirname, config_json_1["default"].client_Options);
 console.log("initializing Discord bot");
-client.run(Events, Commands, config.token);
+client.run(events_1["default"], commands_1["default"], config_json_1["default"].token);
 ["uncaughtException", "warning", "unhandledRejection"].forEach(function (p) { return process.on(p, console.error); });
