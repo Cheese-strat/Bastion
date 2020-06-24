@@ -1,5 +1,5 @@
 'use strict';
-export = (client:any) => 
+export const fn = (client: any) => {
     require("fs").readdirSync(`./src/events`).filter(f =>
         f.endsWith(".js")).forEach(fileName =>
             client.on(
@@ -8,3 +8,4 @@ export = (client:any) =>
                     .bind(null, client)
             )
         )
+}
