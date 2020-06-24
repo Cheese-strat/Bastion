@@ -3,17 +3,17 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "allowJs": true,
-        "target": "es5",
+        "target": "ESNext",
         "module": "commonjs",
         "strict": true,
         "moduleResolution": "node",
         "resolveJsonModule": true
     },
     "include": [
-        "./src/**/**/*",
-        "./src/commands/**/*"
+        "/",
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "/src/commands/**/*"
     ]
 }
