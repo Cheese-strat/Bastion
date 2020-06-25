@@ -8,14 +8,15 @@ import Command from "./Command"
 export default class client extends Client {
     prefixes: any;
     commands : Collection<string, Command>
-    cooldowns : Collection<string,Collection<string,string>>
+    cooldowns : Collection<string, Collection<string,string>>
     path: string
     constructor(basepath: string, options:ClientOptions = {}) {
         super(options)
         this.commands = new Collection()
         this.cooldowns = new Collection()
         this.path = basepath
-        this.prefixes = store("../storage.json", require("../storage.json"))
+        const storage = require("../storage.json")
+        this.prefixes = store("../storage.json")
     }
 
     get developers() {
@@ -28,7 +29,7 @@ export default class client extends Client {
         this.prefixes = store(`${this.path}/storage.json`)
         return this.prefixes
     }
-    run(eventFunc, commFunc, token) {
+    start(eventFunc:(client:Client)=>{}, commFunc, token) {
         if (token.split(".").length < 2) throw new Error(`you dumb you gave me this: ${token}`)
         commFunc(this)
         eventFunc(this)
