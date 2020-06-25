@@ -32,7 +32,7 @@ export default class client extends Client {
         if (token.split(".").length < 2) throw new Error(`you dumb you gave me this: ${token}`)
         commFunc(this)
         eventFunc(this)
-        this.login(token)
+        super.login(token)
         return this
     }
 
