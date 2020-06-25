@@ -30,7 +30,7 @@ module.exports = {
 			embed.setImage(web.url)
 			return msg.channel.send(embed);
 		}
-		if (Arguments.includes("chuck")||Arguments.includes("norris")) {
+		if (Arguments.includes("chuck") || Arguments.includes("norris")) {
 			const web = await fetch("https://api.chucknorris.io/jokes/random").then(response => response.json())
 			if (!web) return msg.channel.send(`Something went wrong.`);
 			const embed = ez.embed('#EFFF00', "Chuck Norris!")
