@@ -1,35 +1,37 @@
 'use strict';
-import{ Client, Collection, ClientOptions } from "discord.js";
+import { Client, Collection, ClientOptions } from "discord.js";
 import { readFileSync } from "fs";
-import store from "storage.js";
+import store from "./storage";
 import Command from "./Command"
 
 
 export default class client extends Client {
     prefixes: any;
-    commands : Collection<string, Command>
-    cooldowns : Collection<string, Collection<string,string>>
+    commands: Collection<string, Command>
+    cooldowns: Collection<string, Collection<string, string>>
     path: string
-    constructor(basepath: string, options:ClientOptions = {}) {
+    constructor(basepath: string, options: ClientOptions = {}) {
         super(options)
         this.commands = new Collection()
         this.cooldowns = new Collection()
         this.path = basepath
         const storage = require("../storage.json")
-        this.prefixes = store("../storage.json")
+        this.prefixes = store("../storage.json", storage)
     }
 
     get developers() {
-        return JSON.parse(readFileSync("config.json")).developers
+        const read: Buffer = readFileSync(`config.json`)
+        return JSON.parse(read.toString()).developers
     }
     get config() {
-        return JSON.parse(readFileSync("config.json"))
+        const read: Buffer = readFileSync(`config.json`)
+        return JSON.parse(read.toString())
     }
-    saveDB() {
-        this.prefixes = store(`${this.path}/storage.json`)
+    saveDB(data:object) {
+        this.prefixes = store(`${this.path}/storage.json`, data)
         return this.prefixes
     }
-    start(eventFunc:(client:Client)=>{}, commFunc, token) {
+    start(eventFunc: (client: this) => any, commFunc: (client: Client) => any, token: string) {
         if (token.split(".").length < 2) throw new Error(`you dumb you gave me this: ${token}`)
         commFunc(this)
         eventFunc(this)

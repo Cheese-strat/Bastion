@@ -2,15 +2,14 @@
 import { readdirSync } from "fs";
 import Client from "../structures/client";
 import { ClientEvents, Structures } from "discord.js";
-//declare function cmdFunc(client: Client, passed: ClientEvents[keyof ClientEvents], secondpassed?: ClientEvents[keyof ClientEvents]): any
 
-export default (client: Client) => {
+export default (client: Client):any => {
     readdirSync("./src/events").filter(function (f: string) {
         return f.endsWith(".js");
     }).forEach(function (fileName: string) {
         const file_name = fileName.split(".")[0] as keyof ClientEvents;
         const cmdFile = require(client.path + "/events/" + fileName)
-        const binded = cmdFile.bind(null, client)
-        client.on(file_name, binded)
+        const binded = cmdFile.bind(null, client) as (client: Client, passed: ClientEvents[keyof ClientEvents])=>any
+        client.on(file_name, binded as any)
     });
 };

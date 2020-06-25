@@ -1,7 +1,6 @@
 'use strict';
 exports.__esModule = true;
 var fs_1 = require("fs");
-//declare function cmdFunc(client: Client, passed: ClientEvents[keyof ClientEvents], secondpassed?: ClientEvents[keyof ClientEvents]): any
 exports["default"] = (function (client) {
     fs_1.readdirSync("./src/events").filter(function (f) {
         return f.endsWith(".js");
