@@ -1,4 +1,3 @@
-'use strict';
 import { Client, Collection, ClientOptions } from "discord.js";
 import { readFileSync } from "fs";
 import store from "./storage";

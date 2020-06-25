@@ -1,5 +1,4 @@
-'use strict';
-export default (a: string, b: string) => {
+export default (a: string, b: string):number => {
 	var tmp: string|number;
 	if (a.length === 0) { return b.length; }
 	if (b.length === 0) { return a.length; }

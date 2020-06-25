@@ -1,4 +1,3 @@
-'use strict';
 import Client from "./structures/client";
 import Commands from "./Handlers/commands";
 import Events from "./Handlers/events";

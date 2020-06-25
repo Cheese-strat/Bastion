@@ -4,8 +4,8 @@
   "description": "an open source discord bot",
   "main": "./src/main.js",
   "scripts": {
-    "start": "node src/main.js",
-    "pretty": "tsc --resolveJsonModule --pretty",
+    "start": "node /dist/main.js",
+    "jsoncomp": "tsc --resolveJsonModule --pretty",
     "comp":"tsc --pretty"
   },
   "author": "Cheese_strat",

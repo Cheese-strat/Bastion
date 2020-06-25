@@ -1,4 +1,3 @@
-'use strict';
 import { readdirSync } from "fs";
 export default (client: any) => {
     for (const Folder of readdirSync(`${client.path}/commands`).filter(folder => !folder.includes("."))) {

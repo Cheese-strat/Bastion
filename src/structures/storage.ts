@@ -1,4 +1,3 @@
-'use strict';
 import { writeFile } from 'fs';
 export default (path:string, data:object) => {
     //if (typeof data !== "object") throw new Error(`passed parameter was of type ${typeof data}, expected object`)

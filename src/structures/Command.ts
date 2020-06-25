@@ -1,5 +1,3 @@
-import { Client } from "discord.js";
-
 import clientClass from "./client"
 export default class {
     path:string

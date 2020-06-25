@@ -1,4 +1,3 @@
-'use strict';
 import { readdirSync } from "fs";
 import Client from "../structures/client";
 import { ClientEvents, Structures } from "discord.js";
