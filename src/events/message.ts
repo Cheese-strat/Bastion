@@ -1,33 +1,31 @@
-'use strict';
-const Discord = require(`discord.js`);
-const data = require("../storage.json")
-const storage = require("../structures/storage.js")
-module.exports = (client, msg) => {
-  if (msg.guild == undefined) {
-    if (!msg.author.bot) {
-      client.channels.fetch(`629683449976061971`).then(channel => {
-        channel.send({
-          embed: {
-            color: 3447003,
-            author: {
-              name: msg.author.username,
-              icon_url: msg.author.avatarURL
-            },
-            title: `DM'd me a message:`,
-            description: msg.content,
-            timestamp: new Date(),
-            footer: {
-              text: `id: ${msg.author.id}`,
-            },
-          }
-        })
-      })
-    }
-    return;
+import { Collection, Message } from "discord.js"
+import clientClass from "../structures/client"
+import storage from "../storage.json"
+import store from "../structures/storage"
+
+export default async (client: clientClass, msg: Message) => {
+  if (msg.guild === null) {
+    if (msg.author.bot === false) return false
+    const channel = await client.getLogChannel()
+    channel.send({
+      embed: {
+        color: 3447003,
+        author: {
+          name: msg.author.username,
+          icon_url: msg.author.avatarURL
+        },
+        title: `DM'd me a message:`,
+        description: msg.content,
+        timestamp: new Date(),
+        footer: {
+          text: `id: ${msg.author.id}`,
+        },
+      }
+    })
+    return false;
   }
-  const config = client.config
-  if (data[msg.guild.id] == undefined) {
-    data[msg.guild.id] = {
+  if (storage[msg.guild.id] === undefined) {
+    const obj = {
       logs: {
         "id": "NULL",
         "badwords": "on",
@@ -36,36 +34,49 @@ module.exports = (client, msg) => {
         "channelu": "on",
         "useru": "on"
       },
-      "prefix": config.prefix,
-      "reminders": [],
-      "banwords": [],
-      "channels": {}
+      prefix: client.config.prefix,
+      reminders: [],
+      banwords: []
     }
-    console.log(`writing ${msg.guild.name} to the file`)
-    storage("../src/structures/storage.js", data)//src\structures\storage.js
+    function _addProp(o: object, k: string, val: any) {
+      if (typeof val === "object") {
+        for (const key in val){
+          _addProp(o, key, o[key])
+        }
+    }
+      Object.defineProperty(storage, msg.guild!.id, key)
+    }
+
+    for (const key in obj) {
+      (typeof obj[key] === "object") ? Object.defineProperty(storage, msg.guild.id, key) : null
+    
   }
-  if (msg.author.bot || !msg.guild.me.permissionsIn(msg.channel).has("SEND_MESSAGES")) return;
-  if (data[msg.guild.id].logs.id != "NULL") {
-    data[msg.guild.id].banwords.forEach(ele => {
+    Object.defineProperty(storage, msg.guild.id, "logs")
+
+    storage("../src/structures/storage.js", storage)
+  }
+  if (msg.author.bot || msg.guild!.me!.permissionsIn(msg.channel).has("SEND_MESSAGES") === false) return;
+  if (storage[msg.guild.id].logs.id != "NULL") {
+    storage[msg.guild.id].banwords.forEach(ele => {
       if (msg.content.toLowerCase().includes(ele)) {
         msg.channel.send(`You cannot use the word: \`${ele}\` in this server!`)
         msg.delete()
           .then(() => {
             h
-            if (data[msg.guild.id].logs.id != "NULL") {
-              client.channels.cache.get(data[msg.guild.id].logs.id).send(`${msg.author.tag} used the banned word: \`${ele}\` in <#${msg.channel.id}>`)
+            if (storage[msg.guild.id].logs.id != "NULL") {
+              client.channels.cache.get(storage[msg.guild.id].logs.id).send(`${msg.author.tag} used the banned word: \`${ele}\` in <#${msg.channel.id}>`)
             }
           })
           .catch(() => {
-            if (data[msg.guild.id].logs.id != "NULL") return client.channels.cache.get(data[msg.guild.id].logs.id).send(`I do not have the correct permissions to delete messages in <#${msg.channel.id}>.`)
+            if (storage[msg.guild.id].logs.id != "NULL") return client.channels.cache.get(storage[msg.guild.id].logs.id).send(`I do not have the correct permissions to delete messages in <#${msg.channel.id}>.`)
           })
       }
     })
   }
-  if ((msg.mentions.users.size > 0) && msg.content.includes(`${client.user.id}>`)) msg.channel.send("my prefix in this server is: " + data[msg.guild.id].prefix)
-  if (!msg.content.startsWith(data[msg.guild.id].prefix)) return
+  if ((msg.mentions.users.size > 0) && msg.content.includes(`${client.user.id}>`)) msg.channel.send("my prefix in this server is: " + storage[msg.guild.id].prefix)
+  if (!msg.content.startsWith(storage[msg.guild.id].prefix)) return
   if (!msg.guild.me.permissionsIn(msg.channel).has('EMBED_LINKS')) return msg.channel.send("I need the `Embed Links` permission.");
-  let args = msg.content.slice(data[msg.guild.id].prefix.length).trim().split(/ +/);
+  let args = msg.content.slice(storage[msg.guild.id].prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase()
   msg.flags = []
   args.forEach(arg => {
@@ -84,7 +95,7 @@ module.exports = (client, msg) => {
   if (command.args && !args.length) {
     let reply = `You didn't give me any arguments, ${msg.author}!`;
     if (command.usage) {
-      reply += `\nThe correct usage is: \`${data[msg.guild.id].prefix}${command.name} ${command.usage}\``;
+      reply += `\nThe correct usage is: \`${storage[msg.guild.id].prefix}${command.name} ${command.usage}\``;
     }
     return msg.channel.send(reply);
   }
@@ -98,7 +109,7 @@ module.exports = (client, msg) => {
     })) return msg.channel.send(`You dont have the correct permissions to use this command`)
   }
   if (!msg.guild.me.permissionsIn(msg.channel).has('ADMINISTRATOR') && command.admin) return msg.channel.send(`You must have administrator permission to use this command`)
-  if (command.category==="Developer" && !config.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
+  if (command.category === "Developer" && !config.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
   if (!command.Case) args.map(x => x.toLowerCase())
   if (command.poke) {
     if (args.length > command.usage.split(`> <`).length) {
@@ -108,7 +119,7 @@ module.exports = (client, msg) => {
     }
     args[0] = ez.findpokemon(args[0])
   }
-  if (!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Discord.Collection());
+  if (!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Collection());
 
   const now = Date.now();
   const timestamps = client.cooldowns.get(command.name);

@@ -1,10 +1,10 @@
-import { Client, Collection, ClientOptions } from "discord.js";
+import { Client, Collection, ClientOptions, TextChannel } from "discord.js";
 import { readFileSync } from "fs";
 import store from "./storage";
 import Command from "./Command"
 
 
-export default class client extends Client {
+export default class clientClass extends Client {
     prefixes: any;
     commands: Collection<string, Command>
     cooldowns: Collection<string, Collection<string, string>>
@@ -16,6 +16,11 @@ export default class client extends Client {
         this.path = basepath
         const storage = require("../storage.json")
         this.prefixes = store("../storage.json", storage)
+    }
+
+    async getLogChannel():Promise<TextChannel>{
+        const id = this.config.logChannel
+        return await super.channels.fetch(id) as TextChannel
     }
 
     get developers() {
