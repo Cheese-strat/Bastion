@@ -25,9 +25,9 @@ export default async (client: clientClass, msg: Message) => {
     return false;
   }
   if (storage[msg.guild.id] === undefined) {
-    const obj = {
+    store("../src/structures/storage.js", msg.guild.id, {
       logs: {
-        "id": "NULL",
+        "id": null,
         "badwords": "on",
         "allmsg": "on",
         "newusers": "on",
@@ -37,32 +37,17 @@ export default async (client: clientClass, msg: Message) => {
       prefix: client.config.prefix,
       reminders: [],
       banwords: []
-    }
-    function _addProp(o: object, k: string, val: any) {
-      if (typeof val === "object") {
-        for (const key in val){
-          _addProp(o, key, o[key])
-        }
-    }
-      Object.defineProperty(storage, msg.guild!.id, key)
-    }
-
-    for (const key in obj) {
-      (typeof obj[key] === "object") ? Object.defineProperty(storage, msg.guild.id, key) : null
-    
-  }
-    Object.defineProperty(storage, msg.guild.id, "logs")
-
-    storage("../src/structures/storage.js", storage)
+    })
   }
   if (msg.author.bot || msg.guild!.me!.permissionsIn(msg.channel).has("SEND_MESSAGES") === false) return;
   if (storage[msg.guild.id].logs.id != "NULL") {
     storage[msg.guild.id].banwords.forEach(ele => {
       if (msg.content.toLowerCase().includes(ele)) {
         msg.channel.send(`You cannot use the word: \`${ele}\` in this server!`)
+        //deal with this bruh, you got await now :)
         msg.delete()
           .then(() => {
-            h
+
             if (storage[msg.guild.id].logs.id != "NULL") {
               client.channels.cache.get(storage[msg.guild.id].logs.id).send(`${msg.author.tag} used the banned word: \`${ele}\` in <#${msg.channel.id}>`)
             }

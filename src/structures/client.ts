@@ -1,11 +1,11 @@
-import { Client, Collection, ClientOptions, TextChannel } from "discord.js";
+import { Client, Collection, ClientOptions, TextChannel, Channel } from "discord.js";
 import { readFileSync } from "fs";
 import store from "./storage";
 import Command from "./Command"
 
 
 export default class clientClass extends Client {
-    prefixes: any;
+    data: object;
     commands: Collection<string, Command>
     cooldowns: Collection<string, Collection<string, string>>
     path: string
@@ -14,26 +14,28 @@ export default class clientClass extends Client {
         this.commands = new Collection()
         this.cooldowns = new Collection()
         this.path = basepath
-        const storage = require("../storage.json")
-        this.prefixes = store("../storage.json", storage)
+        const data = require("../storage.json")
+        this.data = store("../", null)
     }
 
-    async getLogChannel():Promise<TextChannel>{
+    async getLogChannel(): Promise<TextChannel | Channel> {
         const id = this.config.logChannel
-        return await super.channels.fetch(id) as TextChannel
+        const channel = await super.channels.fetch(id)
+        if (channel.type === "text") return channel as TextChannel
+        return channel as Channel
     }
 
     get developers() {
-        const read: Buffer = readFileSync(`config.json`)
-        return JSON.parse(read.toString()).developers
+        const read: string = readFileSync(`config.json`, "utf8")
+        return JSON.parse(read).developers
     }
     get config() {
-        const read: Buffer = readFileSync(`config.json`)
-        return JSON.parse(read.toString())
+        const read = readFileSync(`config.json`, "utf8")
+        return JSON.parse(read)
     }
-    saveDB(data:object) {
-        this.prefixes = store(`${this.path}/storage.json`, data)
-        return this.prefixes
+    saveDB(guildID: string, data: object) {
+        this.data = store("../", guildID, data)
+        return this.data
     }
     start(eventFunc: (client: this) => any, commFunc: (client: Client) => any, token: string) {
         if (token.split(".").length < 2) throw new Error(`you dumb you gave me this: ${token}`)
