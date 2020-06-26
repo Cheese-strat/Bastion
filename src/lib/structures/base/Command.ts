@@ -1,4 +1,4 @@
-import clientClass from "./client";
+import clientClass from "../client/client";
 import { Message } from "discord.js"
 export default class {
     path: string
