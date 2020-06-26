@@ -1,4 +1,4 @@
-import Client from "./structures/client";
+import Client from "./lib/structures/client/client";
 import Commands from "./Handlers/commands";
 import Events from "./Handlers/events";
 import config from "../config.json";
