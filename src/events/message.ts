@@ -1,10 +1,10 @@
 import { Collection, Message } from "discord.js"
-import clientClass from "../structures/client"
+import clientClass from "../lib/structures/client/client"
 import storage from "../storage.json"
-import store from "../structures/storage"
+import store from "../lib/structures/util/storage"
 
 export default async (client: clientClass, msg: Message) => {
-  if (msg.guild === null) {
+  if (msg.channel.type === "dm") {
     if (msg.author.bot === false) return false
     const channel = await client.getLogChannel()
     channel.send({
@@ -24,7 +24,8 @@ export default async (client: clientClass, msg: Message) => {
     })
     return false;
   }
-  if (storage[msg.guild.id] === undefined) {
+  const data = storage[msg.guild.id]
+  if (data === undefined) {
     store("../src/structures/storage.js", msg.guild.id, {
       logs: {
         "id": null,
@@ -39,29 +40,29 @@ export default async (client: clientClass, msg: Message) => {
       banwords: []
     })
   }
-  if (msg.author.bot || msg.guild!.me!.permissionsIn(msg.channel).has("SEND_MESSAGES") === false) return;
-  if (storage[msg.guild.id].logs.id != "NULL") {
-    storage[msg.guild.id].banwords.forEach(ele => {
+  if (msg.author.bot || msg.guild.me.permissionsIn(msg.channel).has("SEND_MESSAGES") === false) return;
+  if (data.logs.id !== null) {
+    data.banwords.forEach(ele => {
       if (msg.content.toLowerCase().includes(ele)) {
         msg.channel.send(`You cannot use the word: \`${ele}\` in this server!`)
         //deal with this bruh, you got await now :)
         msg.delete()
           .then(() => {
 
-            if (storage[msg.guild.id].logs.id != "NULL") {
-              client.channels.cache.get(storage[msg.guild.id].logs.id).send(`${msg.author.tag} used the banned word: \`${ele}\` in <#${msg.channel.id}>`)
+            if (data.logs.id != "NULL") {
+              client.channels.cache.get(data.logs.id).send(`${msg.author.tag} used the banned word: \`${ele}\` in <#${msg.channel.id}>`)
             }
           })
           .catch(() => {
-            if (storage[msg.guild.id].logs.id != "NULL") return client.channels.cache.get(storage[msg.guild.id].logs.id).send(`I do not have the correct permissions to delete messages in <#${msg.channel.id}>.`)
+            if (data.logs.id != "NULL") return client.channels.cache.get(data.logs.id).send(`I do not have the correct permissions to delete messages in <#${msg.channel.id}>.`)
           })
       }
     })
   }
-  if ((msg.mentions.users.size > 0) && msg.content.includes(`${client.user.id}>`)) msg.channel.send("my prefix in this server is: " + storage[msg.guild.id].prefix)
-  if (!msg.content.startsWith(storage[msg.guild.id].prefix)) return
+  if ((msg.mentions.users.size > 0) && msg.content.includes(`${client.user.id}>`)) msg.channel.send("my prefix in this server is: " + data.prefix)
+  if (!msg.content.startsWith(data.prefix)) return
   if (!msg.guild.me.permissionsIn(msg.channel).has('EMBED_LINKS')) return msg.channel.send("I need the `Embed Links` permission.");
-  let args = msg.content.slice(storage[msg.guild.id].prefix.length).trim().split(/ +/);
+  let args = msg.content.slice(data.prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase()
   msg.flags = []
   args.forEach(arg => {
@@ -80,7 +81,7 @@ export default async (client: clientClass, msg: Message) => {
   if (command.args && !args.length) {
     let reply = `You didn't give me any arguments, ${msg.author}!`;
     if (command.usage) {
-      reply += `\nThe correct usage is: \`${storage[msg.guild.id].prefix}${command.name} ${command.usage}\``;
+      reply += `\nThe correct usage is: \`${data.prefix}${command.name} ${command.usage}\``;
     }
     return msg.channel.send(reply);
   }

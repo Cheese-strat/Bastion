@@ -1,5 +1,5 @@
 export default (a: string, b: string):number => {
-	var tmp: string|number;
+	let tmp: string|number;
 	if (a.length === 0) { return b.length; }
 	if (b.length === 0) { return a.length; }
 	if (a.length > b.length) { tmp = a; a = b; b = tmp; }

@@ -1,5 +1,5 @@
 import { readdirSync } from "fs";
-import Client from "../structures/client";
+import Client from "../lib/structures/client";
 import { ClientEvents, Structures } from "discord.js";
 
 export default (client: Client):any => {
