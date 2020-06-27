@@ -1,9 +1,9 @@
 {
   "client_Options": {},
   "prefix": "b!",
-  "token": "NjI4NDQzNzcyNTkzNjM1MzI4.XaGN1w.oufI3B17BySp-JRoctb_wNjYajc",
-  "name": "Bastion",
-  "version": "4.3.4",
+  "token": "",
+  "name": "Beagle",
+  "version": "5.1.0",
   "description": "My Discord Bot",
   "author": "Cheesestrat",
   "flagprefix": "-",
