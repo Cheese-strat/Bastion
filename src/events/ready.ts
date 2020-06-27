@@ -1,5 +1,5 @@
 import { TextChannel } from "discord.js";
-import clientClass from "../structures/client";
+import {clientClass} from "../lib/structures/index";
 export default async (client: clientClass) => {
     if (client.user === null) return console.log(`the clientUser is null`);
     console.log(`bot is running. logged in as ${client.user.tag}`);
