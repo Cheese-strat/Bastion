@@ -1,7 +1,7 @@
 import { Collection, Message } from "discord.js"
-import clientClass from "../lib/structures/client/client"
+import {clientClass} from "../structures/library"
 import storage from "../storage.json"
-import store from "../lib/structures/util/storage"
+import {store} from "../structures/library"
 
 export default async (client: clientClass, msg: Message) => {
   if (msg.channel.type === "dm") {
