@@ -1,5 +1,5 @@
-import { guildObject as Gobj, config as c } from "../index"
-export const config:c = {
+import { GType, CType } from "../library"
+export const config: CType = {
     clientOptions: {},
     prefix: "b!",
     token: "",
@@ -12,7 +12,7 @@ export const config:c = {
         "625149330348703744"
     ]
 }
-export const guildObject:Gobj = {
+export const guildObject: GType = {
     logs: {
         "id": null,
         "badwords": false,
@@ -24,5 +24,4 @@ export const guildObject:Gobj = {
     prefix: "b!",
     reminders: [],
     banwords: []
-
 }
