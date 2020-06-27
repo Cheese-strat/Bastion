@@ -1,3 +1,5 @@
+/// <reference path="index.d.ts" />
+
 /** Export base classes */
 export * from "./base/Command"
 export * from "./base/Event"
