@@ -1,6 +1,7 @@
 import { writeFile } from 'fs';
 import { normalize } from "path"
-function _addProp(o: object, k: string, val: any) {
+
+function _addProp(o: any, k: string, val: any) {
     if (typeof val === "object") {
         for (const key in val) {
             _addProp(o[k], key, o[k][key])
@@ -9,10 +10,10 @@ function _addProp(o: object, k: string, val: any) {
     return o
 }
 
-export default (direction: string, guildID: string|null, data?: object) => {
+export default (direction: string, guildID: string | null, data?: object) => {
 
-    const json = require(normalize("/"+direction+"/storage.json"))
-    if (guildID===null) return json
+    const json = require(normalize("/" + direction + "/storage.json"))
+    if (guildID === null) return json
     let queue = Promise.resolve();
     _addProp(json, guildID, data)
 

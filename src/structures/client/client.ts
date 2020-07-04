@@ -1,8 +1,7 @@
-import { Client, Collection, ClientOptions, TextChannel, Channel } from "discord.js";
+import { Client, Collection, ClientOptions, TextChannel } from "discord.js";
 import { readFileSync } from "fs";
 import store from "../util/storage";
-import Command from "../base/Command"
-
+import Command from "../base/Command";
 
 export default class clientClass extends Client {
     data: object;

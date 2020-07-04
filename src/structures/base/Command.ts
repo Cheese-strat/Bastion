@@ -1,6 +1,6 @@
 import clientClass from "../client/client";
 import { Message } from "discord.js"
-export abstract class Command {
+export default abstract class Command {
     path: string
     client: clientClass
     abstract run: (c: clientClass, m: Message) => any

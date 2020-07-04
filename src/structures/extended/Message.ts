@@ -1,12 +1,12 @@
-import { Structures, Message } from "discord.js";
+import { Structures } from "discord.js";
 export default () =>
     Structures.extend(
         "Message",
         (message) =>
-            class extends Message {
+            class extends message {
                 public command: string
-                public args:string[]
-                private A:string[] = this.content.split(/ +/g)
+                public args: string[]
+                private A: string[] = this.content.split(/ +/g)
                 constructor() {
                     super(arguments[0], arguments[1], arguments[2]);
                     this.command = this.A[0]
