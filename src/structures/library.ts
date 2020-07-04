@@ -10,7 +10,7 @@ export * as Event from "./base/Event"
 /** Export the client, objects and obj types */
 export * from "./client/Object"
 export * from "./client/types"
-export * as clientClass from "./client/client"
+export class  clientClass
 
 /** Export extenstions */
 export * from "./extended/GuildMember"
