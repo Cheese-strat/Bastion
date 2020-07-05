@@ -1,5 +1,5 @@
-export default (a: string, b: string):number => {
-	let tmp: string|number;
+export const levenstein = (a: string, b: string): number => {
+	let tmp: string | number;
 	if (a.length === 0) { return b.length; }
 	if (b.length === 0) { return a.length; }
 	if (a.length > b.length) { tmp = a; a = b; b = tmp; }
@@ -9,7 +9,7 @@ export default (a: string, b: string):number => {
 	let res: number = 1
 	const alen = a.length;
 	const blen = b.length;
-	const row:number[] = Array(alen);
+	const row: number[] = Array(alen);
 	for (i = 0; i <= alen; i++) { row[i] = i; }
 
 	for (i = 1; i <= blen; i++) {

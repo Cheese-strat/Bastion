@@ -1,5 +1,5 @@
-import { GType, CType } from "../library"
-export const config: CType = {
+import { ClientOptionsTYPE, guildTYPE } from "../library"
+export const config: ClientOptionsTYPE = {
     clientOptions: {},
     prefix: "b!",
     token: "",
@@ -12,7 +12,7 @@ export const config: CType = {
         "625149330348703744"
     ]
 }
-export const guildObject: GType = {
+export const guildObject: guildTYPE = {
     logs: {
         "id": null,
         "badwords": false,

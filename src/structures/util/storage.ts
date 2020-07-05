@@ -10,7 +10,7 @@ function _addProp(o: any, k: string, val: any) {
     return o
 }
 
-export default (direction: string, guildID: string | null, data?: object) => {
+export const storage = (direction: string, guildID: string | null, data?: object) => {
 
     const json = require(normalize("/" + direction + "/storage.json"))
     if (guildID === null) return json

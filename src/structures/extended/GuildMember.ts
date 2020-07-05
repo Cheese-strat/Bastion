@@ -1,5 +1,5 @@
 import { Structures } from "discord.js";
-export default () =>
+export const GuildMember = () =>
     Structures.extend(
         "GuildMember",
         (GuildMember) =>

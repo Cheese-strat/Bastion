@@ -1,5 +1,5 @@
 import { Structures } from "discord.js";
-export default () =>
+export const Message = () =>
     Structures.extend(
         "Message",
         (message) =>
@@ -11,6 +11,11 @@ export default () =>
                     super(arguments[0], arguments[1], arguments[2]);
                     this.command = this.A[0]
                     this.args = this.A.slice(1)
+                }
+                permissions() {
+                    if (this.channel.type === "dm") return console.error(`cannot use permissions method on a direct message`)
+                    if (this.channel.type === "news") return console.error(`this permissions method is not suited for a news channel`)
+                    return this.channel.permissionsFor(this.guild.me)
                 }
             }
     );

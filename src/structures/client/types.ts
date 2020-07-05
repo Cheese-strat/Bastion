@@ -1,5 +1,5 @@
-import { ClientOptions } from "discord.js"
-export type CType = {
+import { ClientOptions, Message } from "discord.js"
+export type ClientOptionsTYPE = {
     clientOptions: ClientOptions,
     prefix: string,
     token: string,
@@ -10,7 +10,7 @@ export type CType = {
     flagprefix: string,
     developers: string[]
 }
-export interface GType {
+export interface guildTYPE {
     logs: {
         id: null | string,
         badwords: boolean,
@@ -23,6 +23,12 @@ export interface GType {
     reminders: [],
     banwords: []
 }
-export interface storage {
-    [id: string]: GType
+export interface storageTYPE {
+    [id: string]: guildTYPE
+}
+export interface messageTYPE extends Message {
+    command: string
+    args: string[]
+    A: string[]
+    permissions: ()=>{}
 }
