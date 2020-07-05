@@ -10,16 +10,16 @@ function _addProp(o: any, k: string, val: any) {
     return o
 }
 
-export const storage = (direction: string, guildID: string | null, data?: object) => {
+export const storage = (path: string, guildID: string | null, data?: object) => {
 
-    const json = require(normalize("/" + direction + "/storage.json"))
+    const json = require(path)
     if (guildID === null) return json
     let queue = Promise.resolve();
     _addProp(json, guildID, data)
 
     const write = () => {
         queue = queue.then(() => new Promise(res =>
-            writeFile(normalize(__dirname + "/.." + "storage.json"), JSON.stringify(json, null, 2), err => {
+            writeFile(path, JSON.stringify(json, null, 2), err => {
                 if (!err) return res();
                 throw err;
             })

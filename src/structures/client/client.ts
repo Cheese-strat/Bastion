@@ -2,6 +2,7 @@ import { Client, Collection, ClientOptions, TextChannel } from "discord.js";
 import { readFileSync } from "fs";
 import { storage as store } from "../util/storage"
 import { Command } from "../base/Command";
+import { normalize } from "path";
 
 export class clientClass extends Client {
     data: object;
@@ -13,16 +14,15 @@ export class clientClass extends Client {
         this.commands = new Collection()
         this.cooldowns = new Collection()
         this.path = basepath
-        const data = require("../storage.json")
-        this.data = store("../", null)
+        this.data = store(normalize(basepath + "/storage.json"), null)
     }
 
-    get developers():string[] {
+    get developers(): string[] {
         const read: string = readFileSync(`config.json`, "utf8")
         return JSON.parse(read).developers
     }
 
-    get config():any {
+    get config(): any {
         const read = readFileSync(`config.json`, "utf8")
         return JSON.parse(read)
     }
@@ -33,7 +33,7 @@ export class clientClass extends Client {
         throw new Error(`expected logChannel of type text, store or news. received: ${channel.type}, id: ${id}`)
     }
 
-    saveDB(guildID: string, data: object):object {
+    saveDB(guildID: string, data: object): object {
         this.data = store("../", guildID, data)
         return this.data
     }

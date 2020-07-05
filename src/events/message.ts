@@ -1,8 +1,6 @@
 import { Collection, } from "discord.js"
-import { clientClass, messageTYPE } from "../structures/library"
-import storage from "../storage.json"
+import { clientClass, messageTYPE, storageTYPE } from "../structures/library"
 import { storage as store } from "../structures/library"
-import { stringify } from "querystring"
 
 export default async (client: clientClass, msg: messageTYPE) => {
   if (msg.guild === null) {
@@ -25,6 +23,7 @@ export default async (client: clientClass, msg: messageTYPE) => {
     })
     return false;
   }
+  const storage:storageTYPE = require("../storage.json")
   const data = storage[msg.guild.id]
   if (data === undefined) {
     store("../src/structures/storage.js", msg.guild.id, {
@@ -62,11 +61,11 @@ export default async (client: clientClass, msg: messageTYPE) => {
       }
     }
   }
-  if ((msg.mentions.users.size > 0) && msg.content.includes(`${client.user.id}>`)) msg.channel.send("my prefix in this server is: " + data.prefix)
+  if ((msg.mentions.users.size > 0) && msg.content.includes(`${client.user!.id}>`)) msg.channel.send("my prefix in this server is: " + data.prefix)
   if (!msg.content.startsWith(data.prefix)) return false;
-  if (!msg.guild.me.permissionsIn(msg.channel).has('EMBED_LINKS')) return msg.channel.send("I need the `Embed Links` permission.");
+  if (!msg.permissions().has('EMBED_LINKS')) return msg.channel.send("I need the `Embed Links` permission.");
   let args: string[] = msg.content.slice(data.prefix.length).trim().split(/ +/);
-  const commandName = args.shift().toLowerCase()
+  const commandName = args.shift()
   /*msg.flags = []
   args.forEach(arg => {
     if (arg.startsWith(config.flagprefix)) {
@@ -78,10 +77,11 @@ export default async (client: clientClass, msg: messageTYPE) => {
   args.filter(a => msg.flags.includes(config.flagprefix + a))
   */
   if (commandName === `crash` && client.developers.includes(msg.author.id)) throw new Error(`Crashing on authorization of ${msg.author.tag}`)
+  if (!commandName) return false
+  const command = client.commands.get(commandName.toLowerCase()) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName.toLowerCase()));
 
-  const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
-  if (!command) return false;
+  if (!command )return false
+  
   if (command.args && !args.length) {
     let reply = `You didn't give me any arguments, ${msg.author}!`;
     if (command.args.usage) {
@@ -91,14 +91,14 @@ export default async (client: clientClass, msg: messageTYPE) => {
   }
   if (command.permissions.length) {
     if (!command.permissions.every(permFlag => {
-      msg.guild.me.permissionsIn(msg.channel).has(permFlag)
+      msg.guild!.me!.permissionsIn(msg.channel).has(permFlag)
     })) return msg.channel.send(`I dont have the correct permissions to use this command`)
 
     if (!command.permissions.every(permFlag => {
-      msg.member.permissionsIn(msg.channel).has(permFlag)
+      msg.member!.permissionsIn(msg.channel).has(permFlag)
     })) return msg.channel.send(`You dont have the correct permissions to use this command`)
   }
-  if (!msg.guild.me.permissionsIn(msg.channel).has('ADMINISTRATOR') && command.permissions.includes("ADMINISTRATOR")) return msg.channel.send(`You must have administrator permission to use this command`)
+  if (!msg.permissions().has('ADMINISTRATOR') && command.permissions.includes("ADMINISTRATOR")) return msg.channel.send(`You must have administrator permission to use this command`)
   if (command.category === "Developer" && !client.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
   if (!command.args.case) args.map(x => x.toLowerCase())
   if (!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Collection());
@@ -120,7 +120,7 @@ export default async (client: clientClass, msg: messageTYPE) => {
     setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
   }
   try {
-    command.run(client, msg);
+    return command.run(client, msg);
   } catch (error) {
     const logChannel = await client.getLogChannel()
     logChannel.send(`<@625149330348703744> \n command: ${msg.content} \n Error: ${error} \n channel: <#${msg.channel.id}> \n server: ${msg.guild.name}`);

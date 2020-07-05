@@ -15,8 +15,8 @@ export const Message = () =>
                 permissions() {
                     if (this.channel.type === "dm") return console.error(`cannot use permissions method on a direct message`)
                     if (this.channel.type === "news") return console.error(`this permissions method is not suited for a news channel`)
-                    if (this.guild.me === null) return console.error(`Please fetch the client guilmember before testing permissions`)
-                    return this.channel.permissionsFor(this.guild.me)
+                    if (this.guild!.me === null) return console.error(`Please fetch the client guilmember before testing permissions`)
+                    return this.channel.permissionsFor(this.guild!.me)
                 }
             }
     );
