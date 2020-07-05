@@ -1,11 +1,11 @@
-import { Collection, Message } from "discord.js"
-import { clientClass } from "../structures/library"
+import { Collection, } from "discord.js"
+import { clientClass, messageTYPE } from "../structures/library"
 import storage from "../storage.json"
 import { storage as store } from "../structures/library"
 import { stringify } from "querystring"
 
-export default async (client: clientClass, msg: Message) => {
-  if (msg.channel.type === "dm") {
+export default async (client: clientClass, msg: messageTYPE) => {
+  if (msg.guild === null) {
     if (msg.author.bot === false) return false
     const channel = await client.getLogChannel()
     channel.send({
@@ -41,30 +41,31 @@ export default async (client: clientClass, msg: Message) => {
       banwords: []
     })
   }
-  
-  if (msg.author.bot || msg.permissions(msg.channel).has("SEND_MESSAGES") === false) return;
-  if (data.logs.id !== null) {
-    for (const word of data.banwords){
-      if (msg.content.toLowerCase().includes(ele)) {
-        msg.channel.send(`You cannot use the word: \`${ele}\` in this server!`)
-        //deal with this bruh, you got await now :)
-        msg.delete()
-          .then(() => {
 
-            if (data.logs.id != "NULL") {
-              client.getLogChannel().then(logs => logs.send(`${msg.author.tag} used the banned word: \`${ele}\` in <#${msg.channel.id}>`))
-            }
-          })
-          .catch(() => {
-            if (data.logs.id != "NULL") return client.channels.cache.get(data.logs.id).send(`I do not have the correct permissions to delete messages in <#${msg.channel.id}>.`)
-          })
+  if (msg.author.bot || msg.permissions().has("SEND_MESSAGES") === false) return false;
+  if (data.logs.id !== null) {
+    if (msg.args.some(msg.content.toLowerCase().includes)) {
+
+    }
+    for (const word of data.banwords) {
+      if (msg.content.toLowerCase().includes(word)) {
+        msg.channel.send(`You cannot use the word: \`${word}\` in this server!`)
+        const logs = await client.getLogChannel(data.logs.id);
+        try {
+          await msg.delete()
+        } catch {
+          logs.send(`I do not have the correct permissions to delete messages in <#${msg.channel.id}>.\nPlease disable banWords or apply the MANAGE_MESSAGES permission`)
+        }
+        if (data.logs.badwords === true) {
+          logs.send(`${msg.author.tag} used the banned word: \`${word}\` in <#${msg.channel.id}>`);
+        }
       }
     }
   }
   if ((msg.mentions.users.size > 0) && msg.content.includes(`${client.user.id}>`)) msg.channel.send("my prefix in this server is: " + data.prefix)
-  if (!msg.content.startsWith(data.prefix)) return
+  if (!msg.content.startsWith(data.prefix)) return false;
   if (!msg.guild.me.permissionsIn(msg.channel).has('EMBED_LINKS')) return msg.channel.send("I need the `Embed Links` permission.");
-  let args = msg.content.slice(data.prefix.length).trim().split(/ +/);
+  let args: string[] = msg.content.slice(data.prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase()
   /*msg.flags = []
   args.forEach(arg => {
@@ -76,38 +77,30 @@ export default async (client: clientClass, msg: Message) => {
   })
   args.filter(a => msg.flags.includes(config.flagprefix + a))
   */
-  if (commandName === `crash` && config.developers[msg.author.id] >= 4) throw new Error(`Crashing on authorization of ${msg.author.tag}`)
+  if (commandName === `crash` && client.developers.includes(msg.author.id)) throw new Error(`Crashing on authorization of ${msg.author.tag}`)
 
   const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-  if (!command) return;
+  if (!command) return false;
   if (command.args && !args.length) {
     let reply = `You didn't give me any arguments, ${msg.author}!`;
-    if (command.usage) {
-      reply += `\nThe correct usage is: \`${data.prefix}${command.name} ${command.usage}\``;
+    if (command.args.usage) {
+      reply += `\nThe correct usage is: \`${data.prefix}${command.name} ${command.args.usage}\``;
     }
     return msg.channel.send(reply);
   }
-  if (command.perms) {
-    if (!command.perms.every(permFlag => {
+  if (command.permissions.length) {
+    if (!command.permissions.every(permFlag => {
       msg.guild.me.permissionsIn(msg.channel).has(permFlag)
     })) return msg.channel.send(`I dont have the correct permissions to use this command`)
 
-    if (!command.perms.every(permFlag => {
+    if (!command.permissions.every(permFlag => {
       msg.member.permissionsIn(msg.channel).has(permFlag)
     })) return msg.channel.send(`You dont have the correct permissions to use this command`)
   }
-  if (!msg.guild.me.permissionsIn(msg.channel).has('ADMINISTRATOR') && command.admin) return msg.channel.send(`You must have administrator permission to use this command`)
-  if (command.category === "Developer" && !config.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
-  if (!command.Case) args.map(x => x.toLowerCase())
-  if (command.poke) {
-    if (args.length > command.usage.split(`> <`).length) {
-      value = args[0] + args[1]
-      args.shift()
-      args[0] = value
-    }
-    args[0] = ez.findpokemon(args[0])
-  }
+  if (!msg.guild.me.permissionsIn(msg.channel).has('ADMINISTRATOR') && command.permissions.includes("ADMINISTRATOR")) return msg.channel.send(`You must have administrator permission to use this command`)
+  if (command.category === "Developer" && !client.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
+  if (!command.args.case) args.map(x => x.toLowerCase())
   if (!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Collection());
 
   const now = Date.now();
@@ -127,11 +120,10 @@ export default async (client: clientClass, msg: Message) => {
     setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
   }
   try {
-    console.log(command)
-    command.execute(msg, args, client);
-    console.log(`executed command: ${command.name}`)
+    command.run(client, msg);
   } catch (error) {
-    client.channels.cache.get(`629683449976061971`).send(`<@625149330348703744> \n command: ${msg.content} \n Error: ${error} \n channel: <#${msg.channel.id}> \n server: ${msg.guild.name}`);
+    const logChannel = await client.getLogChannel()
+    logChannel.send(`<@625149330348703744> \n command: ${msg.content} \n Error: ${error} \n channel: <#${msg.channel.id}> \n server: ${msg.guild.name}`);
     console.log(`message: ${msg.content} \n Error: ${error} \n channel: <#${msg.channel.id}> \n server: ${msg.guild.name}`);
     msg.channel.send(`There was an error trying to execute that command!`);
   }

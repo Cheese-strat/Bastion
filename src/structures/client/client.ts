@@ -17,12 +17,12 @@ export class clientClass extends Client {
         this.data = store("../", null)
     }
 
-    get developers() {
+    get developers():string[] {
         const read: string = readFileSync(`config.json`, "utf8")
         return JSON.parse(read).developers
     }
 
-    get config() {
+    get config():any {
         const read = readFileSync(`config.json`, "utf8")
         return JSON.parse(read)
     }
@@ -33,12 +33,12 @@ export class clientClass extends Client {
         throw new Error(`expected logChannel of type text, store or news. received: ${channel.type}, id: ${id}`)
     }
 
-    saveDB(guildID: string, data: object) {
+    saveDB(guildID: string, data: object):object {
         this.data = store("../", guildID, data)
         return this.data
     }
 
-    start(eventFunc: (client: this) => any, commFunc: (client: Client) => any, token: string) {
+    start(eventFunc: (client: this) => any, commFunc: (client: clientClass) => any, token: string) {
         if (token.split(".").length < 2) throw new Error(`you dumb you gave me this: ${token}`)
         commFunc(this)
         eventFunc(this)

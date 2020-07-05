@@ -1,4 +1,4 @@
-import { ClientOptions, Message } from "discord.js"
+import { ClientOptions, Message, Permissions, GuildMember, User } from "discord.js"
 export type ClientOptionsTYPE = {
     clientOptions: ClientOptions,
     prefix: string,
@@ -30,5 +30,12 @@ export interface messageTYPE extends Message {
     command: string
     args: string[]
     A: string[]
-    permissions: ()=>{}
+    permissions(): Permissions
+
+}
+export interface GuildMemberTYPE extends GuildMember {
+    xp: number
+}
+export interface UserTYPE extends User {
+    money: number
 }
