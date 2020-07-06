@@ -1,10 +1,10 @@
 /** Export base classes */
 export * from "./base/Command"
 export * from "./base/Event"
-import commands from "../Handlers/commands"
+
 /** Export the client, objects and obj types */
 export * from "./client/Object"
-export * from "./client/types"
+export * from "./types"
 export * from "./client/client"
 
 /** Export extenstions */

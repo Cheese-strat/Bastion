@@ -1,5 +1,5 @@
 import { writeFile } from 'fs';
-import { normalize } from "path"
+import { storageTYPE } from '../types';
 
 function _addProp(o: any, k: string, val: any) {
     if (typeof val === "object") {
@@ -10,7 +10,7 @@ function _addProp(o: any, k: string, val: any) {
     return o
 }
 
-export const storage = (path: string, guildID: string | null, data?: object) => {
+export const storage = (path: string, guildID: string | null, data?: object): storageTYPE => {
 
     const json = require(path)
     if (guildID === null) return json

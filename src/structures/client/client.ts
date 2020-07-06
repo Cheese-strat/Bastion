@@ -3,9 +3,10 @@ import { readFileSync } from "fs";
 import { storage as store } from "../util/storage"
 import { Command } from "../base/Command";
 import { normalize } from "path";
+import { storageTYPE } from "../types";
 
 export class clientClass extends Client {
-    data: object;
+    data: storageTYPE;
     commands: Collection<string, Command>
     cooldowns: Collection<string, any>
     path: string

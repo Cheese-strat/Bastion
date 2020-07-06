@@ -1,11 +1,11 @@
 import { Collection, } from "discord.js"
-import { clientClass, messageTYPE, storageTYPE } from "../structures/library"
-import { storage as store } from "../structures/library"
+import { clientClass, storage as store, guildObject } from "../structures/library"
+import { messageTYPE, storageTYPE } from "../structures/types"
 
 export default async (client: clientClass, msg: messageTYPE) => {
   if (msg.guild === null) {
-    if (msg.author.bot === false) return false
-    const channel = await client.getLogChannel()
+    if (msg.author.bot === false) return false;
+    const channel = await client.getLogChannel();
     channel.send({
       embed: {
         color: 3447003,
@@ -20,26 +20,13 @@ export default async (client: clientClass, msg: messageTYPE) => {
           text: `id: ${msg.author.id}`,
         },
       }
-    })
+    });
     return false;
   }
-  const storage:storageTYPE = require("../storage.json")
-  const data = storage[msg.guild.id]
-  if (data === undefined) {
-    store("../src/structures/storage.js", msg.guild.id, {
-      logs: {
-        "id": null,
-        "badwords": "on",
-        "allmsg": "on",
-        "newusers": "on",
-        "channelu": "on",
-        "useru": "on"
-      },
-      prefix: client.config.prefix,
-      reminders: [],
-      banwords: []
-    })
-  }
+  const storage: storageTYPE = require("../storage.json");
+  const data = storage[msg.guild.id];
+  if (data === undefined) store("../src/structures/storage.js", msg.guild.id, guildObject)
+
 
   if (msg.author.bot || msg.permissions().has("SEND_MESSAGES") === false) return false;
   if (data.logs.id !== null) {
@@ -80,8 +67,8 @@ export default async (client: clientClass, msg: messageTYPE) => {
   if (!commandName) return false
   const command = client.commands.get(commandName.toLowerCase()) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName.toLowerCase()));
 
-  if (!command )return false
-  
+  if (!command) return false
+
   if (command.args && !args.length) {
     let reply = `You didn't give me any arguments, ${msg.author}!`;
     if (command.args.usage) {
@@ -98,7 +85,6 @@ export default async (client: clientClass, msg: messageTYPE) => {
       msg.member!.permissionsIn(msg.channel).has(permFlag)
     })) return msg.channel.send(`You dont have the correct permissions to use this command`)
   }
-  if (!msg.permissions().has('ADMINISTRATOR') && command.permissions.includes("ADMINISTRATOR")) return msg.channel.send(`You must have administrator permission to use this command`)
   if (command.category === "Developer" && !client.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
   if (!command.args.case) args.map(x => x.toLowerCase())
   if (!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Collection());
