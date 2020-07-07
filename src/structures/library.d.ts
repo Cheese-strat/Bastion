@@ -1,4 +1,5 @@
 import { ClientOptions, Message, Permissions, GuildMember, User, ClientEvents, Channel } from "discord.js"
+export as namespace lib
 export type ClientOptionsTYPE = {
     clientOptions: ClientOptions,
     prefix: string,
@@ -95,16 +96,14 @@ export interface ClientEventsTYPE {
     guildMemberSpeaking: [GuildMember | PartialGuildMember, Readonly<Speaking>];
     guildMemberUpdate: [GuildMember | PartialGuildMember, GuildMember | PartialGuildMember];
     guildUpdate: [guildTYPE, guildTYPE];
-    inviteCreate: [Invite];
-    inviteDelete: [Invite];
-    message: [Message];
-    messageDelete: [Message | PartialMessage];
-    messageReactionRemoveAll: [Message | PartialMessage];
+    message: [messageTYPE];
+    messageDelete: [messageTYPE];
+    messageReactionRemoveAll: [messageTYPE];
     messageReactionRemoveEmoji: [MessageReaction];
-    messageDeleteBulk: [Collection<Snowflake, Message | PartialMessage>];
-    messageReactionAdd: [MessageReaction, User | PartialUser];
-    messageReactionRemove: [MessageReaction, User | PartialUser];
-    messageUpdate: [Message | PartialMessage, Message | PartialMessage];
+    messageDeleteBulk: [Collection<Snowflake, messageTYPE>];
+    messageReactionAdd: [MessageReaction, User];
+    messageReactionRemove: [MessageReaction, User];
+    messageUpdate: [messageTYPE, messageTYPE];
     presenceUpdate: [Presence | undefined, Presence];
     rateLimit: [RateLimitData];
     ready: [];
@@ -112,8 +111,8 @@ export interface ClientEventsTYPE {
     roleCreate: [Role];
     roleDelete: [Role];
     roleUpdate: [Role, Role];
-    typingStart: [ChannelTYPE | PartialDMChannel, User | PartialUser];
-    userUpdate: [User | PartialUser, User | PartialUser];
+    typingStart: [ChannelTYPE, User ];
+    userUpdate: [User , User ];
     voiceStateUpdate: [VoiceState, VoiceState];
     webhookUpdate: [TextChannel];
     shardDisconnect: [CloseEvent, number];

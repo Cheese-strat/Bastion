@@ -1,5 +1,5 @@
 import { writeFile } from 'fs';
-import { storageTYPE } from '../types';
+import { storageTYPE } from '../library';
 
 function _addProp(o: any, k: string, val: any) {
     if (typeof val === "object") {

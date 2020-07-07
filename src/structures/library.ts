@@ -1,10 +1,11 @@
+/// <reference types="node" />
 /** Export base classes */
 export * from "./base/Command"
 export * from "./base/Event"
 
 /** Export the client, objects and obj types */
 export * from "./client/Object"
-export * from "./types"
+export * from "./library"
 export * from "./client/client"
 
 /** Export extenstions */
