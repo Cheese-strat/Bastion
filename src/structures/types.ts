@@ -1,4 +1,4 @@
-import { ClientOptions, Message, Permissions, GuildMember, User } from "discord.js"
+import { ClientOptions, Message, Permissions, GuildMember, User, ClientEvents, Channel } from "discord.js"
 export type ClientOptionsTYPE = {
     clientOptions: ClientOptions,
     prefix: string,
@@ -70,3 +70,55 @@ export interface cmdPerms {
     delete: boolean
     react: boolean
 }
+export interface ChannelTYPE extends Channel {
+    ventable?:boolean
+}
+export interface ClientEventsTYPE {
+    channelCreate: [ChannelTYPE];
+    channelDelete: [ChannelTYPE];
+    channelPinsUpdate: [ChannelTYPE, Date];
+    ChannelUpdate: [ChannelTYPE, ChannelTYPE];
+    debug: [string];
+    warn: [string];
+    disconnect: [any, number];
+    error: [Error];
+    guildBanAdd: [guildTYPE, UserTYPE];
+    guildBanRemove: [guildTYPE, UserTYPE];
+    guildCreate: [guildTYPE];
+    guildDelete: [guildTYPE];
+    guildUnavailable: [guildTYPE];
+    guildIntegrationsUpdate: [guildTYPE];
+    guildMemberAdd: [GuildMember | PartialGuildMember];
+    guildMemberAvailable: [GuildMember | PartialGuildMember];
+    guildMemberRemove: [GuildMember | PartialGuildMember];
+    guildMembersChunk: [Collection<Snowflake, GuildMember | PartialGuildMember>, guildTYPE];
+    guildMemberSpeaking: [GuildMember | PartialGuildMember, Readonly<Speaking>];
+    guildMemberUpdate: [GuildMember | PartialGuildMember, GuildMember | PartialGuildMember];
+    guildUpdate: [guildTYPE, guildTYPE];
+    inviteCreate: [Invite];
+    inviteDelete: [Invite];
+    message: [Message];
+    messageDelete: [Message | PartialMessage];
+    messageReactionRemoveAll: [Message | PartialMessage];
+    messageReactionRemoveEmoji: [MessageReaction];
+    messageDeleteBulk: [Collection<Snowflake, Message | PartialMessage>];
+    messageReactionAdd: [MessageReaction, User | PartialUser];
+    messageReactionRemove: [MessageReaction, User | PartialUser];
+    messageUpdate: [Message | PartialMessage, Message | PartialMessage];
+    presenceUpdate: [Presence | undefined, Presence];
+    rateLimit: [RateLimitData];
+    ready: [];
+    invalidated: [];
+    roleCreate: [Role];
+    roleDelete: [Role];
+    roleUpdate: [Role, Role];
+    typingStart: [ChannelTYPE | PartialDMChannel, User | PartialUser];
+    userUpdate: [User | PartialUser, User | PartialUser];
+    voiceStateUpdate: [VoiceState, VoiceState];
+    webhookUpdate: [TextChannel];
+    shardDisconnect: [CloseEvent, number];
+    shardError: [Error, number];
+    shardReady: [number];
+    shardReconnecting: [number];
+    shardResume: [number, number];
+  }
