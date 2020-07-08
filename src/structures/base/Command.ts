@@ -15,6 +15,7 @@ export abstract class Command {
     abstract aliases: string[]
     abstract perms: permsobj
     abstract extraPermissions: perms[]
+  permissions: any;
     abstract run(c: clientClass, m: Message): any
     constructor(path: string, client: clientClass) {
         this.path = path

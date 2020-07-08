@@ -1,4 +1,4 @@
-import { ClientOptionsTYPE, guildTYPE } from "../library"
+import { ClientOptionsTYPE, storageGuildTYPE } from "../library"
 export const config: ClientOptionsTYPE = {
     clientOptions: {},
     prefix: "b!",
@@ -12,7 +12,7 @@ export const config: ClientOptionsTYPE = {
         "625149330348703744"
     ]
 }
-export const guildObject: guildTYPE = {
+export const guildObject: storageGuildTYPE = {
     logs: {
         "id": null,
         "badwords": false,

@@ -1,16 +1,16 @@
-import { Collection, } from "discord.js"
-import { clientClass, storage as store, guildObject, Event } from "../structures/library"
-import { messageTYPE, storageTYPE } from "../structures/types"
+import { Collection, Message, } from "discord.js"
+import { clientClass, storage as store, guildObject, Event, messageTYPE, storageGuildTYPE, storageTYPE } from "../structures/library"
+import {  } from "../structures/library"
 
 export class Message extends Event {
   name:"message" = "message"
-  constructor(client: clientClass, msg: messageTYPE) {
+  constructor(client: clientClass, m: messageTYPE) {
     super(__dirname, client)
   }
-  run(msg:messageTYPE) {
+  run(msg: messageTYPE) {
     if (msg.guild === null) {
       if (msg.author.bot === false) return false;
-      const channel = await client.getLogChannel();
+      const channel = await this.client.getLogChannel();
       channel.send({
         embed: {
           color: 3447003,
@@ -41,7 +41,7 @@ export class Message extends Event {
       for (const word of data.banwords) {
         if (msg.content.toLowerCase().includes(word)) {
           msg.channel.send(`You cannot use the word: \`${word}\` in this server!`)
-          const logs = await client.getLogChannel(data.logs.id);
+          const logs = await this.client.getLogChannel(data.logs.id);
           try {
             await msg.delete()
           } catch {
@@ -53,24 +53,15 @@ export class Message extends Event {
         }
       }
     }
-    if ((msg.mentions.users.size > 0) && msg.content.includes(`${client.user!.id}>`)) msg.channel.send("my prefix in this server is: " + data.prefix)
+    if ((msg.mentions.users.size > 0) && msg.content.includes(`${this.client.user!.id}>`)) msg.channel.send("my prefix in this server is: " + data.prefix)
     if (!msg.content.startsWith(data.prefix)) return false;
     if (!msg.permissions().has('EMBED_LINKS')) return msg.channel.send("I need the `Embed Links` permission.");
     let args: string[] = msg.content.slice(data.prefix.length).trim().split(/ +/);
     const commandName = args.shift()
-    /*msg.flags = []
-    args.forEach(arg => {
-      if (arg.startsWith(config.flagprefix)) {
-        args.filter(a => a.startsWith(config.flagprefix))
-        let flag = arg.slice(config.flagprefix.length, arg.length)
-        msg.flags.push(flag)
-      }
-    })
-    args.filter(a => msg.flags.includes(config.flagprefix + a))
-    */
-    if (commandName === `crash` && client.developers.includes(msg.author.id)) throw new Error(`Crashing on authorization of ${msg.author.tag}`)
+
+    if (commandName === `crash` && this.client.developers.includes(msg.author.id)) throw new Error(`Crashing on authorization of ${msg.author.tag}`)
     if (!commandName) return false
-    const command = client.commands.get(commandName.toLowerCase()) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName.toLowerCase()));
+    const command = this.client.commands.get(commandName.toLowerCase()) || this.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName.toLowerCase()));
 
     if (!command) return false
 
@@ -90,12 +81,12 @@ export class Message extends Event {
         msg.member!.permissionsIn(msg.channel).has(permFlag)
       })) return msg.channel.send(`You dont have the correct permissions to use this command`)
     }
-    if (command.category === "Developer" && !client.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
+    if (command.category === "Developer" && !this.client.developers.includes(msg.author.id)) return msg.channel.send(`only developers can use that command!`)
     if (!command.args.case) args.map(x => x.toLowerCase())
-    if (!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Collection());
+    if (!this.client.cooldowns.has(command.name)) this.client.cooldowns.set(command.name, new Collection());
 
     const now = Date.now();
-    const timestamps = client.cooldowns.get(command.name);
+    const timestamps = this.client.cooldowns.get(command.name);
     const cooldownAmount = (command.cooldown || 3) * 1000;
 
     if (timestamps.has(msg.author.id)) {
@@ -111,9 +102,9 @@ export class Message extends Event {
       setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
     }
     try {
-      return command.run(client, msg);
+      return command.run(this.client, msg);
     } catch (error) {
-      const logChannel = await client.getLogChannel()
+      const logChannel = await this.client.getLogChannel()
       logChannel.send(`<@625149330348703744> \n command: ${msg.content} \n Error: ${error} \n channel: <#${msg.channel.id}> \n server: ${msg.guild.name}`);
       console.log(`message: ${msg.content} \n Error: ${error} \n channel: <#${msg.channel.id}> \n server: ${msg.guild.name}`);
       msg.channel.send(`There was an error trying to execute that command!`);

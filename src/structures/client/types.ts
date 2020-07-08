@@ -1,5 +1,4 @@
-import { ClientOptions, Message, Permissions, GuildMember, User, ClientEvents, Channel } from "discord.js"
-export as namespace lib
+import { ClientOptions, Message, Permissions, GuildMember, User, Channel, Collection, Snowflake, Speaking, MessageReaction, Presence, RateLimitData, Role, VoiceState, TextChannel } from "discord.js"
 export type ClientOptionsTYPE = {
     clientOptions: ClientOptions,
     prefix: string,
@@ -11,7 +10,7 @@ export type ClientOptionsTYPE = {
     flagprefix: string,
     developers: string[]
 }
-export interface guildTYPE {
+export interface storageGuildTYPE {
     logs: {
         id: null | string,
         badwords: boolean,
@@ -25,7 +24,7 @@ export interface guildTYPE {
     banwords: []
 }
 export interface storageTYPE {
-    [id: string]: guildTYPE
+    [id: string]: storageGuildTYPE
 }
 export interface messageTYPE extends Message {
     command: string
@@ -72,7 +71,7 @@ export interface cmdPerms {
     react: boolean
 }
 export interface ChannelTYPE extends Channel {
-    ventable?:boolean
+    ventable?: boolean
 }
 export interface ClientEventsTYPE {
     channelCreate: [ChannelTYPE];
@@ -83,19 +82,19 @@ export interface ClientEventsTYPE {
     warn: [string];
     disconnect: [any, number];
     error: [Error];
-    guildBanAdd: [guildTYPE, UserTYPE];
-    guildBanRemove: [guildTYPE, UserTYPE];
-    guildCreate: [guildTYPE];
-    guildDelete: [guildTYPE];
-    guildUnavailable: [guildTYPE];
-    guildIntegrationsUpdate: [guildTYPE];
-    guildMemberAdd: [GuildMember | PartialGuildMember];
-    guildMemberAvailable: [GuildMember | PartialGuildMember];
-    guildMemberRemove: [GuildMember | PartialGuildMember];
-    guildMembersChunk: [Collection<Snowflake, GuildMember | PartialGuildMember>, guildTYPE];
-    guildMemberSpeaking: [GuildMember | PartialGuildMember, Readonly<Speaking>];
-    guildMemberUpdate: [GuildMember | PartialGuildMember, GuildMember | PartialGuildMember];
-    guildUpdate: [guildTYPE, guildTYPE];
+    guildBanAdd: [storageGuildTYPE, UserTYPE];
+    guildBanRemove: [storageGuildTYPE, UserTYPE];
+    guildCreate: [storageGuildTYPE];
+    guildDelete: [storageGuildTYPE];
+    guildUnavailable: [storageGuildTYPE];
+    guildIntegrationsUpdate: [storageGuildTYPE];
+    guildMemberAdd: [GuildMemberTYPE];
+    guildMemberAvailable: [GuildMemberTYPE];
+    guildMemberRemove: [GuildMemberTYPE];
+    guildMembersChunk: [Collection<Snowflake, GuildMemberTYPE>, storageGuildTYPE];
+    guildMemberSpeaking: [GuildMemberTYPE, Readonly<Speaking>];
+    guildMemberUpdate: [GuildMemberTYPE, GuildMemberTYPE];
+    guildUpdate: [storageGuildTYPE, storageGuildTYPE];
     message: [messageTYPE];
     messageDelete: [messageTYPE];
     messageReactionRemoveAll: [messageTYPE];
@@ -111,8 +110,8 @@ export interface ClientEventsTYPE {
     roleCreate: [Role];
     roleDelete: [Role];
     roleUpdate: [Role, Role];
-    typingStart: [ChannelTYPE, User ];
-    userUpdate: [User , User ];
+    typingStart: [ChannelTYPE, User];
+    userUpdate: [User, User];
     voiceStateUpdate: [VoiceState, VoiceState];
     webhookUpdate: [TextChannel];
     shardDisconnect: [CloseEvent, number];
@@ -120,4 +119,4 @@ export interface ClientEventsTYPE {
     shardReady: [number];
     shardReconnecting: [number];
     shardResume: [number, number];
-  }
+}

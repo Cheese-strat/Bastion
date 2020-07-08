@@ -1,4 +1,5 @@
 import { Client, Collection, ClientOptions, TextChannel } from "discord.js";
+
 import { readFileSync } from "fs";
 import { storage as store } from "../util/storage"
 import { Command } from "../base/Command";

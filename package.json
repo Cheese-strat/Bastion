@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/src/main.js",
     "jsoncomp": "tsc --resolveJsonModule --pretty",
-    "comp":"tsc --pretty"
+    "comp": "tsc --pretty"
   },
   "author": "Cheese_strat",
   "license": "ISC",
@@ -15,7 +15,7 @@
     "discord.js": "^12.2.0",
     "fs": "0.0.1-security",
     "node-fetch": "^2.6.0",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.6"
   },
   "repository": "https://github.com/Cheese-strat/dont-dead"
 }
