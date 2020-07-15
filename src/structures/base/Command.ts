@@ -6,10 +6,10 @@ export abstract class Command {
     client: clientClass
     abstract name: string
     abstract description: string
-    abstract category?: string
+    category?: string
     abstract args: {
-        required: false
-        case: false
+        required: boolean
+        case: boolean
         usage: string
     }
     abstract cooldown: number
