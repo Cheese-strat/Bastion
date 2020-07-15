@@ -1,13 +1,13 @@
-import { Collection, Message, } from "discord.js"
+import { Collection, } from "discord.js"
 import { clientClass, storage as store, guildObject, Event, messageTYPE, storageGuildTYPE, storageTYPE } from "../structures/library"
-import {  } from "../structures/library"
+import { } from "../structures/library"
 
 export class Message extends Event {
-  name:"message" = "message"
-  constructor(client: clientClass, m: messageTYPE) {
+  name: "message" = "message"
+  constructor(client: clientClass) {
     super(__dirname, client)
   }
-  run(msg: messageTYPE) {
+  async run(msg: messageTYPE) {
     if (msg.guild === null) {
       if (msg.author.bot === false) return false;
       const channel = await this.client.getLogChannel();
@@ -72,12 +72,12 @@ export class Message extends Event {
       }
       return msg.channel.send(reply);
     }
-    if (command.permissions.length) {
-      if (!command.permissions.every(permFlag => {
+    if (command.permissions) {
+      if (!command.permissions.bot.every(permFlag => {
         msg.guild!.me!.permissionsIn(msg.channel).has(permFlag)
       })) return msg.channel.send(`I dont have the correct permissions to use this command`)
 
-      if (!command.permissions.every(permFlag => {
+      if (!command.permissions.auth.every(permFlag => {
         msg.member!.permissionsIn(msg.channel).has(permFlag)
       })) return msg.channel.send(`You dont have the correct permissions to use this command`)
     }
@@ -111,3 +111,4 @@ export class Message extends Event {
     }
 
   }
+}

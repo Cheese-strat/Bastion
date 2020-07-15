@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE } from "../structures/library";
+import { Command, clientClass, messageTYPE, CMDPermsObj } from "../structures/library";
 
 export class Template extends Command {
     name: string
@@ -11,9 +11,8 @@ export class Template extends Command {
     }
     cooldown: number
     aliases: string[]
-    perms: permsobj
-    extraPermissions: perms[]
-    constructor(path, client) {
+    permissions: CMDPermsObj
+    constructor(path:string, client:clientClass) {
         super(path, client)
         this.description = ""
         this.args = {
@@ -23,11 +22,13 @@ export class Template extends Command {
         }
         this.cooldown = 3
         this.aliases = []
-        this.perms = {
+        this.permissions = {
             send: false,
             embed: false,
             delete: false,
-            react: false
+            react: false,
+            bot: [],
+            auth: []
         }
 
 

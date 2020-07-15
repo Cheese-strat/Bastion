@@ -39,6 +39,14 @@ export interface GuildMemberTYPE extends GuildMember {
 export interface UserTYPE extends User {
     money: number
 }
+export interface CMDPermsObj {
+    send:boolean
+    embed:boolean
+    react:boolean
+    delete:boolean
+    bot:extraPermissions[]
+    auth:extraPermissions[]   
+}
 export type extraPermissions =
     | 'CREATE_INSTANT_INVITE'
     | 'KICK_MEMBERS'
@@ -64,59 +72,53 @@ export type extraPermissions =
     | 'MANAGE_WEBHOOKS'
     | 'MANAGE_EMOJIS';
 
-export interface cmdPerms {
-    send: boolean
-    embed: boolean
-    delete: boolean
-    react: boolean
-}
 export interface ChannelTYPE extends Channel {
     ventable?: boolean
 }
 export interface ClientEventsTYPE {
-    channelCreate: [ChannelTYPE];
-    channelDelete: [ChannelTYPE];
+    channelCreate: ChannelTYPE;
+    channelDelete: ChannelTYPE;
     channelPinsUpdate: [ChannelTYPE, Date];
     ChannelUpdate: [ChannelTYPE, ChannelTYPE];
-    debug: [string];
-    warn: [string];
+    debug: string;
+    warn: string;
     disconnect: [any, number];
-    error: [Error];
+    error: Error;
     guildBanAdd: [storageGuildTYPE, UserTYPE];
     guildBanRemove: [storageGuildTYPE, UserTYPE];
-    guildCreate: [storageGuildTYPE];
-    guildDelete: [storageGuildTYPE];
-    guildUnavailable: [storageGuildTYPE];
-    guildIntegrationsUpdate: [storageGuildTYPE];
-    guildMemberAdd: [GuildMemberTYPE];
-    guildMemberAvailable: [GuildMemberTYPE];
-    guildMemberRemove: [GuildMemberTYPE];
+    guildCreate: storageGuildTYPE;
+    guildDelete: storageGuildTYPE;
+    guildUnavailable: storageGuildTYPE;
+    guildIntegrationsUpdate: storageGuildTYPE;
+    guildMemberAdd: GuildMemberTYPE;
+    guildMemberAvailable: GuildMemberTYPE;
+    guildMemberRemove: GuildMemberTYPE;
     guildMembersChunk: [Collection<Snowflake, GuildMemberTYPE>, storageGuildTYPE];
     guildMemberSpeaking: [GuildMemberTYPE, Readonly<Speaking>];
     guildMemberUpdate: [GuildMemberTYPE, GuildMemberTYPE];
     guildUpdate: [storageGuildTYPE, storageGuildTYPE];
-    message: [messageTYPE];
-    messageDelete: [messageTYPE];
-    messageReactionRemoveAll: [messageTYPE];
-    messageReactionRemoveEmoji: [MessageReaction];
+    message: messageTYPE;
+    messageDelete: messageTYPE;
+    messageReactionRemoveAll: messageTYPE;
+    messageReactionRemoveEmoji: MessageReaction;
     messageDeleteBulk: [Collection<Snowflake, messageTYPE>];
     messageReactionAdd: [MessageReaction, User];
     messageReactionRemove: [MessageReaction, User];
     messageUpdate: [messageTYPE, messageTYPE];
     presenceUpdate: [Presence | undefined, Presence];
-    rateLimit: [RateLimitData];
+    rateLimit: RateLimitData;
     ready: [];
     invalidated: [];
-    roleCreate: [Role];
-    roleDelete: [Role];
+    roleCreate: Role;
+    roleDelete: Role;
     roleUpdate: [Role, Role];
     typingStart: [ChannelTYPE, User];
     userUpdate: [User, User];
     voiceStateUpdate: [VoiceState, VoiceState];
-    webhookUpdate: [TextChannel];
+    webhookUpdate: TextChannel;
     shardDisconnect: [CloseEvent, number];
     shardError: [Error, number];
-    shardReady: [number];
-    shardReconnecting: [number];
+    shardReady: number;
+    shardReconnecting: number;
     shardResume: [number, number];
 }
