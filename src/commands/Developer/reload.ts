@@ -30,8 +30,8 @@ export default class extends Command {
 			client.commands.map(cmd => {
 				arr.push(cmd.name)
 				cmd.aliases && cmd.aliases.forEach(e => arr.push(e))
-
 			})
+
 			let corrected = correct(commandName, arr)
 
 			if (corrected) {

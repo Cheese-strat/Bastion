@@ -10,7 +10,7 @@ export * from "./library"
 export * from "./client/client"
 
 /** Export extenstions */
-export * from "./extended/GuildMember"
+export * from "./extended/Guild"
 export * from "./extended/Message"
 export * from "./extended/User"
 
@@ -28,7 +28,7 @@ export * from "./library"
 export * from "./client/client"
 
 /** Export extenstions */
-export * from "./extended/GuildMember"
+export * from "./extended/Guild"
 export * from "./extended/Message"
 export * from "./extended/User"
 

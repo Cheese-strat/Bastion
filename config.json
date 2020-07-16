@@ -9,5 +9,6 @@
   "flagprefix": "-",
   "developers": [
     "625149330348703744"
-  ]
+  ],
+  "correctThreshold":1
 }
