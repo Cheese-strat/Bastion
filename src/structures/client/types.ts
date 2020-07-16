@@ -116,9 +116,11 @@ export interface ClientEventsTYPE {
     userUpdate: [User, User];
     voiceStateUpdate: [VoiceState, VoiceState];
     webhookUpdate: TextChannel;
+    /* disabling sharding
     shardDisconnect: [CloseEvent, number];
     shardError: [Error, number];
     shardReady: number;
     shardReconnecting: number;
     shardResume: [number, number];
+    */
 }

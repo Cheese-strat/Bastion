@@ -1,8 +1,7 @@
 import { levenstein } from "./levenstein";
-export const correct = (find: string, group: string[]) => {
-    let array: number[] = []
-    for (const str of group) {
-        array.push(levenstein(str, find))
-    }
-    return array.sort((a, b) => a - b)
+export function correct(find: string, group: string[], threshold?: number = thresh) {
+    const res = group.sort((a, b) => {
+        return levenstein(find, a) - levenstein(find, b);
+    })[0];
+    return threshold ? res : null
 }
