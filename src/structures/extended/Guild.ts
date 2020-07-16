@@ -1,16 +1,39 @@
 import { Structures } from "discord.js";
+import { GuildMemberTYPE } from '../client/types';
 export const Guild = () =>
     Structures.extend(
         "Guild",
         (Guild) =>
             class extends Guild {
-                private _xp: number;
                 constructor() {
                     super(arguments[0], arguments[1]);
-                    this._xp = 0
                 }
-                async getMember(find:string){
-                    this.members
+
+                getChannel(toFind: string) {
+                    if (!isNaN(Number(toFind))) {
+                        var channel = this.channels.cache.get(toFind);
+                        if (channel) return channel;
+                    }
+                    if (toFind.startsWith("<#") && toFind.endsWith(">")) {
+                        const str = toFind.slice(2, -1);
+                        var channel = this.channels.cache.get(str);
+                        if (channel) return channel;
+                    }
+                    return this.channels.cache.find(channel => channel.name === toFind)
+                }
+
+                async getMember(toFind: string) {
+                    let member:any;
+                    if (!isNaN(Number(toFind))) {
+                        member = await this.members.fetch(toFind);
+                        if (member) return member;
+                    }
+                    if (toFind.startsWith("<#") && toFind.endsWith(">")) {
+                        const str = toFind.slice(2, -1);
+                        member = this.channels.cache.get(str);
+                        if (member) return member;
+                    }
+                    return this.members.cache.find(m => m.name === toFind)
                 }
             }
     );
