@@ -13,7 +13,7 @@ module.exports = {
 		if (!web) return msg.channel.send(`Something went wrong.`);
 		console.log(web)
 		if (web[0].setup){
-			msg.channel.send(web[0].setup)
+			await msg.channel.send(web[0].setup)
 			setTimeout(x=>{
 				msg.channel.send(web[0].punchline)
 			},(web[0].setup.length*100))

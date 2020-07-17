@@ -22,10 +22,10 @@ module.exports = {
 					permissions: []
 				}).then(muterole=>{
 				msg.guild.channels.forEach(async (channel, id) => {
-					channel.overwritePermissions(muterole, {
-						SEND_MESSAGES: false,
-						ADD_REACTIONS: false
-					});
+					await channel.overwritePermissions(muterole, {
+                        SEND_MESSAGES: false,
+                        ADD_REACTIONS: false
+                    });
 				});
 			});
 			} catch (e) {

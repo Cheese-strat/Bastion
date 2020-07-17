@@ -44,7 +44,7 @@ module.exports = {
 		const embed = ez.embed(colour, "Boomer test!")
 		embed.setDescription(`The predicted age for ${web.name} is ${web.age} years old.`)
 		embed.setFooter(`This result was taken from ${web.count} different counts`)
-		msg.channel.send(embed)
+		await msg.channel.send(embed)
 		return
 	}
 };

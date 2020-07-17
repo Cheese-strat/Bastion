@@ -55,11 +55,11 @@
         "forceConsistentCasingInFileNames": true
     },
     "include": [
-        "./src/**/*",
+        "./src/**/*"
     ],
     "exclude": [
         "node_modules",
         "./src/commands/**/*",
         "./src/commands/template.ts"
-    ],
+    ]****
 }

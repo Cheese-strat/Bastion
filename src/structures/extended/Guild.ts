@@ -11,12 +11,12 @@ export const Guild = () =>
 
                 getChannel(toFind: string) {
                     if (!isNaN(Number(toFind))) {
-                        var channel = this.channels.cache.get(toFind);
+                        const channel = this.channels.cache.get(toFind);
                         if (channel) return channel;
                     }
                     if (toFind.startsWith("<#") && toFind.endsWith(">")) {
                         const str = toFind.slice(2, -1);
-                        var channel = this.channels.cache.get(str);
+                        const channel = this.channels.cache.get(str);
                         if (channel) return channel;
                     }
                     return this.channels.cache.find(channel => channel.name === toFind)
@@ -30,10 +30,10 @@ export const Guild = () =>
                     }
                     if (toFind.startsWith("<#") && toFind.endsWith(">")) {
                         const str = toFind.slice(2, -1);
-                        member = this.channels.cache.get(str);
+                        member = this.members.fetch(str);
                         if (member) return member;
                     }
-                    return this.members.cache.find(m => m.name === toFind)
+                    return this.members.cache.find(m => m..user.username === toFind)
                 }
             }
     );
