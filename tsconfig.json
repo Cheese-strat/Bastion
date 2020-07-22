@@ -61,5 +61,5 @@
         "node_modules",
         "./src/commands/**/*",
         "./src/commands/template.ts"
-    ]****
+    ]
 }

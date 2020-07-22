@@ -1,4 +1,4 @@
-import { Structures } from "discord.js";
+import { GuildMember, Structures } from "discord.js";
 import { GuildMemberTYPE } from '../client/types';
 export const Guild = () =>
     Structures.extend(
@@ -22,18 +22,18 @@ export const Guild = () =>
                     return this.channels.cache.find(channel => channel.name === toFind)
                 }
 
-                async getMember(toFind: string) {
-                    let member:any;
+                async getMember(toFind: string): Promise<GuildMemberTYPE | GuildMember | undefined> {
+                    let member: any;
                     if (!isNaN(Number(toFind))) {
                         member = await this.members.fetch(toFind);
                         if (member) return member;
                     }
                     if (toFind.startsWith("<#") && toFind.endsWith(">")) {
                         const str = toFind.slice(2, -1);
-                        member = this.members.fetch(str);
+                        member = await this.members.fetch(str);
                         if (member) return member;
                     }
-                    return this.members.cache.find(m => m..user.username === toFind)
+                    return this.members.cache.find(m => m.user.username === toFind)
                 }
             }
     );
