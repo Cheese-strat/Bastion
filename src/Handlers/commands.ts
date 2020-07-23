@@ -7,6 +7,6 @@ export default (client: clientClass) => {
             commandOBJ.category = Folder
             client.commands.set(commandOBJ.name, commandOBJ)
             console.log(`found command: ${commandOBJ.name}`)
-        };
-    };
+        }
+    }
 };

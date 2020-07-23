@@ -118,7 +118,7 @@ module.exports = {
         ]
     },
     execute(msg, args, client) {
-	execute: async(msg, args, p, data, client) =>{
+	async(msg, args, p, data, client) =>{
 		var member = await getmember(args[0], msg.guild.members)
 		if (member == undefined) return msg.channel.send("I couldn't find that user")
 		var user = member.user
@@ -181,6 +181,6 @@ module.exports = {
 				})
 				.catch(error => console.log(error))
 		}
-		return
+
 	}
 };

@@ -1,6 +1,6 @@
 import { GuildMember, Structures } from "discord.js";
 import { GuildMemberTYPE } from '../client/types';
-export const Guild = () =>
+export default () =>
     Structures.extend(
         "Guild",
         (Guild) =>

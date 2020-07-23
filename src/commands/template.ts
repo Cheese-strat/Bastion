@@ -1,7 +1,7 @@
 import { Command, clientClass, messageTYPE, CMDPermsObj } from "../structures/library";
 
-export class Template extends Command {
-    name: string
+export default class extends Command {
+    name= ""
     description: string
     category?: string
     args: {
@@ -33,38 +33,7 @@ export class Template extends Command {
 
 
     }
-    run(client, msg) {
+    run(client: clientClass, msg: messageTYPE) {
 
     }
-}
-type perms =
-    | 'CREATE_INSTANT_INVITE'
-    | 'KICK_MEMBERS'
-    | 'BAN_MEMBERS'
-    | 'ADMINISTRATOR'
-    | 'MANAGE_CHANNELS'
-    | 'MANAGE_GUILD'
-    | 'VIEW_AUDIT_LOG'
-    | 'PRIORITY_SPEAKER'
-    | 'STREAM'
-    | 'SEND_TTS_MESSAGES'
-    | 'MENTION_EVERYONE'
-    | 'VIEW_GUILD_INSIGHTS'
-    | 'CONNECT'
-    | 'SPEAK'
-    | 'MUTE_MEMBERS'
-    | 'DEAFEN_MEMBERS'
-    | 'MOVE_MEMBERS'
-    | 'USE_VAD'
-    | 'CHANGE_NICKNAME'
-    | 'MANAGE_NICKNAMES'
-    | 'MANAGE_ROLES'
-    | 'MANAGE_WEBHOOKS'
-    | 'MANAGE_EMOJIS';
-
-interface permsobj {
-    send: boolean
-    embed: boolean
-    delete: boolean
-    react: boolean
 }

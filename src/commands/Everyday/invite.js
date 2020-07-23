@@ -108,7 +108,7 @@ module.exports = {
         ]
     },
     execute(msg, args, client) {
-	name: 'invite',
+	'invite',
 	description: 'Gives you the link of the official server and the bots invite link',
 	args: false,
 	cooldown:3,

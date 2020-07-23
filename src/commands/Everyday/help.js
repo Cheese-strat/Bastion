@@ -37,7 +37,6 @@ module.exports = {
 			//const embed = ez.embed(msg.member.displayHexColor, "My commands:")
 			/*for (const commFolder of fs.readdirSync("./commands")) {
 				console.log(commFolder)
-				let info = JSON.parse(fs.readFileSync(`./commands/${commFolder}/info.json`))
 				embed.addField(commFolder, info.desc)
 			}*/
 			//embed.setDescription(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`)

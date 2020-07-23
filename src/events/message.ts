@@ -1,15 +1,14 @@
 import { Collection, } from "discord.js"
-import { clientClass, storage as store, guildObject, Event, messageTYPE, storageGuildTYPE, storageTYPE } from "../structures/library"
-import { } from "../structures/library"
+import { clientClass, storage as store, guildObject, Event, messageTYPE, storageTYPE } from "../structures/library"
 
-export class Message extends Event {
+export default class extends Event {
   name: "message" = "message"
   constructor(client: clientClass) {
     super(__dirname, client)
   }
   async run(msg: messageTYPE) {
     if (msg.guild === null) {
-      if (msg.author.bot === false) return false;
+      if (!msg.author.bot) return false;
       const channel = await this.client.getLogChannel();
       channel.send({
         embed: {
@@ -33,7 +32,7 @@ export class Message extends Event {
     if (data === undefined) store("../src/structures/storage.js", msg.guild.id, guildObject)
 
 
-    if (msg.author.bot || msg.permissions().has("SEND_MESSAGES") === false) return false;
+    if (msg.author.bot || !msg.permissions().has("SEND_MESSAGES")) return false;
     if (data.logs.id !== null) {
       if (msg.args.some(msg.content.toLowerCase().includes)) {
 
@@ -47,7 +46,7 @@ export class Message extends Event {
           } catch {
             logs.send(`I do not have the correct permissions to delete messages in <#${msg.channel.id}>.\nPlease disable banWords or apply the MANAGE_MESSAGES permission`)
           }
-          if (data.logs.badwords === true) {
+          if (data.logs.badwords) {
             logs.send(`${msg.author.tag} used the banned word: \`${word}\` in <#${msg.channel.id}>`);
           }
         }

@@ -1,5 +1,5 @@
 import { Structures } from "discord.js";
-export const User = () =>
+export default () =>
     Structures.extend(
         "User",
         (user) =>

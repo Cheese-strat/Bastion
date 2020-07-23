@@ -6,7 +6,7 @@ export abstract class Event {
     path: string
     client: clientClass
     abstract run(yes:ClientEventsTYPE[keyof ClientEventsTYPE]): any
-    constructor(path: string, client: clientClass) {
+    protected constructor(path: string, client: clientClass) {
         this.path = path
         this.client = client
     }

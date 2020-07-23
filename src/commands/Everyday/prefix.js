@@ -109,7 +109,7 @@ module.exports = {
         ]
     },
     execute(msg, args, client) {
-	name: 'prefix',
+	'prefix',
 	description: 'Changes the prefix for your server',
 	args: true,
 	usage:"<prefix>",

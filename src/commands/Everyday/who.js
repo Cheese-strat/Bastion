@@ -7,17 +7,17 @@ module.exports = {
 	usage: "<target user>",
 	aliases: ['whois', 'find', "search", "finduser"],
 	execute(msg, args, pokemon, data, client) {
-		name: __filename.slice(0, -3),
+		__filename.slice(0, -3),
     description: "",
     args: {
-        required: false,
+        false,
         case: false,
         usage: ""
     },
-    cooldown: 3,
+    3,
     aliases: ["pong"],
     permissions: {
-        bot: [
+        [
             "CREATE_INSTANT_INVITE",
             "KICK_MEMBERS",
             "BAN_MEMBERS",

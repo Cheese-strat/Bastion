@@ -1,17 +1,4 @@
-import { ClientOptionsTYPE, storageGuildTYPE } from "../library"
-export const config: ClientOptionsTYPE = {
-    clientOptions: {},
-    prefix: "b!",
-    token: "",
-    name: "Bastion",
-    version: "4.3.4",
-    description: "My Discord Bot",
-    author: "Cheesestrat",
-    flagprefix: "-",
-    developers: [
-        "625149330348703744"
-    ]
-}
+import { storageGuildTYPE } from "./types"
 export const guildObject: storageGuildTYPE = {
     logs: {
         "id": null,

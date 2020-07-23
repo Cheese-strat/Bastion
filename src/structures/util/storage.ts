@@ -1,31 +1,22 @@
-import { writeFile } from 'fs';
-import { storageTYPE } from '../library';
-
-function _addProp(o: any, k: string, val: any) {
-    if (typeof val === "object") {
-        for (const key in val) {
-            _addProp(o[k], key, o[k][key])
-        }
-    } else Object.defineProperty(o, k, val)
-    return o
-}
+import {writeFile} from 'fs';
+import {storageTYPE} from '../library';
 
 export const storage = (path: string, guildID: string | null, data?: object): storageTYPE => {
 
-    const json = require(path)
-    if (guildID === null) return json
+    const json = require(path);
+    if (!guildID) return json;
+    Object.defineProperty(json, guildID, data as object);
     let queue = Promise.resolve();
-    _addProp(json, guildID, data)
+
 
     const write = () => {
-        queue = queue.then(() => new Promise(res =>
+         queue = queue.then(() => new Promise(res =>
             writeFile(path, JSON.stringify(json, null, 2), err => {
                 if (!err) return res();
                 throw err;
             })
-        ))
+        ));
     }
-
     return new Proxy(json, {
         set: (obj, prop, value): true => {
             Object.defineProperty(obj, prop, value)

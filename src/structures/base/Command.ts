@@ -16,7 +16,7 @@ export abstract class Command {
     abstract aliases: string[]
     abstract permissions: CMDPermsObj;
     abstract run(c: clientClass, m: Message): any
-    constructor(path: string, client: clientClass) {
+    protected constructor(path: string, client: clientClass) {
         this.path = path
         this.client = client
     }

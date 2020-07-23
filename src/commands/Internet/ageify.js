@@ -45,6 +45,6 @@ module.exports = {
 		embed.setDescription(`The predicted age for ${web.name} is ${web.age} years old.`)
 		embed.setFooter(`This result was taken from ${web.count} different counts`)
 		await msg.channel.send(embed)
-		return
+
 	}
 };

@@ -107,7 +107,7 @@ module.exports = {
         ]
     },
     execute(msg, args, client) {
-	name: 'ping',
+	'ping',
 	description: 'Pings the bot and the discord API to test reaction time and latency',
 	args: false,
 	cooldown:2,
