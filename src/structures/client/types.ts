@@ -26,8 +26,9 @@ export interface storageGuildTYPE {
 export interface storageTYPE {
     [id: string]: storageGuildTYPE
 }
+
 export interface messageTYPE extends Message {
-    command: string
+    command: string | undefined
     args: string[]
     A: string[]
     permissions(): Permissions

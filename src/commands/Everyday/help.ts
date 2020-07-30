@@ -1,39 +1,36 @@
-const ez = require("../../ez.js")
-const fs = require("fs")
-module.exports = {
 
-	usage: '<command name>',
-	aliases: ['commands', "h"],
-	cooldown: 5,
-	name: __filename.slice(0, -3),
-	description: 'List all of my commands or info about a specific command.',
-	args: {
+import {} from "fs";
+import { Command, messageTYPE, clientClass, CMDPermsObj } from "../../structures/library";
+import {Collection} from "discord.js"
+
+export default class extends Command {
+	name= "help"
+	description= 'List all of my commands or info about a specific command.'
+	args = {
 		required: false,
 		case: false,
 		usage: '<command name>'
-	},
-	cooldown: 5,
-	aliases: ['commands', "h"],
-	permissions: {
-		bot: [
-			"VIEW_CHANNEL",
-			"SEND_MESSAGES",
-			"EMBED_LINKS",
-		],
-		author: [
-			"VIEW_CHANNEL",
-			"SEND_MESSAGES",
-		],
-		mentions: []
-	},
-	execute(msg, args, client) {
-		args.join(" ")
-		let prefix = data[msg.guild.id].prefix
-		data = [];
-		const {
-			commands
-		} = msg.client;
-		if (!args.length) {
+	}
+	cooldown= 5
+	aliases= ['commands', "h"]
+	permissions:CMDPermsObj= {
+		send:true,
+		embed:true,
+		react:false,
+		delete:false,
+		bot: [],
+		auth: []
+	}
+	constructor(basepath:string,client:clientClass){
+		super(arguments[0], arguments[1])
+	}
+	run( client:clientClass,msg:messageTYPE) {
+		msg.args.join(" ")
+		let prefix = "b!"
+		let data = [];
+		
+		const commands:Collection<string, Command> = client.commands;
+		if (!msg.args.length) {
 			//const embed = ez.embed(msg.member.displayHexColor, "My commands:")
 			/*for (const commFolder of fs.readdirSync("./commands")) {
 				console.log(commFolder)
@@ -52,8 +49,8 @@ module.exports = {
 					msg.reply('it seems like I can\'t DM you! Do you have DMs disabled?');
 				});
 		}
-		if (isNaN(Number(args))) {
-			const name = args[0].toLowerCase();
+		if (isNaN(Number(msg.args))) {
+			const name = msg.args[0].toLowerCase();
 			const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
 			if (!command) return msg.reply('that\'s not a valid command!');
 			const exampleEmbed = ez.embed('#0099ff', 'Some title')
@@ -63,7 +60,7 @@ module.exports = {
 				.setTimestamp()
 				.setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
 			let categories = commands.map(c => c.category).filter(category => commands.map(c => c.category).filter(cat => cat === category).length === 1)
-			for (x = 0; x > categories.length; x++) {
+			for (let x = 0; x > categories.length; x++) {
 				exampleEmbed.addField(`Page: ${x}`, `${categories[x]} commands`)
 			}
 			categories.forEach(category => {

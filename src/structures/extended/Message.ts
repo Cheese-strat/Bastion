@@ -12,9 +12,8 @@ export default () =>
                 constructor() {
 
                     super(arguments[0], arguments[1], arguments[2]);
-                    this.A = this.content.split(/ +/g);
-                    this.command = this.A[0]
-                    this.args = this.A.slice(1)
+                    this.args = this.content.split(/ +/g);
+                    this.command = this.args.shift()
 
                 }
 
