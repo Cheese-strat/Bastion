@@ -1,4 +1,4 @@
-import { ClientOptions, Message, Permissions, GuildMember, User, Channel, Collection, Snowflake, Speaking, MessageReaction, Presence, RateLimitData, Role, VoiceState, TextChannel } from "discord.js"
+import { ClientOptions, Message, Permissions, GuildMember, User, Channel, Collection, Snowflake, Speaking, MessageReaction, Presence, RateLimitData, Role, VoiceState, TextChannel, Guild, GuildChannel } from "discord.js"
 export type ClientOptionsTYPE = {
     clientOptions: ClientOptions,
     prefix: string,
@@ -26,8 +26,12 @@ export interface storageGuildTYPE {
 export interface storageTYPE {
     [id: string]: storageGuildTYPE
 }
-
+export interface GuildTYPE extends Guild {
+    getChannel(toFind: string):GuildChannel
+    getMember(toFind: string): Promise<GuildMemberTYPE | GuildMember | undefined>
+}
 export interface messageTYPE extends Message {
+    guild:GuildTYPE
     command: string | undefined
     args: string[]
     A: string[]

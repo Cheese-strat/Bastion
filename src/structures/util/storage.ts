@@ -1,7 +1,7 @@
 import {writeFile} from 'fs';
 import {storageTYPE} from '../library';
 
-export const storage = (path: string, guildID: string | null, data?: object): storageTYPE => {
+export default (path: string, guildID: string | null, data?: object): storageTYPE => {
 
     const json = require(path);
     if (!guildID) return json;

@@ -5,18 +5,13 @@ export default () =>
         "Message",
         (message) =>
             class extends message {
-                public command: string
+                public command: string|undefined
                 public args: string[]
-                private readonly A: string[]
-
                 constructor() {
-
                     super(arguments[0], arguments[1], arguments[2]);
                     this.args = this.content.split(/ +/g);
                     this.command = this.args.shift()
-
                 }
-
                 permissions() {
                     if (this.channel.type === "dm") return console.error(`cannot use permissions method on a direct message`)
                     if (this.channel.type === "news") return console.error(`this permissions method is not suited for a news channel`)

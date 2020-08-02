@@ -1,4 +1,4 @@
-import { GuildMember, Structures } from "discord.js";
+import { GuildChannel, GuildMember, Structures } from "discord.js";
 import { GuildMemberTYPE } from '../client/types';
 export default () =>
     Structures.extend(
@@ -9,7 +9,7 @@ export default () =>
                     super(arguments[0], arguments[1]);
                 }
 
-                getChannel(toFind: string) {
+                getChannel(toFind: string):GuildChannel|undefined {
                     if (!isNaN(Number(toFind))) {
                         const channel = this.channels.cache.get(toFind);
                         if (channel) return channel;

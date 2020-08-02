@@ -1,22 +1,20 @@
-import { Client, Collection, ClientOptions, TextChannel } from "discord.js";
+import { Client, Collection, ClientOptions, TextChannel, User } from "discord.js";
 
 import { readFileSync } from "fs";
-import { storage as store } from "../util/storage"
+import store from "../util/storage"
 import { Command } from "../base/Command";
 import { normalize } from "path";
 import { storageTYPE } from "./types";
 
 export class clientClass extends Client {
-    data: storageTYPE;
     commands: Collection<string, Command>
     cooldowns: Collection<string, any>
     path: string
     constructor(basepath: string, options: ClientOptions = {}) {
-        super(options)
-        this.commands = new Collection()
-        this.cooldowns = new Collection()
-        this.path = basepath
-        this.data = store(normalize(basepath + "/storage.json"), null)
+        super(options);
+        this.commands = new Collection();
+        this.cooldowns = new Collection();
+        this.path = basepath;
     }
 
     get developers(): string[] {
@@ -35,9 +33,14 @@ export class clientClass extends Client {
         throw new Error(`expected logChannel of type text, store or news. received: ${channel.type}, id: ${id}`)
     }
 
-    saveDB(guildID: string, data: object): object {
-        this.data = store("../", guildID, data)
-        return this.data
+    async getUser(str: string): Promise<User | undefined> {
+        let User = await this.users.fetch(str).catch(x => console.log(x.message))
+
+        return User || this.users.cache.find(u => u.username === str)
+    }
+
+    DB(guildID: string | null, data?: object): storageTYPE {
+        return store(this.path, guildID, data)
     }
 
     start(eventFunc: (client: this) => any, commFunc: (client: clientClass) => any, token: string) {
