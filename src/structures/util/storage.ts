@@ -3,8 +3,10 @@ import {storageTYPE} from '../library';
 
 export const storage = (path: string, guildID: string | null, data?: object): storageTYPE => {
 
-    const json = require(path);
+    
+    const json = require(`${path}storage.json`);
     if (!guildID) return json;
+    
     Object.defineProperty(json, guildID, data as object);
     let queue = Promise.resolve();
 

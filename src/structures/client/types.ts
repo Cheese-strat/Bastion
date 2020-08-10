@@ -1,4 +1,4 @@
-import { ClientOptions, Message, Permissions, GuildMember, User, Channel, Collection, Snowflake, Speaking, MessageReaction, Presence, RateLimitData, Role, VoiceState, TextChannel, Guild, GuildChannel } from "discord.js"
+import { ClientOptions, Message, Permissions, GuildMember, User, Channel, Collection, Snowflake, Speaking, MessageReaction, Presence, RateLimitData, Role, VoiceState, TextChannel, Guild, GuildChannel, DMChannel, NewsChannel } from "discord.js"
 export type ClientOptionsTYPE = {
     clientOptions: ClientOptions,
     prefix: string,
@@ -21,7 +21,7 @@ export interface storageGuildTYPE {
     },
     prefix: string,
     reminders: [],
-    banwords: []
+    banwords: string[]
 }
 export interface storageTYPE {
     [id: string]: storageGuildTYPE

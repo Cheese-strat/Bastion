@@ -2,7 +2,7 @@ import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures
 
 export default class extends Command {
     name = "kill"
-    description = "to Absolutely murder someone"
+    description = "To Absolutely murder someone"
     category = "";
     args = {
         required: true,
