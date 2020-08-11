@@ -10,6 +10,12 @@ export type ClientOptionsTYPE = {
     flagprefix: string,
     developers: string[]
 }
+export interface reminderTYPE {
+    time: number,
+    author: string,
+    target: string,
+    message: string
+}
 export interface storageGuildTYPE {
     logs: {
         id: null | string,
@@ -20,18 +26,18 @@ export interface storageGuildTYPE {
         useru: boolean
     },
     prefix: string,
-    reminders: [],
+    reminders: reminderTYPE[],
     banwords: string[]
 }
 export interface storageTYPE {
     [id: string]: storageGuildTYPE
 }
 export interface GuildTYPE extends Guild {
-    getChannel(toFind: string):GuildChannel
+    getChannel(toFind: string): GuildChannel
     getMember(toFind: string): Promise<GuildMemberTYPE | GuildMember | undefined>
 }
 export interface messageTYPE extends Message {
-    guild:GuildTYPE
+    guild: GuildTYPE
     command: string | undefined
     args: string[]
     A: string[]
@@ -45,12 +51,12 @@ export interface UserTYPE extends User {
     money: number
 }
 export interface CMDPermsObj {
-    send:boolean
-    embed:boolean
-    react:boolean
-    delete:boolean
-    bot:extraPermissions[]
-    auth:extraPermissions[]   
+    send: boolean
+    embed: boolean
+    react: boolean
+    delete: boolean
+    bot: extraPermissions[]
+    auth: extraPermissions[]
 }
 export type extraPermissions =
     | 'CREATE_INSTANT_INVITE'

@@ -133,8 +133,6 @@ module.exports = {
 				});
 				collector.on("end", () => update(data))
 			})
-		} else if(args.join(" ").includes("join")||args.join(" ").includes("welcome")) {
-			
 		}
 	}
 };

@@ -1,10 +1,10 @@
 import { Client, Collection, ClientOptions, TextChannel, User } from "discord.js";
 
 import { readFileSync } from "fs";
-import store from "../util/storage"
+import { storage as store } from "../util/storage"
 import { Command } from "../base/Command";
-import { normalize } from "path";
-import { storageTYPE } from "./types";
+import { storageGuildTYPE, storageTYPE } from "./types";
+import { __values } from 'tslib';
 
 export class clientClass extends Client {
     commands: Collection<string, Command>
@@ -39,8 +39,8 @@ export class clientClass extends Client {
         return User || this.users.cache.find(u => u.username === str)
     }
 
-    DB(guildID: string | null, data?: object): storageTYPE {
-        return store(this.path, guildID, data)
+    DB(guildID: string | null, data?: object): storageTYPE | storageGuildTYPE {
+        return data ? store(this.path, guildID, data) as storageTYPE : store(this.path, guildID) as storageGuildTYPE
     }
 
     start(eventFunc: (client: this) => any, commFunc: (client: clientClass) => any, token: string) {
