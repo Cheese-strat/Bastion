@@ -27,3 +27,4 @@ export const storage = (path: string, guildID: string | null, data?: object): st
         }
     })
 }
+export default storage

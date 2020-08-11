@@ -1,13 +1,29 @@
-const {update} = require("../../ez.js")
-module.exports = {
-	name: 'reminder',
-	description: 'set a reminder to go off at a specific time',
-	cooldown: 10,
-	args: true,
-	admin: true,
-	usage: "<time> <where> <message>",
-	execute(msg, args, pokemon, data, client) {
-		var time = args[0]
+import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+
+export default class extends Command {
+	name = "reminder"
+	description = "set a reminder to go off at a specific time"
+	category = "";
+	args = {
+		required: true,
+		case: true,
+		usage: "<time> <where> <message>"
+	};
+	cooldown = 10
+	aliases = [];
+	permissions: CMDPermsObj = {
+		send: true,
+		embed: true,
+		react: false,
+		delete: false,
+		bot: [],
+		auth: []
+	};
+	constructor(path: string, client: clientClass) {
+		super(path, client)
+	}
+	run(client: clientClass, msg: messageTYPE) {
+		let time = msg.args[0]
 		if (time.includes(":")) {
 			time.split(":")
 			time[0].slice(-2)
@@ -24,31 +40,31 @@ module.exports = {
 			time.slice(0, 4)
 		}
 		if (Number(time) == NaN || time.length > 4) return msg.channel.send("please enter the correct data formatting: 12:30 or 1230 (24 hour time)")
-		if (args[1] == undefined) return msg.channel.send("You need to enter a place to send it...")
-		if (args[1].startsWith('<@') && args[1].endsWith('>')) {
-			var user = args[1].slice(2, -1);
+		if (!msg.args[1]) return msg.channel.send("You need to enter a place to send it...")
+		if (msg.args[1].startsWith('<@') && msg.args[1].endsWith('>')) {
+			var user = msg.args[1].slice(2, -1);
 			if (mention.startsWith('!')) {
 				mention = mention.slice(1);
 			}
 			var target = client.users.get(mention);
 		}
-		if (args[1].startsWith('<#') && args[1].endsWith('>')) {
-			var channel = args[1].slice(2, -1);
+		if (msg.args[1].startsWith('<#') && msg.args[1].endsWith('>')) {
+			var channel = msg.args[1].slice(2, -1);
 			var target = client.channels.get(channel);
 			if (!target.memberPermissions(msg.author).has('SEND_MESSAGES')) return msg.channel.send("You dont have permission to select that channel!")
 		}
-		if (args[1].startsWith('1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' || '0')) {
+		if (msg.args[1].startsWith('1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' || '0')) {
 			var target = client.channels.get(channel);
-			if (client.channels.get(args[1]) == undefined) {
-				if (client.users.get(args[1]) == undefined) return msg.channel.send("I could not find the correct target,\nplease mention a channel, a user or the id of either")
-				var target = client.users.get(args[1])
+			if (client.channels.get(msg.args[1]) == undefined) {
+				if (client.users.get(msg.args[1]) == undefined) return msg.channel.send("I could not find the correct target,\nplease mention a channel, a user or the id of either")
+				var target = client.users.get(msg.args[1])
 			} else {
-				var target = client.channels.get(args[1])
+				var target = client.channels.get(msg.args[1])
 			}
 			if (!target.memberPermissions(msg.author).has('SEND_MESSAGES')) return msg.channel.send("You dont have permission to select that channel!")
 		}
-		args.slice(2)
-		var message = args.join(" ")
+		msg.args.slice(2)
+		var message = msg.args.join(" ")
 		client.users.forEach(user => {
 			if (message.includes(`<@${user.id}>` || `<@!${user.id}>`)) return msg.channel.send(`make sure you have permission from <@${user.id}> before making them a reminder`)
 		});
@@ -64,4 +80,4 @@ module.exports = {
 		update(data)
 		msg.channel.send("I have added your reminder!")
 	}
-};
+}
