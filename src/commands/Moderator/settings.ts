@@ -1,15 +1,29 @@
-const {update} = require("../../ez.js")
-module.exports = {
-	name: 'settings',
-	description: 'Settings for your server, the category options are: logging',
-	cooldown: 10,
-	args: true,
-	admin: true,
-	dev: true,
-	usage: "<category>",
-	aliases:["options", "setup"],
-	execute(msg, args, pokemon, data, client) {
-		if (args.join(" ").includes("log")) {
+import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+
+export default class extends Command {
+    name = "settings"
+    description = "Settings for your server, the category options are: logging"
+    category = "";
+    args = {
+        required: true,
+        case: false,
+        usage: "<category>"
+    };
+    cooldown = 1
+    aliases = ["options","setup"];
+    permissions: CMDPermsObj = {
+        send: true,
+        embed: true,
+        react: false,
+        delete: false,
+        bot: [],
+        auth: []
+    };
+    constructor(path: string, client: clientClass) {
+        super(path, client)
+    }
+    run(client: clientClass, msg: messageTYPE) {
+if (args.join(" ").includes("log")) {
 			msg.channel.send({
 				embed: {
 					color: Math.floor(Math.random() * 16777214) + 1,
@@ -134,5 +148,5 @@ module.exports = {
 				collector.on("end", () => update(data))
 			})
 		}
-	}
-};
+    }
+}
