@@ -1,16 +1,19 @@
-import {Structures} from "discord.js";
+import { Structures, Message } from "discord.js";
 
 export default () =>
     Structures.extend(
         "Message",
-        (message) =>
+        (message: Message) =>
             class extends message {
-                public command: string|undefined
+                [x: string]: any
+                public readonly command: string
                 public args: string[]
+                public ctx: string;
                 constructor() {
                     super(arguments[0], arguments[1], arguments[2]);
                     this.args = this.content.split(/ +/g);
-                    this.command = this.args.shift()
+                    this.command = this.args.shift() as string
+                    this.ctx = this.content.slice(this.command.length).trim()
                 }
                 permissions() {
                     if (this.channel.type === "dm") return console.error(`cannot use permissions method on a direct message`)
