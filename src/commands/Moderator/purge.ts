@@ -8,7 +8,7 @@ export default class extends Command {
 	args = {
 		required: true,
 		case: false,
-		usage: "<number of msgs>"
+		usage: "<number of msgs> [reason]"
 	};
 	cooldown = 5
 	aliases = ["clear", "wipe", "clean", "delete"];
@@ -18,14 +18,29 @@ export default class extends Command {
 		react: false,
 		delete: true,
 		bot: [],
-		auth: []
+		auth: ["MANAGE_CHANNELS"]
 	};
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	run(client: clientClass, msg: messageTYPE) {
+	async run(client: clientClass, msg: messageTYPE) {
 		const deleteCount = Number(msg.args[0]);
-		if (!deleteCount || deleteCount < 2 || deleteCount > 100) return msg.channel.send("Please provide a number between 2 and 100 for the number of messages to delete");
+		if (!deleteCount) return msg.channel.send("Please provide a number")
+		if (deleteCount < 2) {
+			const msgs = await msg.channel.messages.fetch(2)
+			Promise.all(msgs.map(m => {
+				m.delete(msg.args[1])
+			}))
+		}
+		if (deleteCount > 2 && deleteCount < 100) {
+			msg.channel.messages.fetch(deleteCount)
+		}
+		if (deleteCount > 100) {
+			msg.channel.messages.fetch(deleteCount)
+		}
+		msg.channel.messages.fetch((deleteCount > 100) ? deleteCount : 100)
+		if (deleteCount < 2)
+			if (deleteCount < 2 || deleteCount > 100) return msg.channel.send("Please provide a number between 2 and 100 for the number of messages to delete");
 		let chan = msg.channel as TextChannel
 		chan.bulkDelete(deleteCount).catch(error => msg.channel.send(`Couldn't delete messages because of: ${error}`));
 	}
