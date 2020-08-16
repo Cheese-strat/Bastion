@@ -42,7 +42,7 @@ export class clientClass extends Client {
         if (d) {
             return 7
         } else {
-            return typeof mhm === "number" ? 10 : "no"
+            return mhm ? 10 : "no"
         }
     }
     DB: guildSpecific | wholeDB | writing = (guildID, data) => {
@@ -55,7 +55,7 @@ export class clientClass extends Client {
         eventFunc(this)
         super.login(token)
         return this
-    }
+    }W
 
 }
 type writing = (guildID: string, data: storageGuildTYPE) => storageGuildTYPE
