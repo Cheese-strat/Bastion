@@ -23,14 +23,18 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(client: clientClass, msg: messageTYPE) {
-		const [res] = await fetch("https://official-joke-api.appspot.com/jokes/general/ten").then(response => response.json())
-		if (!res) return msg.channel.send(`Something went wrong.`);
-		if (res.setup){
-			await msg.channel.send(res.setup)
-			setTimeout(x=>{
-				msg.channel.send(res.punchline)
-			},res.setup.length*100)
-		}
+    async run(_client: clientClass, msg: messageTYPE) {
+        const [res]:[joke] = await fetch("https://official-joke-api.appspot.com/jokes/random").then(r => r.json())
+        if (!res) return msg.channel.send(`Something went wrong.`);
+        await msg.channel.send(res.setup)
+        return setTimeout(() => {
+            return msg.channel.send(res.punchline)
+        }, res.setup.length * 100)
     }
+}
+interface joke {
+    id: number,
+    type: string,
+    setup: string
+    punchline: string
 }

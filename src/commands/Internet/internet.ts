@@ -24,7 +24,7 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	async run(client: clientClass, msg: messageTYPE) {
+	async run(_client: clientClass, msg: messageTYPE) {
 		const Arguments = msg.args.join(" ");
 		const Embed = new MessageEmbed();
 		Embed.setColor("GREEN")

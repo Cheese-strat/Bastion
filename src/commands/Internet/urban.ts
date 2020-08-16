@@ -25,7 +25,7 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client);
 	}
-	async run(client: clientClass, msg: messageTYPE) {
+	async run(_client: clientClass, msg: messageTYPE) {
 		const query = querystring.stringify({
 			term: msg.args.join(" "),
 		});
@@ -33,7 +33,9 @@ export default class extends Command {
 		if (!list.length) {
 			return msg.channel.send(`No results found for **${msg.args.join(" ")}**.`);
 		}
-		const trim = (str, max) => str.length > max ? `${str.slice(0, max - 3)}...` : str;
+		const trim = function (str: string, max: number) {
+			return str.length > max ? `${str.slice(0, max - 3)}...` : str;
+		};
 		const [answer] = list;
 		const embed = new MessageEmbed()
 			.setColor("#EFFF00")

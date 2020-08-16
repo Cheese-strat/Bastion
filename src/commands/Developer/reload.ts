@@ -35,8 +35,8 @@ export default class extends Command {
 			let corrected = correct(commandName, arr)
 
 			if (corrected) {
-				const command = client.commands.get(corrected) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(corrected));
-				return msg.channel.send(`There is no command with name or alias \`${commandName}\`\nDid you mean \`${command.name}\`?`);
+				const cmd = client.commands.get(corrected) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(corrected));
+				return msg.channel.send(`There is no command with name or alias \`${commandName}\`\nDid you mean \`${name}\`?`);
 			}
 			return msg.channel.send(`There is no command with name or alias \`${commandName}\`, ${msg.author}!`);
 		}

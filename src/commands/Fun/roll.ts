@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(client: clientClass, msg: messageTYPE) {
-		msg.channel.send("You rolled a " + (Math.floor(Math.random() * Number(msg.args[0])||6) + 1).toString());
+    run(_client: clientClass, msg: messageTYPE) {
+		return msg.channel.send("You rolled a " + (Math.floor(Math.random() * Number(msg.args[0])||6) + 1).toString());
     }
 }

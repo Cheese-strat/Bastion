@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(client: clientClass, msg: messageTYPE) {
+    run(_client: clientClass, msg: messageTYPE) {
         msg.channel.send("You called for help").then(message => {
             setTimeout(() => message.edit("You called for help."), 1000)
             setTimeout(() => message.edit("You called for help.."), 2000)

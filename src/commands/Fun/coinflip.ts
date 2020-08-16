@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(client: clientClass, msg: messageTYPE) {
+    run(_client: clientClass, msg: messageTYPE) {
         return msg.channel.send(`"The coin landed on "${Math.random() > 0.5 ? "Coins" : "Heads"}!`)
     }
 }

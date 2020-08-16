@@ -25,7 +25,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(client: clientClass, msg: messageTYPE) {
+    async run(_client: clientClass, msg: messageTYPE) {
 		const web = await fetch(`https://api.agify.io?name=${msg.args[0]}`).then(response => response.json())
 		const colour:[number, number, number] = [web.age/100*255, 0, 255-(web.age/100*255)]
 		

@@ -22,8 +22,9 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(client: clientClass, msg: messageTYPE) {
+    async run(_client: clientClass, msg: messageTYPE) {
         const member = await msg.guild.getMember(msg.args.join(" "))
-        msg.channel.send(`${member.toString()}, Congratulations, you now have no choice but to accept death`)
+        if (!member)return await msg.channel.send("You could at least tell me who...")
+       return await msg.channel.send(`${member.toString()}, Congratulations, you now have no choice but to accept death`)
     }
 }

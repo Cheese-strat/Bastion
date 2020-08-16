@@ -1,9 +1,9 @@
-import { Structures, Message } from "discord.js";
+import { Structures, Message as m } from "discord.js";
 
 export default () =>
     Structures.extend(
         "Message",
-        (message: Message) =>
+        (message: typeof m) =>
             class extends message {
                 [x: string]: any
                 public readonly command: string
@@ -22,4 +22,5 @@ export default () =>
                     return this.channel.permissionsFor(this.guild!.me)
                 }
             }
+        
     );

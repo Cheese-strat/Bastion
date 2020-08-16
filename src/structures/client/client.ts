@@ -38,13 +38,19 @@ export class clientClass extends Client {
 
         return User || this.users.cache.find(u => u.username === str)
     }
-
-    DB(guildID: string | null, data?: object): storageTYPE | storageGuildTYPE {
-        return data ? store(this.path, guildID, data) as storageTYPE : store(this.path, guildID) as storageGuildTYPE
+    test: first | second | third = (mhm, d) => {
+        if (d) {
+            return 7
+        } else {
+            return typeof mhm === "number" ? 10 : "no"
+        }
+    }
+    DB: guildSpecific | wholeDB | writing = (guildID, data) => {
+        return data ? store(this.path, guildID, data) : store(this.path, guildID)
     }
 
     start(eventFunc: (client: this) => any, commFunc: (client: clientClass) => any, token: string) {
-        if (token.split(".").length < 2) throw new Error(`you dumb you gave me this: ${token}`)
+        if (token.split(".").length < 2) throw new Error(`expected a string token. received: ${token}`)
         commFunc(this)
         eventFunc(this)
         super.login(token)
@@ -52,3 +58,10 @@ export class clientClass extends Client {
     }
 
 }
+type writing = (guildID: string, data: storageGuildTYPE) => storageGuildTYPE
+type guildSpecific = (guildID: string) => storageGuildTYPE
+type wholeDB = (guildID: null) => storageTYPE
+
+type first = (mhm: string, d: { okie: string }) => number
+type second = (mhm: string) => number
+type third = (mhm: null) => string

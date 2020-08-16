@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
@@ -23,9 +24,9 @@ export default class extends Command {
         super(path, client)
     }
     run(client: clientClass, msg: messageTYPE) {
-		let data = client.DB(null)
-		data[msg.guild.id].banwords.push(msg.args[0])
-		client.DB(msg.guild.id, data[msg.guild.id])
+		let guildData = client.DB(msg.guild.id)
+		guildData.banwords.push(msg.args[0])
+		client.DB(msg.guild.id, guildData)
 		msg.channel.send(`I have added \`${msg.args[0]}\` to this servers list of banned words`)
     }
 }

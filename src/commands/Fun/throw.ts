@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(client: clientClass, msg: messageTYPE) {
+    async run(_client: clientClass, msg: messageTYPE) {
         const member = await msg.guild.getMember(msg.args.join(" "))
         if (!member) return msg.channel.send("Please mention a valid user")
         return msg.channel.send(`${msg.author.username} throws ${member.toString()} against the wall`);
