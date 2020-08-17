@@ -1,7 +1,7 @@
 import { writeFile } from 'fs';
 import { storageTYPE, storageGuildTYPE } from '../library';
 
-type wrting = (path:string, guildID:string, data:storageGuildTYPE)=>storageGuildTYPE
+type writing = (path:string, guildID:string, data:storageGuildTYPE)=>storageGuildTYPE
 type singleGuild = (path:string, guildID:string)=>storageGuildTYPE
 type allGuilds = (path:string, guildID:null)=>storageTYPE
 
@@ -20,7 +20,7 @@ export const storage:writing|singleGuild|allGuilds = (path, guildID, data) => {
 
     const write = () => {
         queue = queue.then(() => new Promise(res =>
-            writeFile(path, JSON.stringify(json, null, 2), err => {
+            writeFile(path, JSON.stringify(json, null, 2), (err: any) => {
                 if (!err) return res();
                 throw err;
             })

@@ -1,9 +1,4 @@
-export default (str:string):number => {
-    str.toLowerCase()
-    for (let x =0;x<Object.keys(obj).length;x++){
-        str.replace(Object.keys(obj)[x], obj[Object.keys(obj)[x]]) 
-    }
-    const matches = str.match(/[0-9]+ {0,}[smhd]/gi)
-    console.log(matches)
-    return matches
+export default (str: string): null | string[] => {
+    const matches = str.toLowerCase().match(/[0-9]+ {0,}[smhd]/g)
+    return matches ? Array.from(matches) : null
 }

@@ -23,22 +23,18 @@ export default class extends Command {
 	}
 	run(client: clientClass, msg: messageTYPE) {
 		const commandName = msg.args[0].toLowerCase();
-		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+		const command = client.commands.get(commandName) || client.commands.find((cmd: { aliases: string | string[] }) => cmd.aliases && cmd.aliases.includes(commandName));
 
 		if (!command) {
 			const arr: string[] = []
-			client.commands.map(cmd => {
+			client.commands.map((cmd: Command) => {
 				arr.push(cmd.name)
-				cmd.aliases && cmd.aliases.forEach(e => arr.push(e))
+				cmd.aliases && cmd.aliases.forEach((e: string) => arr.push(e))
 			})
-
-			let corrected = correct(commandName, arr)
-
-			if (corrected) {
-				const cmd = client.commands.get(corrected) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(corrected));
-				return msg.channel.send(`There is no command with name or alias \`${commandName}\`\nDid you mean \`${name}\`?`);
-			}
-			return msg.channel.send(`There is no command with name or alias \`${commandName}\`, ${msg.author}!`);
+			let corrected = correct({ find: commandName, group: arr })
+			if (!corrected) return msg.channel.send(`There is no command with name or alias \`${commandName}\`, ${msg.author}!`);
+			const { name }: Command = client.commands.get(corrected) || client.commands.find((cmd: Command) => cmd.aliases.includes(corrected));
+			return msg.channel.send(`There is no command with name or alias \`${commandName}\`\nDid you mean \`${name}\`?`);
 		}
 
 		delete require.cache[require.resolve(`../../commands/${command.category}/${command.name}.js`)];
