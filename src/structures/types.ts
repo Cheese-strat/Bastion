@@ -33,22 +33,22 @@ export module Bastion {
     export interface storageTYPE {
         [id: string]: storageGuildTYPE
     }
-    export interface GuildTYPE extends Guild {
-        getChannel(toFind: string): GuildChannel
-        getMember(toFind: string): Promise<GuildMemberTYPE | GuildMember | undefined>
+    export interface GuildTYPE extends Discord.Guild {
+        getChannel(toFind: string): Discord.GuildChannel
+        getMember(toFind: string): Promise<GuildMemberTYPE | Discord.GuildMember | undefined>
     }
-    export interface messageTYPE extends Message {
+    export interface messageTYPE extends Discord.Message {
         guild: GuildTYPE
         command: string | undefined
         args: string[]
         A: string[]
-        permissions(): Permissions
+        permissions(): Discord.Permissions
 
     }
-    export interface GuildMemberTYPE extends GuildMember {
+    export interface GuildMemberTYPE extends Discord.GuildMember {
         xp: number
     }
-    export interface UserTYPE extends User {
+    export interface UserTYPE extends Discord.User {
         money: number
     }
     export interface CMDPermsObj {
@@ -84,7 +84,7 @@ export module Bastion {
         | 'MANAGE_WEBHOOKS'
         | 'MANAGE_EMOJIS';
 
-    export interface ChannelTYPE extends Channel {
+    export interface ChannelTYPE extends Discord.Channel {
         ventable?: boolean
     }
     export interface ClientEventsTYPE {
@@ -105,29 +105,29 @@ export module Bastion {
         guildMemberAdd: GuildMemberTYPE;
         guildMemberAvailable: GuildMemberTYPE;
         guildMemberRemove: GuildMemberTYPE;
-        guildMembersChunk: [Collection<Snowflake, GuildMemberTYPE>, storageGuildTYPE];
-        guildMemberSpeaking: [GuildMemberTYPE, Readonly<Speaking>];
+        guildMembersChunk: [Discord.Collection<Discord.Snowflake, GuildMemberTYPE>, storageGuildTYPE];
+        guildMemberSpeaking: [GuildMemberTYPE, Readonly<Discord.Speaking>];
         guildMemberUpdate: [GuildMemberTYPE, GuildMemberTYPE];
         guildUpdate: [storageGuildTYPE, storageGuildTYPE];
         message: messageTYPE;
         messageDelete: messageTYPE;
         messageReactionRemoveAll: messageTYPE;
-        messageReactionRemoveEmoji: MessageReaction;
-        messageDeleteBulk: [Collection<Snowflake, messageTYPE>];
-        messageReactionAdd: [MessageReaction, User];
-        messageReactionRemove: [MessageReaction, User];
+        messageReactionRemoveEmoji: Discord.MessageReaction;
+        messageDeleteBulk: [Discord.Collection<Discord.Snowflake, messageTYPE>];
+        messageReactionAdd: [Discord.MessageReaction, Discord.User];
+        messageReactionRemove: [Discord.MessageReaction, Discord.User];
         messageUpdate: [messageTYPE, messageTYPE];
-        presenceUpdate: [Presence | undefined, Presence];
-        rateLimit: RateLimitData;
+        presenceUpdate: [Discord.Presence | undefined, Discord.Presence];
+        rateLimit: Discord.RateLimitData;
         ready: [];
         invalidated: [];
-        roleCreate: Role;
-        roleDelete: Role;
-        roleUpdate: [Role, Role];
-        typingStart: [ChannelTYPE, User];
-        userUpdate: [User, User];
-        voiceStateUpdate: [VoiceState, VoiceState];
-        webhookUpdate: TextChannel;
+        roleCreate: Discord.Role;
+        roleDelete: Discord.Role;
+        roleUpdate: [Discord.Role, Discord.Role];
+        typingStart: [ChannelTYPE, Discord.User];
+        userUpdate: [Discord.User, Discord.User];
+        voiceStateUpdate: [Discord.VoiceState, Discord.VoiceState];
+        webhookUpdate: Discord.TextChannel;
     /* disabling sharding
     shardDisconnect: [CloseEvent, number];
     shardError: [Error, number];
