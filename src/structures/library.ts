@@ -1,38 +1,16 @@
-/** Export base classes */
-export *  from "./client/types"
-export * from "./base/Command"
+/// <reference path="types.ts" />
 
-export * from "./base/Event"
+import { format } from 'path'
+import Command from "./base/Command"
+import Event from "./base/Event"
+import Object from "./client/Object"
+import Client from "./client/client"
+import GuildExtension from "./extended/Guild"
+import MessageExtension from "./extended/Message"
+import UserExtension from "./extended/User"
+import correct from "./util/correct"
+import levenstein from "./util/levenstein"
+import storage from "./util/storage"
 
-/** Export the client, objects and obj types */
-export * from "./client/Object"
-export * from "./library"
-export * from "./client/client"
-
-/** Export extenstions */
-export * from "./extended/Guild"
-export * from "./extended/Message"
-export * from "./extended/User"
-
-/** Export util methods */
-export * from "./util/correct"
-export * from "./util/levenstein"
-export * from "./util/storage"
-
-export * from "./base/Command"
-export * from "./base/Event"
-
-/** Export the client, objects and obj types */
-export * from "./client/Object"
-export * from "./library"
-export * from "./client/client"
-
-/** Export extenstions */
-export * from "./extended/Guild"
-export * from "./extended/Message"
-export * from "./extended/User"
-
-/** Export util methods */
-export * from "./util/correct"
-export * from "./util/levenstein"
-export * from "./util/storage"
+export module Bastion {
+}

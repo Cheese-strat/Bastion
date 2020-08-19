@@ -1,7 +1,7 @@
+/// <reference path="../types.ts"/>
 import { clientClass } from "../client/client";
 import { Message } from "discord.js"
-import { CMDPermsObj } from '../client/types';
-export abstract class Command {
+export default abstract class Command {
     path: string
     client: clientClass
     abstract name: string

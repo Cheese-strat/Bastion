@@ -1,5 +1,6 @@
 import { writeFile } from 'fs';
-import { storageTYPE, storageGuildTYPE } from '../library';
+import {Bastion} from "../types"
+import { storageTYPE, storageGuildTYPE } from '../types';
 
 type writing = (path:string, guildID:string, data:storageGuildTYPE)=>storageGuildTYPE
 type singleGuild = (path:string, guildID:string)=>storageGuildTYPE
