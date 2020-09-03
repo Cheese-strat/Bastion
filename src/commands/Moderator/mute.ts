@@ -22,8 +22,8 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	async run(client: clientClass, msg: messageTYPE) {
-		let tomute = await msg.guild.getMember(msg.args.shift())
+	async run(_client: clientClass, msg: messageTYPE) {
+		let tomute = await msg.guild.getMember(msg.args.join(" "))
 		if (!tomute) return msg.reply("Couldn't find user.");
 		if (tomute.hasPermission("MANAGE_MESSAGES")) return msg.reply("I cannot mute that person");
 		let muterole = msg.guild.roles.cache.find(role => role.name === "muted");
@@ -33,16 +33,17 @@ export default class extends Command {
 					name: "muted",
 					color: "#000000"
 				}
-			}).then(muterole => {
+			}).then(Mrole => {
 				msg.guild.channels.cache.forEach(async (channel) => {
 					await channel.overwritePermissions([{
 						deny: ["SEND_MESSAGES", "ADD_REACTIONS"],
-						id: muterole.id,
+						id: Mrole.id,
 					}]);
 				});
+				muterole = Mrole
 			}).catch(console.log)
 		}
-		await (tomute.roles.add(muterole.id));
-		msg.reply(`<@${tomute.id}> has been muted for ${getDate(msg.args.join(" "))}`);
+		await (tomute.roles.add(muterole!.id));
+		return msg.reply(`<@${tomute.id}> has been muted for ${getDate(msg.args.join(" "))}`);
 	}
 }

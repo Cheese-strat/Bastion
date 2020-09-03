@@ -23,7 +23,7 @@ export default class extends Command {
 	}
 	run(client: clientClass, msg: messageTYPE) {
 		const commandName = msg.args[0].toLowerCase();
-		const command = client.commands.get(commandName) || client.commands.find((cmd: { aliases: string | string[] }) => cmd.aliases && cmd.aliases.includes(commandName));
+		const command = client.commands.get(commandName) || client.commands.find((cmd:Command) => cmd.aliases && cmd.aliases.includes(commandName));
 
 		if (!command) {
 			const arr: string[] = []
@@ -33,7 +33,7 @@ export default class extends Command {
 			})
 			let corrected = correct({ find: commandName, group: arr })
 			if (!corrected) return msg.channel.send(`There is no command with name or alias \`${commandName}\`, ${msg.author}!`);
-			const { name }: Command = client.commands.get(corrected) || client.commands.find((cmd: Command) => cmd.aliases.includes(corrected));
+			const {name}: Command = client.commands.get(corrected as string) || client.commands.find((cmd: Command) => cmd.aliases.includes(corrected as string)) as Command;
 			return msg.channel.send(`There is no command with name or alias \`${commandName}\`\nDid you mean \`${name}\`?`);
 		}
 

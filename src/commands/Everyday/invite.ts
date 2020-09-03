@@ -23,7 +23,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(client: clientClass, msg: messageTYPE) {
+    run(_client: clientClass, msg: messageTYPE) {
         const Embed = new MessageEmbed()
             .setColor(3447003)
             .setTitle("Bot invite link")

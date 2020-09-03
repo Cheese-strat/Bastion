@@ -57,7 +57,7 @@ export default class extends Command {
 				.setTitle('Some title')
 				.setDescription('Some description here')
 				.setTimestamp()
-				.setFooter('Some footer text here', client.user.displayAvatarURL({ dynamic: true, format: "png" }));
+				.setFooter('Some footer text here', client.user!.displayAvatarURL({ dynamic: true, format: "png" }));
 
 			let categories = commands.map(c => c.category).filter(category => commands.map(c => c.category).filter(cat => cat === category).length === 1)
 			
@@ -70,5 +70,6 @@ export default class extends Command {
 
 			return msg.channel.send(Embed);
 		}
+		return msg.channel.send("beans")
 	}
 };

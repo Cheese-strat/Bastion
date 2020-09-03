@@ -23,22 +23,23 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(client: clientClass, msg: messageTYPE) {
+    async run(_client: clientClass, msg: messageTYPE) {
         const guild = await msg.guild.fetch()
         const guildcreationdate = `${guild.createdAt.getDate()}/${guild.createdAt.getMonth()}/${guild.createdAt.getFullYear()}`
+        const { user } = await guild.members.fetch(guild.ownerID)
         const Embed = new MessageEmbed()
             .setColor(0x0099ff)
             .setTitle(guild.name)
-            .setThumbnail(guild.iconURL({ dynamic: true, format: "png" }))
             .addFields(
                 { name: 'Amount of humans:', value: guild.members.cache.filter(m => !m.user.bot), inline: true },
                 { name: 'Number of bots:', value: guild.members.cache.filter(m => m.user.bot), inline: true },
                 { name: 'Number of roles:', value: guild.roles.cache.size, inline: true },
                 { name: `Number of channels`, value: guild.channels.cache.size, inline: true },
-                { name: 'Owner: ', value: guild.owner.user.tag, inline: true },
+                { name: 'Owner: ', value: user.tag, inline: true },
                 { name: `Server creation date:`, value: guildcreationdate, inline: true }
             )
             .setFooter(`Server id: ${msg.guild.id}`);
+        if (typeof guild.iconURL() === "string") Embed.setThumbnail(guild.iconURL({ dynamic: true, format: "png" })!)
         return msg.channel.send(Embed);
     }
 }

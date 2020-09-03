@@ -1,6 +1,6 @@
 import {MessageEmbed} from "discord.js";
 import {clientClass, Command, messageTYPE} from "../../structures/library";
-
+import {version} from "discord.js"
 
 export default class extends Command {
     name = "bot-info"
@@ -45,7 +45,7 @@ export default class extends Command {
                 value: client.guilds.cache.size.toLocaleString(),
             }, {
                 name: 'Discord.js',
-                value: Discord.version,
+                value: version,
             }, {
                 name: 'Node',
                 value: process.version,

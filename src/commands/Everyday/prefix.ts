@@ -23,7 +23,7 @@ export default class extends Command {
         super(path, client)
     }
     run(client: clientClass, msg: messageTYPE) {
-        const guildData = client.DB(null)[msg.guild.id]
+        const guildData = client.DB(msg.guild.id)
         if (msg.args[0] === "reset") {
             guildData.prefix = client.config.prefix
             msg.channel.send(`Your prefix has been reset and is now: ${guildData.prefix}`)

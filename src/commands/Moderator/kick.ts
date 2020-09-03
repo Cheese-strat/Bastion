@@ -22,10 +22,10 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	run(client: clientClass, msg: messageTYPE) {
-		var member = msg.mentions.members.first();
-		if (member == undefined) return msg.channel.send("Please mention a valid user")
-		member.kick().then((member) => {
+	async run(_client: clientClass, msg: messageTYPE) {
+		const member = await msg.guild.getMember(msg.args.join(" "))
+		if (!member) return msg.channel.send("Please mention a valid user")
+		return await member.kick().then((member) => {
 			return msg.channel.send(member.displayName + " has been successfully kicked :point_right: ");
 		}).catch(() => {
 			return msg.channel.send("You cannot kick this user");

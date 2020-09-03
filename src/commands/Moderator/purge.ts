@@ -23,13 +23,13 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	async run(client: clientClass, msg: messageTYPE) {
+	async run(_client: clientClass, msg: messageTYPE) {
 		const deleteCount = Number(msg.args[0]);
 		if (!deleteCount) return msg.channel.send("Please provide a number")
-		if (deleteCount < 2) {
-			const msgs = await msg.channel.messages.fetch(2)
+		/* if (deleteCount < 2) {
+			const msgs = await msg.channel.messages.fetch({limit:2})
 			Promise.all(msgs.map(m => {
-				m.delete(msg.args[1])
+				m.delete({reason:msg.args[1]})
 			}))
 		}
 		if (deleteCount > 2 && deleteCount < 100) {
@@ -39,9 +39,10 @@ export default class extends Command {
 			msg.channel.messages.fetch(deleteCount)
 		}
 		msg.channel.messages.fetch((deleteCount > 100) ? deleteCount : 100)
-		if (deleteCount < 2)
-			if (deleteCount < 2 || deleteCount > 100) return msg.channel.send("Please provide a number between 2 and 100 for the number of messages to delete");
+		if (deleteCount < 2) */
+		if (deleteCount < 2 || deleteCount > 100) return msg.channel.send("Please provide a number between 2 and 100 for the number of messages to delete");
 		let chan = msg.channel as TextChannel
-		chan.bulkDelete(deleteCount).catch(error => msg.channel.send(`Couldn't delete messages because of: ${error}`));
+		const msgs = await chan.messages.fetch({ limit: deleteCount })
+		return await chan.bulkDelete(deleteCount).catch(error => msg.channel.send(`Couldn't delete messages because of: ${error}`));
 	}
 }

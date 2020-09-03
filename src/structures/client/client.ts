@@ -38,14 +38,10 @@ export class clientClass extends Client {
 
         return User || this.users.cache.find(u => u.username === str)
     }
-    test: first | second | third = (mhm, d) => {
-        if (d) {
-            return 7
-        } else {
-            return mhm ? 10 : "no"
-        }
-    }
-    DB: guildSpecific | wholeDB | writing = (guildID, data) => {
+    public DB(guildID?:never, data?:never):storageTYPE
+    public DB(guildID:string, data?:never):storageGuildTYPE
+    public DB(guildID:string, data:storageGuildTYPE):storageGuildTYPE
+    public DB(guildID:any, data:any):any {
         return data ? store(this.path, guildID, data) : store(this.path, guildID)
     }
 
@@ -55,13 +51,6 @@ export class clientClass extends Client {
         eventFunc(this)
         super.login(token)
         return this
-    }W
+    }
 
 }
-type writing = (guildID: string, data: storageGuildTYPE) => storageGuildTYPE
-type guildSpecific = (guildID: string) => storageGuildTYPE
-type wholeDB = (guildID: null) => storageTYPE
-
-type first = (mhm: string, d: { okie: string }) => number
-type second = (mhm: string) => number
-type third = (mhm: null) => string

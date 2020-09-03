@@ -27,7 +27,7 @@ export default class extends Command {
         if (msg.permissions().has('BAN_MEMBERS')) return msg.channel.send("Insufficient permissions, please contact an administrator")
         const member = await msg.guild.getMember(msg.args.join(" "))
         if (!member) return msg.channel.send("Please mention a valid user")
-        return member.ban().then((member) => {
+        return await member.ban().then((member) => {
             return msg.channel.send(member.displayName + " has been successfully banned :point_right: ");
         }).catch(() => {
             return msg.channel.send("You cannot ban this user");

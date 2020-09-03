@@ -1,4 +1,5 @@
-import {clientClass, Command, messageTYPE} from "../../structures/library"
+import { MessageEmbed } from 'discord.js'
+import { clientClass, Command, messageTYPE } from "../../structures/library"
 
 export default class extends Command {
     name = "avatar"
@@ -23,12 +24,12 @@ export default class extends Command {
         super(path, client)
     }
 
-    async run(_client: clientClass, msg: messageTYPE) {
-        let member = await ez.getmember(msg.args.join(" "), msg.guild!.members);
-        if (!member && !msg.args.length) member = msg.member
-        if (!member) return msg.channel.send("I couldn't find that target")
-        const embed = ez.embed(member.displayHexColor, `${member.user.username}'s avatar:`)
-        embed.setImage(member.user.displayAvatarURL({
+    async run(client: clientClass, msg: messageTYPE) {
+        let user = await client.getUser(msg.args.join(" "))
+        if (!msg.args.length) user = msg.author
+        if (!user) return msg.channel.send("I couldn't find that target")
+        const embed = new MessageEmbed().setColor("GREEN").setTitle(`${user.username}'s avatar:`)
+        embed.setImage(user.displayAvatarURL({
             "format": "png"
         }))
         return msg.channel.send(embed)

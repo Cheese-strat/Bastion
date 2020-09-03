@@ -40,7 +40,7 @@ export default class extends Command {
 			msg.channel.send(send, {
 				code: "js"
 			});
-		} catch (err: any) {
+		} catch (err) {
 			msg.channel.send(`\`${err}\``);
 		}
 	}
