@@ -1,4 +1,4 @@
-import { ClientOptions, Message, Permissions, GuildMember, User, Channel, Collection, Snowflake, Speaking, MessageReaction, Presence, RateLimitData, Role, VoiceState, TextChannel, Guild, GuildChannel, DMChannel, NewsChannel } from "discord.js"
+import { ClientOptions, Message, Permissions, GuildMember, User, Channel, Collection, Snowflake, Speaking, MessageReaction, Presence, RateLimitData, Role, VoiceState, TextChannel, Guild, GuildChannel, DMChannel, NewsChannel, ClientEvents } from "discord.js"
 export type ClientOptionsTYPE = {
     clientOptions: ClientOptions,
     prefix: string,
@@ -86,52 +86,27 @@ export type extraPermissions =
 export interface ChannelTYPE extends Channel {
     ventable?: boolean
 }
-export interface ClientEventsTYPE {
-    channelCreate: ChannelTYPE;
-    channelDelete: ChannelTYPE;
+export interface ClientEventsTYPE extends ClientEvents {
+    channelCreate: [ChannelTYPE];
+    channelDelete: [ChannelTYPE];
     channelPinsUpdate: [ChannelTYPE, Date];
     ChannelUpdate: [ChannelTYPE, ChannelTYPE];
-    debug: string;
-    warn: string;
-    disconnect: [any, number];
-    error: Error;
-    guildBanAdd: [storageGuildTYPE, UserTYPE];
-    guildBanRemove: [storageGuildTYPE, UserTYPE];
-    guildCreate: storageGuildTYPE;
-    guildDelete: storageGuildTYPE;
-    guildUnavailable: storageGuildTYPE;
-    guildIntegrationsUpdate: storageGuildTYPE;
-    guildMemberAdd: GuildMemberTYPE;
-    guildMemberAvailable: GuildMemberTYPE;
-    guildMemberRemove: GuildMemberTYPE;
-    guildMembersChunk: [Collection<Snowflake, GuildMemberTYPE>, storageGuildTYPE];
+    guildBanAdd: [GuildTYPE, UserTYPE];
+    guildBanRemove: [GuildTYPE, UserTYPE];
+    guildCreate: [GuildTYPE];
+    guildDelete: [GuildTYPE];
+    guildUnavailable: [GuildTYPE];
+    guildIntegrationsUpdate: [GuildTYPE];
+    guildMemberAdd: [GuildMemberTYPE];
+    guildMemberAvailable: [GuildMemberTYPE];
+    guildMemberRemove: [GuildMemberTYPE];
     guildMemberSpeaking: [GuildMemberTYPE, Readonly<Speaking>];
     guildMemberUpdate: [GuildMemberTYPE, GuildMemberTYPE];
-    guildUpdate: [storageGuildTYPE, storageGuildTYPE];
-    message: messageTYPE;
-    messageDelete: messageTYPE;
-    messageReactionRemoveAll: messageTYPE;
-    messageReactionRemoveEmoji: MessageReaction;
+    guildUpdate: [GuildTYPE, GuildTYPE];
+    message: [messageTYPE];
+    messageDelete: [messageTYPE];
+    messageReactionRemoveAll: [messageTYPE];
     messageDeleteBulk: [Collection<Snowflake, messageTYPE>];
-    messageReactionAdd: [MessageReaction, User];
-    messageReactionRemove: [MessageReaction, User];
     messageUpdate: [messageTYPE, messageTYPE];
-    presenceUpdate: [Presence | undefined, Presence];
-    rateLimit: RateLimitData;
-    ready: [];
-    invalidated: [];
-    roleCreate: Role;
-    roleDelete: Role;
-    roleUpdate: [Role, Role];
     typingStart: [ChannelTYPE, User];
-    userUpdate: [User, User];
-    voiceStateUpdate: [VoiceState, VoiceState];
-    webhookUpdate: TextChannel;
-    /* disabling sharding
-    shardDisconnect: [CloseEvent, number];
-    shardError: [Error, number];
-    shardReady: number;
-    shardReconnecting: number;
-    shardResume: [number, number];
-    */
 }

@@ -1,11 +1,10 @@
 import { clientClass } from "../client/client";
-import { ClientEvents } from "discord.js"
 import { ClientEventsTYPE } from '../client/types';
 export abstract class Event {
-    abstract name: keyof ClientEvents
+    abstract name: keyof ClientEventsTYPE
     path: string
     client: clientClass
-    abstract run(yes:ClientEventsTYPE[keyof ClientEventsTYPE]): any
+    abstract execute(...args: ClientEventsTYPE[keyof ClientEventsTYPE]): any
     protected constructor(path: string, client: clientClass) {
         this.path = path
         this.client = client
