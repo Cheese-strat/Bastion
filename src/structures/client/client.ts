@@ -1,9 +1,9 @@
-import { Client, Collection, ClientOptions, TextChannel, User } from "discord.js";
+import { Client, Collection, ClientOptions, TextChannel, User, ClientEvents } from "discord.js";
 
 import { readFileSync } from "fs";
 import { storage as store } from "../util/storage"
 import { Command } from "../base/Command";
-import { storageGuildTYPE, storageTYPE } from "./types";
+import { ClientEventsTYPE, GuildTYPE, storageGuildTYPE, storageTYPE } from "./types";
 import { __values } from 'tslib';
 import { Event } from '../library';
 
@@ -42,10 +42,10 @@ export class clientClass extends Client {
         return User || this.users.cache.find(u => u.username === str)
     }
 
-    public DB(guildID?:never, data?:never):storageTYPE
-    public DB(guildID:string, data?:never):storageGuildTYPE
-    public DB(guildID:string, data:storageGuildTYPE):storageGuildTYPE
-    public DB(guildID:any, data:any):any {
+    public DB(guildID?: never, data?: never): storageTYPE
+    public DB(guildID: string, data?: never): storageGuildTYPE
+    public DB(guildID: string, data: storageGuildTYPE): storageGuildTYPE
+    public DB(guildID: any, data: any): any {
         return data ? store(this.srcPath, guildID, data) : store(this.srcPath, guildID)
     }
 
@@ -56,8 +56,8 @@ export class clientClass extends Client {
         super.login(token)
         return this
     }
-    private _startEvents(){
-        this.events.forEach(event=>{
+    private _startEvents() {
+        this.events.forEach((event) => {
             return this.on(event.name, event.execute);
         })
     }

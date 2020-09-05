@@ -1,12 +1,12 @@
 import { Collection, } from "discord.js"
-import { clientClass, storage as store, guildObject, Event, messageTYPE, storageTYPE } from "../structures/library"
+import { clientClass, storage as store, guildObject, Event, MessageTYPE, storageTYPE } from "../structures/library"
 
-export default class extends Event {
+export default class messageEVENT extends Event {
   name: "message" = "message"
   constructor(client: clientClass) {
     super(__dirname, client)
   }
-  async execute(msg: messageTYPE) {
+  async execute<KEY="message">(msg: MessageTYPE) {
     if (msg.guild === null) {
       if (!msg.author.bot) return false;
       const channel = await this.client.getLogChannel();
