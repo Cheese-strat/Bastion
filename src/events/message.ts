@@ -6,7 +6,7 @@ export default class messageEVENT extends Event {
   constructor(client: clientClass) {
     super(__dirname, client)
   }
-  async execute<KEY="message">(msg: MessageTYPE) {
+  async execute(msg: MessageTYPE) {
     if (msg.guild === null) {
       if (!msg.author.bot) return false;
       const channel = await this.client.getLogChannel();

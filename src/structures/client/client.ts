@@ -53,13 +53,14 @@ export class clientClass extends Client {
         if (token.split(".").length < 2) throw new Error(`expected a string token. received: ${token}`)
         commFunc(this)
         eventFunc(this)
+        this._startEvents()
         super.login(token)
         return this
     }
     private _startEvents() {
-        this.events.forEach((event) => {
-            return this.on(event.name, event.execute);
+        this.events.forEach(({name, execute}) => {
+            return this.on(name, execute as any); //FIX later
+            //the types dont align and its hardcoded into the .d.ts file
         })
     }
-
 }

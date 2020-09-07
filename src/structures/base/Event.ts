@@ -5,7 +5,7 @@ export abstract class Event {
     abstract name: keyof ClientEventsTYPE
     protected path: string
     protected client: clientClass
-    abstract execute<KEY extends keyof ClientEventsTYPE>(...args: ClientEventsTYPE[KEY]): void
+    abstract execute(...args: ClientEventsTYPE[keyof ClientEventsTYPE]): void
     protected constructor(path: string, client: clientClass) {
         this.path = path
         this.client = client
