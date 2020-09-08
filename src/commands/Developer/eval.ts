@@ -1,8 +1,10 @@
 'use strict';
 import { inspect } from "util";
 import { transpile } from "typescript";
-import { clientClass, CMDPermsObj, Command, messageTYPE } from "../../structures/library";
+import { clientClass, CMDPermsObj, Command, MessageTYPE } from "../../structures/library";
+import {executionLog } from "../../structures/base/Decorators"
 
+@executionLog()
 export default class extends Command {
 	name = "eval"
 	description = 'used to evaluate code, for instant code testing'
@@ -24,7 +26,7 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	run(client: clientClass, msg: messageTYPE): any {
+	run(client: clientClass, msg: MessageTYPE): any {
 		if (msg.content.includes("client.token")) return msg.channel.send("you cannot get the token throught this eval command")
 		if (msg.content.includes("fs")) return msg.channel.send("The fs module is disabled while this process not running through a virtual machine")
 		
