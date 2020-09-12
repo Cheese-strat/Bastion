@@ -2,10 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "npm run jsoncomp",
-            "name": "Run TypeScript",
+            "command": "npm run start:node",
+            "name": "Execute with Node",
             "request": "launch",
-            "type": "node-terminal"
+            "type": "node-terminal",
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ],
         },
         {
             "type": "node",
