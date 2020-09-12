@@ -2,5 +2,5 @@
 package-lock.json
 config.json
 /dist
-/.idea.vscode/launch.json
+/.idea
 .vscode/launch.json
