@@ -1,7 +1,6 @@
 import { clientClass, Event } from "../structures/library"
 
-export default class readyEVENT extends Event {
-  name: "ready" = "ready"
+export default class readyEVENT extends Event<"ready"> {
   _path: string | undefined = undefined
   client: clientClass;
   constructor(client: clientClass) {

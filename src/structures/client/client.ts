@@ -1,16 +1,12 @@
-import { Client, Collection, ClientOptions, TextChannel, User, ClientEvents } from "discord.js";
-
+import { Client, Collection, ClientOptions, TextChannel, User } from "discord.js";
 import { readFileSync } from "fs";
-import { storage as store } from "../util/storage"
-import { Command } from "../base/Command";
-import { ClientEventsTYPE, GuildTYPE, storageGuildTYPE, storageTYPE } from "./types";
-import { __values } from 'tslib';
-import { Event } from '../library';
+import { Event, Command, storageGuildTYPE, storageTYPE, storage as store } from '../library';
+import { ClientEventsTYPE } from './types';
 
 export class clientClass extends Client {
     commands: Collection<string, Command>
     cooldowns: Collection<string, any>
-    events: Collection<string, Event>
+    events: Collection<string, Event<keyof ClientEventsTYPE>>
     srcPath: string
     constructor(basepath: string, options: ClientOptions = {}) {
         super(options);
@@ -49,7 +45,7 @@ export class clientClass extends Client {
         return data ? store(this.srcPath, guildID, data) : store(this.srcPath, guildID)
     }
 
-    public start(eventFunc: (client: this) => any, commFunc: (client: clientClass) => any, token: string) {
+    public start(eventFunc: (client: this) => any, commFunc: (client: this) => any, token: string) {
         if (token.split(".").length < 2) throw new Error(`expected a string token. received: ${token}`)
         commFunc(this)
         eventFunc(this)
@@ -58,9 +54,10 @@ export class clientClass extends Client {
         return this
     }
     private _startEvents() {
-        this.events.forEach(({name, execute}) => {
-            return this.on(name, execute as any); //FIX later
-            //the types dont align and its hardcoded into the .d.ts file
-        })
+        this.events.forEach(Event =>
+            this.on(Event.name, (...args) =>
+                Event.execute(...args, this)
+            )
+        )
     }
 }
