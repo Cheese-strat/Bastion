@@ -1,7 +1,7 @@
 import querystring from "querystring";
 import fetch from "node-fetch";
 import { MessageEmbed } from "discord.js";
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
 	name = "urban";
@@ -25,7 +25,7 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client);
 	}
-	async run(_client: clientClass, msg: messageTYPE) {
+	async run(_client: clientClass, msg: MessageTYPE) {
 		const query = querystring.stringify({
 			term: msg.args.join(" "),
 		});

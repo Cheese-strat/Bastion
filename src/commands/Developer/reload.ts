@@ -1,4 +1,4 @@
-import { clientClass, CMDPermsObj, Command, messageTYPE } from "../../structures/library"
+import { clientClass, CMDPermsObj, Command, MessageTYPE } from "../../structures/library"
 import { correct } from "../../structures/library"
 export default class extends Command {
 	name = 'reload'
@@ -21,7 +21,7 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	run(client: clientClass, msg: messageTYPE) {
+	run(client: clientClass, msg: MessageTYPE) {
 		const commandName = msg.args[0].toLowerCase();
 		const command = client.commands.get(commandName) || client.commands.find((cmd:Command) => cmd.aliases && cmd.aliases.includes(commandName));
 

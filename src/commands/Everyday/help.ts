@@ -1,4 +1,4 @@
-import { Command, messageTYPE, clientClass, CMDPermsObj } from "../../structures/library";
+import { Command, MessageTYPE, clientClass, CMDPermsObj } from "../../structures/library";
 import { Collection, MessageEmbed } from "discord.js"
 
 export default class extends Command {
@@ -22,7 +22,7 @@ export default class extends Command {
 	constructor(basepath: string, client: clientClass) {
 		super(basepath, client)
 	}
-	run(client: clientClass, msg: messageTYPE) {
+	run(client: clientClass, msg: MessageTYPE) {
 		msg.args.join(" ")
 		let prefix = "b!"
 		let data = [];

@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js'
-import { clientClass, Command, messageTYPE } from "../../structures/library"
+import { clientClass, Command, MessageTYPE } from "../../structures/library"
 
 export default class extends Command {
     name = "avatar"
@@ -24,7 +24,7 @@ export default class extends Command {
         super(path, client)
     }
 
-    async run(client: clientClass, msg: messageTYPE) {
+    async run(client: clientClass, msg: MessageTYPE) {
         let user = await client.getUser(msg.args.join(" "))
         if (!msg.args.length) user = msg.author
         if (!user) return msg.channel.send("I couldn't find that target")

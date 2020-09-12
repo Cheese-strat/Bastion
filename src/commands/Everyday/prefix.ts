@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "prefix";
@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(client: clientClass, msg: messageTYPE) {
+    run(client: clientClass, msg: MessageTYPE) {
         const guildData = client.DB(msg.guild.id)
         if (msg.args[0] === "reset") {
             guildData.prefix = client.config.prefix

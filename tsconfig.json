@@ -6,7 +6,7 @@
         "target": "ESNEXT",
         "module": "commonjs",
 
-        "lib": ["es2019"],     
+        "lib": [],     
         // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
         // "declaration": true,                   /* Generates corresponding '.d.ts' file. */
         // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
@@ -60,6 +60,7 @@
     ],
     "exclude": [
         "node_modules",
-        "./src/commands/template.ts"
+        "./src/commands/template.ts",
+        "./src/events/template.ts"
     ]
 }

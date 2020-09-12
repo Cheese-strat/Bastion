@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "joke"
@@ -23,7 +23,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(_client: clientClass, msg: messageTYPE) {
+    async run(_client: clientClass, msg: MessageTYPE) {
         const [res]:[joke] = await fetch("https://official-joke-api.appspot.com/jokes/random").then(r => r.json())
         if (!res) return msg.channel.send(`Something went wrong.`);
         await msg.channel.send(res.setup)

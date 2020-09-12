@@ -1,12 +1,13 @@
 import { clientClass, Event } from "../structures/library"
-import { existsSync } from "fs"
 
-export default class templateEVENT implements Event {
+export default class readyEVENT extends Event {
   name: "ready" = "ready"
   _path: string | undefined = undefined
   client: clientClass;
   constructor(client: clientClass) {
-    this.client = client
+    super(client);
+    this.client = client;
+    return this;
   }
   
   async execute() {

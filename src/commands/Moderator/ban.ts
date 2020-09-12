@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "ban"
@@ -22,12 +22,12 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(_client: clientClass, msg: messageTYPE) {
+    async run(_client: clientClass, msg: MessageTYPE) {
         if (!msg.permissions().has('BAN_MEMBERS')) return msg.channel.send("you dont have permission to do that")
         if (msg.permissions().has('BAN_MEMBERS')) return msg.channel.send("Insufficient permissions, please contact an administrator")
         const member = await msg.guild.getMember(msg.args.join(" "))
         if (!member) return msg.channel.send("Please mention a valid user")
-        return await member.ban().then((member) => {
+        return await member.ban().then(member => {
             return msg.channel.send(member.displayName + " has been successfully banned :point_right: ");
         }).catch(() => {
             return msg.channel.send("You cannot ban this user");

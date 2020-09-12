@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "server"
@@ -23,7 +23,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(_client: clientClass, msg: messageTYPE) {
+    async run(_client: clientClass, msg: MessageTYPE) {
         const guild = await msg.guild.fetch()
         const guildcreationdate = `${guild.createdAt.getDate()}/${guild.createdAt.getMonth()}/${guild.createdAt.getFullYear()}`
         const { user } = await guild.members.fetch(guild.ownerID)

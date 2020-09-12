@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "invite";
@@ -23,7 +23,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(_client: clientClass, msg: messageTYPE) {
+    run(_client: clientClass, msg: MessageTYPE) {
         const Embed = new MessageEmbed()
             .setColor(3447003)
             .setTitle("Bot invite link")

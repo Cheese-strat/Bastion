@@ -1,5 +1,5 @@
 import { TextChannel } from "discord.js";
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
 	name = "purge"
@@ -23,7 +23,7 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	async run(_client: clientClass, msg: messageTYPE) {
+	async run(_client: clientClass, msg: MessageTYPE) {
 		const deleteCount = Number(msg.args[0]);
 		if (!deleteCount) return msg.channel.send("Please provide a number")
 		/* if (deleteCount < 2) {

@@ -31,7 +31,7 @@ export class clientClass extends Client {
     }
 
     public async getLogChannel(id?: string): Promise<TextChannel> {
-        const channel = await super.channels.fetch(id || this.config.logChannel)
+        const channel = await this.channels.fetch(id || this.config.logChannel)
         if (channel.type === "text") return channel as TextChannel
         throw new Error(`expected logChannel of type text, store or news. received: ${channel.type}, id: ${id}`)
     }
@@ -54,7 +54,7 @@ export class clientClass extends Client {
         commFunc(this)
         eventFunc(this)
         this._startEvents()
-        super.login(token)
+        this.login(token)
         return this
     }
     private _startEvents() {

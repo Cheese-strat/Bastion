@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 import getDate from "../../structures/util/getDate"
 export default class extends Command {
 	name = "mute";
@@ -22,7 +22,7 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	async run(_client: clientClass, msg: messageTYPE) {
+	async run(_client: clientClass, msg: MessageTYPE) {
 		let tomute = await msg.guild.getMember(msg.args.join(" "))
 		if (!tomute) return msg.reply("Couldn't find user.");
 		if (tomute.hasPermission("MANAGE_MESSAGES")) return msg.reply("I cannot mute that person");

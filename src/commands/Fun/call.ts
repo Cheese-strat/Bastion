@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "call"
@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(_client: clientClass, msg: messageTYPE) {
+    run(_client: clientClass, msg: MessageTYPE) {
         msg.channel.send("You called for help").then(message => {
             setTimeout(() => message.edit("You called for help."), 1000)
             setTimeout(() => message.edit("You called for help.."), 2000)

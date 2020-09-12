@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "kill"
@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(_client: clientClass, msg: messageTYPE) {
+    async run(_client: clientClass, msg: MessageTYPE) {
         const member = await msg.guild.getMember(msg.args.join(" "))
         if (!member)return await msg.channel.send("You could at least tell me who...")
        return await msg.channel.send(`${member.toString()}, Congratulations, you now have no choice but to accept death`)

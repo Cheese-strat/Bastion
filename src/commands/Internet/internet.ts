@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 import fetch from "node-fetch"
 import { MessageEmbed } from "discord.js";
 
@@ -24,7 +24,7 @@ export default class extends Command {
 	constructor(path: string, client: clientClass) {
 		super(path, client)
 	}
-	async run(_client: clientClass, msg: messageTYPE) {
+	async run(_client: clientClass, msg: MessageTYPE) {
 		const Arguments = msg.args.join(" ");
 		const Embed = new MessageEmbed();
 		Embed.setColor("GREEN")

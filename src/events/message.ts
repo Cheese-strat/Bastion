@@ -4,7 +4,7 @@ import { clientClass, storage as store, guildObject, Event, MessageTYPE, storage
 export default class messageEVENT extends Event {
   name: "message" = "message"
   constructor(client: clientClass) {
-    super(__dirname, client)
+    super(client)
   }
   async execute(msg: MessageTYPE) {
     if (msg.guild === null) {

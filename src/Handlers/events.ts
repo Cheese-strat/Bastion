@@ -8,7 +8,7 @@ export default (client: clientClass): any => {
         return f.endsWith(".js");
     }).forEach((fileName: string) => {
         const file_name = fileName.split(".")[0] as keyof ClientEvents;
-        const cmdFile = require(normalize(client.srcPath + "/events/" + fileName))
+        const cmdFile = require(normalize(client.srcPath + "/events/" + fileName)).default
         client.events.set(cmdFile.name, new cmdFile(client))
     });
 };

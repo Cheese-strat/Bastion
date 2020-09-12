@@ -1,5 +1,5 @@
 import { MessageEmbed, User } from "discord.js";
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "who"
@@ -23,7 +23,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    async run(client: clientClass, msg: messageTYPE) {
+    async run(client: clientClass, msg: MessageTYPE) {
         const str = msg.args.join(" ")
         let user = await client.getUser(str)
         const member = await msg.guild.getMember(str)

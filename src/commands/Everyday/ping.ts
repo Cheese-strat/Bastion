@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "ping";
@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(client: clientClass, msg: messageTYPE) {
+    run(client: clientClass, msg: MessageTYPE) {
         msg.channel.send("Ping!").then(m => {
             m.edit('Pong! Latency is ' + (m.createdTimestamp - msg.createdTimestamp) + 'ms. API Latency is ' + Math.round(client.ws.ping) + 'ms');
         });

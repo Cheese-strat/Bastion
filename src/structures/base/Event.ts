@@ -8,15 +8,16 @@ export abstract class Event {
     protected _path: string | undefined
     protected client: clientClass
     abstract execute(...args: ClientEventsTYPE[keyof ClientEventsTYPE]): void
-    protected constructor(path: string, client: clientClass) {
-        this._path = path
+    protected constructor(client: clientClass) {
+        this._path = undefined
         this.client = client
+        return this
     }
-    get path() {
-        if (this._path === "") {
-            console.log(`Path is not set for ${this.name} event`);
-            return undefined;
-        }
+    get active(): boolean {
+        return (this.client.user && this._path) ? true : false
+    }
+    get path(): string | undefined {
+        if (!this._path) console.log(`Path is not set for ${this.name} event`);
         return this._path
     }
 

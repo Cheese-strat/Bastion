@@ -1,5 +1,5 @@
 import {MessageEmbed} from "discord.js";
-import {clientClass, Command, messageTYPE} from "../../structures/library";
+import {clientClass, Command, MessageTYPE} from "../../structures/library";
 import {version} from "discord.js"
 
 export default class extends Command {
@@ -27,7 +27,7 @@ export default class extends Command {
         this.path = path
     }
 
-    run(client: clientClass, msg: messageTYPE) {
+    run(client: clientClass, msg: MessageTYPE) {
         const Embed = new MessageEmbed;
         Embed.setColor("0xFF4500");
         Embed.setTitle("Statistics");

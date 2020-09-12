@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "headpat";
@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(_client: clientClass, msg: messageTYPE) {
+    run(_client: clientClass, msg: MessageTYPE) {
         var member = msg.guild.getMember(msg.args.join(" "))
     	if (!member) return msg.channel.send("Please mention a valid user")
     	return msg.channel.send(`${msg.author.username} pats ${member.toString()} on the head <:pat:671676931623878677>`);

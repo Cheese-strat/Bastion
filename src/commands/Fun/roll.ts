@@ -1,4 +1,4 @@
-import { Command, clientClass, messageTYPE, CMDPermsObj } from "../../structures/library";
+import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
 
 export default class extends Command {
     name = "roll"
@@ -22,7 +22,7 @@ export default class extends Command {
     constructor(path: string, client: clientClass) {
         super(path, client)
     }
-    run(_client: clientClass, msg: messageTYPE) {
+    run(_client: clientClass, msg: MessageTYPE) {
 		return msg.channel.send("You rolled a " + (Math.floor(Math.random() * Number(msg.args[0])||6) + 1).toString());
     }
 }
