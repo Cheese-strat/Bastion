@@ -9,6 +9,6 @@ export default (client: clientClass): any => {
     }).forEach((fileName: string) => {
         const file_name = fileName.split(".")[0] as keyof ClientEvents;
         const cmdFile = require(normalize(client.srcPath + "/events/" + fileName)).default
-        client.events.set(cmdFile.name, new cmdFile(client))
+        client.events.set(file_name, new cmdFile(client))
     });
 };
