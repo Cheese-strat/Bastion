@@ -3,4 +3,4 @@ package-lock.json
 config.json
 /dist
 /.idea
-.vscode/launch.json
+/.vscode
