@@ -10,6 +10,5 @@ export abstract class Event<T extends keyof ClientEventsTYPE> {
   }
   abstract execute(
     client: clientClass,
-    ...args: ClientEventsTYPE[T][]
-  ): Promise<unknown> | unknown;
+    ...args: ClientEventsTYPE[T]  ): Promise<unknown> | unknown;
 }

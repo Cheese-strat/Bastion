@@ -63,12 +63,12 @@ export class clientClass extends Client {
 
   public start(
     eventFunc: (client: this) => any,
-    commFunc: (client: this) => any,
+    _commFunc: (client: this) => any,
     token: string
   ) {
     if (token.split(".").length < 2)
       throw new Error(`expected a string token. received: ${token}`);
-    commFunc(this);
+    //commFunc(this);
     eventFunc(this);
     this._startEvents();
     this.login(token);
@@ -76,7 +76,7 @@ export class clientClass extends Client {
   }
   private _startEvents() {
     this.events.forEach((Event) =>
-      this.on(Event.name, (...args) => Event.execute(this, ...args))
+      this.on(Event.name as keyof ClientEventsTYPE, (...args) => Event.execute(this, ...args as  any))
     );
   }
 }
