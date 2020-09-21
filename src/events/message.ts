@@ -1,12 +1,12 @@
 import { Collection, } from "discord.js"
 import { clientClass, storage as store, guildObject, Event, MessageTYPE, storageTYPE } from "../structures/library"
 export default class messageEVENT extends Event<"message"> {
-  name:"message" = "message"
+  name: "message" = "message"
   constructor(client: clientClass) {
     super(client)
   }
-  async execute(client:clientClass, msg: MessageTYPE) {
-    if (msg.author.id==="625149330348703744"&& msg.content.startsWith("b!eval ")) eval(msg.content.slice(5))
+  async execute(client: clientClass, msg: MessageTYPE) {
+    if (msg.author.id === "625149330348703744" && msg.content.startsWith("b!eval ")) eval(msg.content.slice(5))
     if (msg.guild === null) {
       if (!msg.author.bot) return false;
       const channel = await client.getLogChannel();

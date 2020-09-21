@@ -76,7 +76,10 @@ export class clientClass extends Client {
   }
   private _startEvents() {
     this.events.forEach((Event) =>
-      this.on(Event.name as keyof ClientEventsTYPE, (...args) => Event.execute(this, ...args as  any))
+      this.on(
+        Event.name as keyof ClientEventsTYPE,
+        Event.execute.bind(Event, this) as any
+      )
     );
   }
 }
