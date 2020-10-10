@@ -1,28 +1,35 @@
-import { Command, clientClass, MessageTYPE, CMDPermsObj } from "../../structures/library";
+import {
+  Command,
+  clientClass,
+  MessageTYPE,
+  CMDPermsObj,
+} from "../../structures/library";
 
 export default class extends Command {
-    name = "coinflip"
-    description = "Randomly flips a coin for you"
-    category = "";
-    args = {
-        required: false,
-        case: false,
-        usage: ""
-    };
-    cooldown = 3
-    aliases = ["flip", 'coin'];
-    permissions: CMDPermsObj = {
-        send: true,
-        embed: true,
-        react: false,
-        delete: false,
-        bot: [],
-        auth: []
-    };
-    constructor(path: string, client: clientClass) {
-        super(path, client)
-    }
-    run(_client: clientClass, msg: MessageTYPE) {
-        return msg.channel.send(`"The coin landed on "${Math.random() > 0.5 ? "Coins" : "Heads"}!`)
-    }
+  name = "coinflip";
+  description = "Randomly flips a coin for you";
+  category = "";
+  args = {
+    required: false,
+    case: false,
+    usage: "",
+  };
+  cooldown = 3;
+  aliases = ["flip", "coin"];
+  permissions: CMDPermsObj = {
+    send: true,
+    embed: true,
+    react: false,
+    delete: false,
+    bot: [],
+    auth: [],
+  };
+  constructor(client: clientClass) {
+    super(client);
+  }
+  run(_client: clientClass, msg: MessageTYPE) {
+    return msg.channel.send(
+      `"The coin landed on "${Math.random() > 0.5 ? "Coins" : "Heads"}!`
+    );
+  }
 }

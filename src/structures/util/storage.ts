@@ -1,11 +1,12 @@
 import { writeFile } from 'fs';
+import { normalize } from 'path';
 import { storageTYPE, storageGuildTYPE , guildObject} from '../library';
 
 export function storage(path:string, guildID?:never, data?:never):storageTYPE
 export function storage(path:string, guildID:string, data?:never):storageGuildTYPE
 export function storage(path:string, guildID:string, data:storageGuildTYPE):storageGuildTYPE
 export function storage(path:string, guildID:any, data?: any):any {
-    const json: storageTYPE = require(`${path}storage.json`);
+    const json: storageTYPE = require(normalize(`${path}/storage.json`));
     if (typeof guildID !== "string") return json
     if (typeof data === "undefined") {
         if (!Object.keys(json).includes(guildID)){

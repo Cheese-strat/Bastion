@@ -2,7 +2,6 @@ import { clientClass } from "../client/client";
 import { Message } from "discord.js"
 import { CMDPermsObj } from '../client/types';
 export abstract class Command {
-    path: string
     client: clientClass
     abstract name: string
     abstract description: string
@@ -16,8 +15,7 @@ export abstract class Command {
     abstract aliases: string[]
     abstract permissions: CMDPermsObj;
     abstract run(c: clientClass, m: Message): any
-    protected constructor(path: string, client: clientClass) {
-        this.path = path
+    protected constructor(client: clientClass) {
         this.client = client
     }
 }
