@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "kill";
+  cmdName = "kill";
   description = "To Absolutely murder someone";
   category = "";
   args = {

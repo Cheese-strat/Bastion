@@ -3,7 +3,7 @@ import { clientClass, Command, MessageTYPE } from "../../structures/library";
 import { version } from "discord.js";
 
 export default class extends Command {
-  name = "bot-info";
+  cmdName = "bot-info";
   description = "Statistics and data about the bot";
   category = undefined;
   args = {

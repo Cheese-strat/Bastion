@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "coinflip";
+  cmdName = "coinflip";
   description = "Randomly flips a coin for you";
   category = "";
   args = {

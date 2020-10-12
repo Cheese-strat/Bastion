@@ -7,7 +7,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "invite";
+  cmdName = "invite";
   description =
     "Gives you the link of the official server and the bots invite link";
   category = "";

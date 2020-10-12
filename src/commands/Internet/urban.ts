@@ -9,7 +9,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "urban";
+  cmdName = "urban";
   description = "search the urban dictionary for a word";
   category = "";
   args = {

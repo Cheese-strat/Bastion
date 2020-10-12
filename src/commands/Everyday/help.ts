@@ -7,7 +7,7 @@ import {
 import { Collection, MessageEmbed } from "discord.js";
 
 export default class extends Command {
-  name = "help";
+  cmdName = "help";
   description = "List all of my commands or info about a specific command.";
   args = {
     required: false,
@@ -45,7 +45,7 @@ export default class extends Command {
       return msg.author
         .send(
           `**My Commands:** \nYou can send \`${prefix}help [command name]\` to get info on a specific command!\mHere\'s a list of all my commands:${commands
-            .map((command) => command.name)
+            .map((command) => command.cmdName)
             .join(
               "\n"
             )}\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`

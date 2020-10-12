@@ -7,7 +7,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "who";
+  cmdName = "who";
   description = "Finds all the information about a certain user";
   category = "";
   args = {
@@ -34,7 +34,7 @@ export default class extends Command {
     const member = await msg.guild.getMember(str);
     const Embed = new MessageEmbed();
     if (!user && !member) return msg.channel.send("I could not find that user");
-    else user = member?.user as User;
+    else user = member!.user as User;
     const rego = `${user.createdAt.getUTCDate()}/${
       user.createdAt.getUTCMonth() + 1
     }/${user.createdAt.getUTCFullYear()}`;

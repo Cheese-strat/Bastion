@@ -7,7 +7,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "server";
+  cmdName = "server";
   description = "Has useful information about the server";
   category = "";
   args = {

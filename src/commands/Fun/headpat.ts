@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "headpat";
+  cmdName = "headpat";
   description = "Pats the target on the head";
   category = "";
   args = {

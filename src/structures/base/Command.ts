@@ -3,7 +3,7 @@ import { Message } from "discord.js"
 import { CMDPermsObj } from '../client/types';
 export abstract class Command {
     client: clientClass
-    abstract name: string
+    abstract cmdName: string
     abstract description: string
     category?: string
     abstract args: {

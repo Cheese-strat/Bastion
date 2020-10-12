@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 import { correct } from "../../structures/library";
 export default class extends Command {
-  name = "reload";
+  cmdName = "reload";
   description = "Reloads a command, developers only.";
   args = {
     required: true,
@@ -37,7 +37,7 @@ export default class extends Command {
     if (!command) {
       const arr: string[] = [];
       client.commands.map((cmd: Command) => {
-        arr.push(cmd.name);
+        arr.push(cmd.cmdName);
         cmd.aliases && cmd.aliases.forEach((e: string) => arr.push(e));
       });
       let corrected = correct({ find: commandName, group: arr });
@@ -45,28 +45,28 @@ export default class extends Command {
         return msg.channel.send(
           `There is no command with name or alias \`${commandName}\`, ${msg.author}!`
         );
-      const { name }: Command =
+      const { cmdName }: Command =
         client.commands.get(corrected as string) ||
         (client.commands.find((cmd: Command) =>
           cmd.aliases.includes(corrected as string)
         ) as Command);
       return msg.channel.send(
-        `There is no command with name or alias \`${commandName}\`\nDid you mean \`${name}\`?`
+        `There is no command with name or alias \`${commandName}\`\nDid you mean \`${cmdName}\`?`
       );
     }
 
     delete require.cache[
-      require.resolve(`../../commands/${command.category}/${command.name}.js`)
+      require.resolve(`../../commands/${command.category}/${command.cmdName}.js`)
     ];
     try {
-      const newCommand = require(`../../commands/${command.category}/${command.name}.js`);
+      const newCommand = require(`../../commands/${command.category}/${command.cmdName}.js`);
       client.commands.set(newCommand.name, newCommand);
     } catch (error) {
       console.log(error);
       msg.channel.send(
-        `There was an error while reloading a command \`${command.name}\`:\n\`${error.msg}\``
+        `There was an error while reloading a command \`${command.cmdName}\`:\n\`${error.msg}\``
       );
     }
-    return msg.channel.send(`The \`${command.name}\` Command was reloaded!`);
+    return msg.channel.send(`The \`${command.cmdName}\` Command was reloaded!`);
   }
 }

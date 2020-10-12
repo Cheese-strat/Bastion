@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "throw";
+  cmdName = "throw";
   description =
     "Throws someone against the wall, for when they start talking about your dogs.";
   category = "";

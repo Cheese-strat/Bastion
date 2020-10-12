@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "call";
+  cmdName = "call";
   description = "An undertale reference";
   category = "";
   args = {

@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "ping";
+  cmdName = "ping";
   description =
     "Pings the bot and the discord API to test reaction time and latency";
   category = "";

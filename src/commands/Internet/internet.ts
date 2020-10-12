@@ -8,7 +8,7 @@ import fetch from "node-fetch";
 import { MessageEmbed } from "discord.js";
 
 export default class extends Command {
-  name = "internet";
+  cmdName = "internet";
   description = "Searches the internet for an image";
   category = "";
   args = {

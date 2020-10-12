@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { clientClass, Command, MessageTYPE } from "../../structures/library";
 
 export default class extends Command {
-  name = "avatar";
+  cmdName = "avatar";
   description =
     "Shows the pfp of the mentioned user, or the message author if no user is mentioned";
   args = {

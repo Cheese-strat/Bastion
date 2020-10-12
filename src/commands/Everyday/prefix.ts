@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "prefix";
+  cmdName = "prefix";
   description = "Changes the prefix for your server";
   category = "";
   args = {

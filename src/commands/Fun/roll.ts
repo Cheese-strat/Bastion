@@ -6,7 +6,7 @@ import {
 } from "../../structures/library";
 
 export default class extends Command {
-  name = "roll";
+  cmdName = "roll";
   description =
     "Rolls a dice of any number of sides and gives a randomized result";
   category = "";
