@@ -1,46 +1,47 @@
 import { clientClass } from '../client/client'
 import { Message } from 'discord.js'
 import { CMDPermsObj } from '../client/types'
-export abstract class Command {
+export class Command {
     client: clientClass
-    abstract cmdName: string
-    abstract description: string
-    category?: string
-    abstract args: {
-        required: boolean
-        case: boolean
-        usage: string
-    }
-    abstract cooldown: number
-    abstract aliases: string[]
-    abstract permissions: CMDPermsObj
-    abstract run(c: clientClass, m: Message): any
-    constructor(client: clientClass) {
-        this.client = client
-    }
-}
-/** @ts-ignore */
-export class extendedCommandTYPE {
-    client?: clientClass
-    /** @ts-ignore */
     cmdName: string
-    /** @ts-ignore */
     description: string
-    /** @ts-ignore */
     category?: string
-    /** @ts-ignore */
     args: {
         required: boolean
         case: boolean
         usage: string
     }
-    /** @ts-ignore */
     cooldown: number
-    /** @ts-ignore */
     aliases: string[]
-    /** @ts-ignore */
     permissions: CMDPermsObj
-    /** @ts-ignore */
-    run(c: clientClass, m: Message): any{}
-    constructor(_client: clientClass){}
+    constructor(client: clientClass, cmdOptions: CommandOptionsTYPE) {
+        /* Object.assign(this, cmdOptions) */
+        /* for (const x in cmdOptions){
+            this[x] = cmdOptions[x]
+        } */
+        this.client = client
+        this.cmdName = cmdOptions.cmdName
+        this.description = cmdOptions.description
+        this.category = cmdOptions.category
+        this.args = cmdOptions.args
+        this.cooldown = cmdOptions.cooldown
+        this.aliases = cmdOptions.aliases
+        this.permissions = cmdOptions.permissions
+        this.run = cmdOptions.run   
+    }
+    run(){}
+}
+interface CommandOptionsTYPE {
+    cmdName: string
+    description: string
+    category?: string
+    args: {
+        required: boolean
+        case: boolean
+        usage: string
+    }
+    cooldown: number
+    aliases: string[]
+    permissions: CMDPermsObj
+    run: ()=>any
 }
