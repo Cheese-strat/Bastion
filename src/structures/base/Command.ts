@@ -1,6 +1,6 @@
 import { clientClass } from '../client/client'
 import { Message } from 'discord.js'
-import { CMDPermsObj } from '../client/types'
+import { CMDPermsObj, MessageTYPE } from '../client/types'
 export class Command {
     client: clientClass
     cmdName: string
@@ -14,7 +14,8 @@ export class Command {
     cooldown: number
     aliases: string[]
     permissions: CMDPermsObj
-    constructor(client: clientClass, cmdOptions: CommandOptionsTYPE) {
+    run: (client:clientClass, msg:MessageTYPE)=>any
+    constructor(client: clientClass, cmdOptions: CommandOptionsTYPE, execFunc:(client:clientClass, msg:MessageTYPE)=>any) {
         /* Object.assign(this, cmdOptions) */
         /* for (const x in cmdOptions){
             this[x] = cmdOptions[x]
@@ -27,11 +28,10 @@ export class Command {
         this.cooldown = cmdOptions.cooldown
         this.aliases = cmdOptions.aliases
         this.permissions = cmdOptions.permissions
-        this.run = cmdOptions.run   
+        this.run = execFunc  
     }
-    run(){}
 }
-interface CommandOptionsTYPE {
+export interface CommandOptionsTYPE {
     cmdName: string
     description: string
     category?: string
@@ -43,5 +43,4 @@ interface CommandOptionsTYPE {
     cooldown: number
     aliases: string[]
     permissions: CMDPermsObj
-    run: ()=>any
 }
