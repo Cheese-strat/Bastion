@@ -1,16 +1,22 @@
 import { clientClass } from '../client/client'
 import { Message } from 'discord.js'
+<<<<<<< HEAD
 import { CMDPermsObj, MessageTYPE } from '../client/types'
 export class Command {
+=======
+import { CMDPermsObj } from '../client/types'
+export abstract class Command {
+>>>>>>> parent of 99de281... moving to instances
     client: clientClass
-    cmdName: string
-    description: string
+    abstract cmdName: string
+    abstract description: string
     category?: string
-    args: {
+    abstract args: {
         required: boolean
         case: boolean
         usage: string
     }
+<<<<<<< HEAD
     cooldown: number
     aliases: string[]
     permissions: CMDPermsObj
@@ -32,15 +38,41 @@ export class Command {
     }
 }
 export interface CommandOptionsTYPE {
+=======
+    abstract cooldown: number
+    abstract aliases: string[]
+    abstract permissions: CMDPermsObj
+    abstract run(c: clientClass, m: Message): any
+    constructor(client: clientClass) {
+        this.client = client
+    }
+}
+/** @ts-ignore */
+export class extendedCommandTYPE {
+    client?: clientClass
+    /** @ts-ignore */
+>>>>>>> parent of 99de281... moving to instances
     cmdName: string
+    /** @ts-ignore */
     description: string
+    /** @ts-ignore */
     category?: string
+    /** @ts-ignore */
     args: {
         required: boolean
         case: boolean
         usage: string
     }
+    /** @ts-ignore */
     cooldown: number
+    /** @ts-ignore */
     aliases: string[]
+    /** @ts-ignore */
     permissions: CMDPermsObj
+<<<<<<< HEAD
+=======
+    /** @ts-ignore */
+    run(c: clientClass, m: Message): any{}
+    constructor(_client: clientClass){}
+>>>>>>> parent of 99de281... moving to instances
 }
