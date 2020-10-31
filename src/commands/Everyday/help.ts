@@ -1,9 +1,4 @@
-import {
-    Command,
-    MessageTYPE,
-    clientClass,
-    CMDPermsObj,
-} from '../../structures/library'
+import { Command, MessageTYPE, clientClass } from '../../structures/library'
 import { Collection, MessageEmbed } from 'discord.js'
 
 export default (client: clientClass) =>
@@ -32,81 +27,82 @@ export default (client: clientClass) =>
         function run(client: clientClass, msg: MessageTYPE) {
             msg.args.join(' ')
             let prefix = 'b!'
-            let data = []
 
             const commands: Collection<string, Command> = client.commands
-            if (!msg.args.length) {
-                //const embed = ez.embed(msg.member.displayHexColor, "My commands:")
-                /*for (const commFolder of fs.readdirSync("./commands")) {
-				console.log(commFolder)
-				embed.addField(commFolder, info.desc)
-			}*/
-                //embed.setDescription(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`)
-                //embed.addField(`Here\'s a list of all my commands:${commands.map(command => command.name).join(', ')}\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`)
+            const embed = new MessageEmbed()
+                .setAuthor(
+                    `${client.user!.username} Help Menu`,
+                    client.user!.displayAvatarURL({
+                        format: 'png',
+                        dynamic: true,
+                    })
+                )
+                .setDescription(`Prefix for this Server: \`${prefix}\``)
+                .setFooter(
+                    `Powered By ${client.user!.username}`,
+                    client.user!.displayAvatarURL({
+                        format: 'png',
+                        dynamic: true,
+                    })
+                )
+                .setTimestamp()
+                .setColor('BLUE')
 
-                return msg.author
-                    .send(
-                        `**My Commands:** \nYou can send \`${prefix}help [command name]\` to get info on a specific command!\mHere\'s a list of all my commands:${commands
-                            .map((command) => command.cmdName)
-                            .join(
-                                '\n'
-                            )}\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`
+            if (!msg.args[0]) {
+                const filteredCategories = client.commands
+                    .filter((cmd) => cmd.category === 'Developer')
+                    .map((cmd) => cmd.category)
+                    .sort()
+                const commandCategories = [...new Set(filteredCategories)]
+
+                for (const commandCategory of commandCategories) {
+                    embed.addField(
+                        `» **${commandCategory}**`,
+                        client.commands
+                            .filter((cmd) => cmd.category === commandCategory)
+                            .map((cmd) => `\`${cmd.cmdName}\``)
+                            .join(', ')
                     )
-                    .then(() => {
-                        msg.reply(`I've sent you a DM!`)
-                    })
-                    .catch((error) => {
-                        client
-                            .getLogChannel('629683449976061971')
-                            .then((x) =>
-                                x.send(
-                                    `Could not send help DM to ${msg.author.tag}.\n`,
-                                    error
-                                )
-                            )
-                        console.log(error)
-                        msg.reply(
-                            "it seems like I can't DM you! Do you have DMs disabled?"
-                        )
-                    })
-            }
-            if (isNaN(Number(msg.args))) {
-                const name = msg.args[0].toLowerCase()
+                }
+
+                return msg.channel.send(embed)
+            } else {
                 const command =
-                    commands.get(name) ||
-                    commands.find((c) => c.aliases && c.aliases.includes(name))
-                if (!command) return msg.reply("that's not a valid command!")
-                const Embed = new MessageEmbed()
-                    .setColor('#0099ff')
-                    .setTitle('Some title')
-                    .setDescription('Some description here')
-                    .setTimestamp()
-                    .setFooter(
-                        'Some footer text here',
+                    client.commands.get(msg.args[0]) ||
+                    client.commands.find((cmd) =>
+                        cmd.aliases.includes(msg.args[0])
+                    )
+                if (!command) return msg.channel.send('**Invalid Command!**')
+                if (
+                    command.category === 'Developer' &&
+                    !client.config.developers.includes(msg.author.id)
+                )
+                    return msg.channel.send('**Invalid Command!**')
+
+                /* const clientPermissions = command.permissions.bot
+                    .map((x) => PermissionsMap[x])
+                    .join(', ')
+                const userPermissions = command.permissions.auth
+                    .map((x) => PermissionsMap[x])
+                    .join(', ') */
+
+                embed
+                    .setAuthor(
+                        `${command.cmdName} Help`,
                         client.user!.displayAvatarURL({
-                            dynamic: true,
                             format: 'png',
+                            dynamic: true,
                         })
                     )
+                    .setDescription([
+                        `Name: \`${command.cmdName}\``,
+                        `Category: \`${command.category}\``,
+                        `Cooldown: \`${command.cooldown} Seconds\``,
+                        `Description: \`${command.description}\``,
+                        `Usage: \`${prefix}${command.cmdName} ${command.args.usage}\``,
+                    ])
 
-                let categories = commands
-                    .map((c) => c.category)
-                    .filter(
-                        (category) =>
-                            commands
-                                .map((c) => c.category)
-                                .filter((cat) => cat === category).length === 1
-                    )
-
-                for (let x = 0; x > categories.length; x++) {
-                    Embed.addField(`Page: ${x}`, `${categories[x]} commands`)
-                }
-                categories.forEach((category) => {
-                    Embed.addField(category, 'Some value here')
-                })
-
-                return msg.channel.send(Embed)
+                return msg.channel.send(embed)
             }
-            return msg.channel.send('beans')
         }
     )

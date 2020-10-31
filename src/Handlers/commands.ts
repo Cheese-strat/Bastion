@@ -11,7 +11,7 @@ export default (client: clientClass) => {
         ).filter((file) => file.endsWith('.js'))) {
             const CMD:Command = require(normalize(
                 `${client.srcPath}/commands/${Folder}/${fileName}`
-            )).default()
+            )).default(client)
             CMD.category = Folder
             client.commands.set(CMD.cmdName, CMD)
             console.log(`found command: ${CMD.cmdName}`)

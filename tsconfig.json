@@ -18,7 +18,7 @@
         // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */
         "removeComments": true,
         // "noEmit": true,                        /* Do not emit outputs. */
-        "importHelpers": true,
+        "importHelpers": false,
         "downlevelIteration": true,
         // "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
         "strict": true,

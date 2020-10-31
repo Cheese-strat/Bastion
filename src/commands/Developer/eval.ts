@@ -1,12 +1,7 @@
-'use strict'
 import { inspect } from 'util'
 import { transpile } from 'typescript'
-import {
-    clientClass,
-    CMDPermsObj,
-    Command,
-    MessageTYPE,
-} from '../../structures/library'
+import { clientClass, Command, MessageTYPE } from '../../structures/library'
+import { Message } from 'discord.js'
 
 export default (client: clientClass) =>
     new Command(
@@ -30,46 +25,50 @@ export default (client: clientClass) =>
                 auth: [],
             },
         },
-        function run(client: clientClass, msg: MessageTYPE): any {
-            if (msg.content.includes('client.token'))
-                return msg.channel.send(
-                    'you cannot get the token throught this eval command'
-                )
-            if (msg.content.includes('fs'))
-                return msg.channel.send(
-                    'The fs module is disabled while this process not running through a virtual machine'
-                )
+        async function run(
+            _client: clientClass,
+            msg: MessageTYPE
+        ): Promise<Message> {
+            async function clean(Input: any) {
+                if (Input instanceof Promise) Input = await Input
+                if (typeof Input !== 'string')
+                    Input = transpile(inspect(Input, { depth: 0 }))
 
+                Input = Input.replace(
+                    /`/g,
+                    '`' + String.fromCharCode(8203)
+                ).replace(/@/g, '@' + String.fromCharCode(8203))
+
+                return Input
+            }
             try {
-                const code = msg.args.join(' ')
-                let js = transpile(code)
-                let evaled = eval(js)
+                const StartTime = process.hrtime()
+                const Input = msg.args
+                    .join(' ')
+                    .replace(/[“”]/g, '"')
+                    .replace(/[‘’]/g, "'")
+                const AsyncInput = Input.includes('await' || 'return')
 
-                if (typeof evaled !== 'string') evaled = inspect(evaled)
-                let send =
-                    typeof evaled === 'string'
-                        ? evaled
-                              .replace(/`/g, '`' + String.fromCharCode(8203))
-                              .replace(/@/g, '@' + String.fromCharCode(8203))
-                        : evaled
-                if (send.includes(client.token))
-                    return msg.channel.send(
-                        'you cannot get the token throught this eval command'
-                    )
-                if (send.length > 2000)
-                    return msg.channel.send(
-                        `The result was ${
-                            send.length - 2000
-                        } characters to long\n\`\`\`js\n${send.substring(
-                            0,
-                            1900
-                        )}\`\`\``
-                    )
-                msg.channel.send(send, {
-                    code: 'js',
-                })
+                let evaledOutput = await eval(
+                    AsyncInput ? `(async() => {${Input}})()` : Input
+                )
+                evaledOutput = await clean(evaledOutput)
+
+                const EvalTime = process.hrtime(StartTime)
+                const FormattedTime = `${(
+                    EvalTime[0] * 1e9 +
+                    EvalTime[1] / 1e6
+                ).toFixed(2)}ms`
+
+                return msg.channel.send(
+                    `**Output:**\n\`\`\`js\n${
+                        evaledOutput.length < 1950
+                            ? evaledOutput
+                            : evaledOutput.slice(1950)
+                    }\`\`\`Time: **- ${FormattedTime}**`
+                )
             } catch (err) {
-                msg.channel.send(`\`${err}\``)
+                return msg.channel.send(`\`\`\`js\n${err}\n\`\`\``)
             }
         }
     )

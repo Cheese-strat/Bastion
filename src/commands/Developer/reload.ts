@@ -1,9 +1,4 @@
-import {
-    clientClass,
-    CMDPermsObj,
-    Command,
-    MessageTYPE,
-} from '../../structures/library'
+import { clientClass, Command, MessageTYPE } from '../../structures/library'
 import { correct } from '../../structures/library'
 export default (client: clientClass) =>
     new Command(

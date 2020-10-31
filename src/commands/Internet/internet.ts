@@ -1,9 +1,4 @@
-import {
-    Command,
-    clientClass,
-    MessageTYPE,
-    CMDPermsObj,
-} from '../../structures/library'
+import { Command, clientClass, MessageTYPE } from '../../structures/library'
 import fetch from 'node-fetch'
 import { MessageEmbed } from 'discord.js'
 

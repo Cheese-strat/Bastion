@@ -1,10 +1,5 @@
 import fetch from 'node-fetch'
-import {
-    Command,
-    clientClass,
-    MessageTYPE,
-    CMDPermsObj,
-} from '../../structures/library'
+import { Command, clientClass, MessageTYPE } from '../../structures/library'
 
 export default (client: clientClass) =>
     new Command(
