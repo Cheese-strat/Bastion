@@ -66,7 +66,6 @@ export interface MessageTYPE extends Message {
 	guild: GuildTYPE;
 	command: string | undefined;
 	args: string[];
-	A: string[];
 	permissions(): Permissions;
 }
 export interface GuildMemberTYPE extends GuildMember {

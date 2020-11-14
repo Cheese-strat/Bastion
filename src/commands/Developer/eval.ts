@@ -32,7 +32,7 @@ export default (client: clientClass) =>
 			async function clean(Input: any) {
 				if (Input instanceof Promise) Input = await Input;
 				if (typeof Input !== "string")
-					Input = transpile(inspect(Input, { depth: 0 }));
+					Input = inspect(Input, { depth: 0 });
 
 				Input = Input.replace(
 					/`/g,
@@ -42,12 +42,15 @@ export default (client: clientClass) =>
 				return Input;
 			}
 			try {
-				const StartTime = process.hrtime();
-				const Input = msg.args
-					.join(" ")
-					.replace(/[“”]/g, '"')
-					.replace(/[‘’]/g, "'");
+				const Input = transpile(
+					msg.args
+						.join(" ")
+						.replace(/```j?s?\n?(.*)\n?```/s, "$1")
+						.replace(/[“”‘’]/g, '"'),
+				);
 				const AsyncInput = Input.includes("await" || "return");
+
+				const StartTime = process.hrtime();
 
 				let evaledOutput = await eval(
 					AsyncInput ? `(async() => {${Input}})()` : Input,
