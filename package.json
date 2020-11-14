@@ -4,8 +4,8 @@
   "description": "an open source discord bot",
   "main": "./src/main.js",
   "scripts": {
-    "start":"tsc --resolveJsonModule --pretty && node ./dist/src/main.js",
-    "start:typescript":"tsc --pretty",
+    "start": "tsc --resolveJsonModule --pretty && node ./dist/src/main.js",
+    "start:typescript": "tsc --pretty",
     "start:node": "node ./dist/src/main.js"
   },
   "author": "Cheese_strat",
@@ -20,10 +20,22 @@
     "typescript": "^3.9.6"
   },
   "repository": "https://github.com/Cheese-strat/dont-dead",
-  "prettier":{
-    "trailingComma": "es5",
+  "prettier": {
+    "arrowParens": "avoid",
+    "bracketSpacing": true,
+    "embeddedLanguageFormatting": "off",
+    "endOfLine": "crlf",
+    "htmlWhitespaceSensitivity": "strict",
+    "jsxBracketSameLine": false,
+    "jsxSingleQuote": false,
+    "parser": "typescript",
+    "printWidth": 80,
+    "proseWrap": "always",
+    "quoteProps": "consistent",
+    "semi": true,
+    "singleQuote": false,
     "tabWidth": 4,
-    "semi": false,
-    "singleQuote": true
+    "trailingComma": "all",
+    "useTabs": true
   }
 }

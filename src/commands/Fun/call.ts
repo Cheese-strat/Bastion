@@ -1,36 +1,36 @@
-import { Command, clientClass, MessageTYPE } from '../../structures/library'
+import { Command, clientClass, MessageTYPE } from "../../structures/library";
 
 export default (client: clientClass) =>
-    new Command(
-        client,
-        {
-            cmdName: 'call',
-            description: 'An undertale reference',
-            category: '',
-            args: {
-                required: false,
-                case: false,
-                usage: '',
-            },
-            cooldown: 10,
-            aliases: [],
-            permissions: {
-                send: true,
-                embed: true,
-                react: false,
-                delete: false,
-                bot: [],
-                auth: [],
-            },
-        },
-        function run(_client: clientClass, msg: MessageTYPE) {
-            msg.channel.send('You called for help').then((message) => {
-                setTimeout(() => message.edit('You called for help.'), 1000)
-                setTimeout(() => message.edit('You called for help..'), 2000)
-                setTimeout(() => message.edit('You called for help...'), 3000)
-            })
-            return
-            /* msg.channel.send("You called for help").then(async message => {
+	new Command(
+		client,
+		{
+			cmdName: "call",
+			description: "An undertale reference",
+			category: "",
+			args: {
+				required: false,
+				case: false,
+				usage: "",
+			},
+			cooldown: 10,
+			aliases: [],
+			permissions: {
+				send: true,
+				embed: true,
+				react: false,
+				delete: false,
+				bot: [],
+				auth: [],
+			},
+		},
+		function run(_client: clientClass, msg: MessageTYPE) {
+			msg.channel.send("You called for help").then(message => {
+				setTimeout(() => message.edit("You called for help."), 1000);
+				setTimeout(() => message.edit("You called for help.."), 2000);
+				setTimeout(() => message.edit("You called for help..."), 3000);
+			});
+			return;
+			/* msg.channel.send("You called for help").then(async message => {
              const filter = response => {
                  return response.content.toLowerCase().includes("hi") //&& (response.author.id != msg.author.id) )
              };
@@ -46,5 +46,5 @@ export default (client: clientClass) =>
              });
          });
          */
-        }
-    )
+		},
+	);
