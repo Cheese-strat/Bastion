@@ -14,22 +14,6 @@ export default class messageEVENT extends Event<"message"> {
 		super(client);
 	}
 	async execute(client: clientClass, msg: MessageTYPE) {
-		/* if (
-            msg.author.id === '625149330348703744' &&
-            msg.content.startsWith('b!eval ')
-        ) {
-            const str = msg.content.slice(7)
-            let evaled
-            try {
-                evaled = format(eval(str))
-            } catch (e) {
-                console.log(e)
-                return msg.channel.send(e.message)
-            }
-            return msg.channel.send(
-                evaled.length > 2000 ? evaled.slice(0, 1900) : evaled
-            )
-        } */
 		if (msg.guild === null) {
 			if (!msg.author.bot) return false;
 			const channel = await client.getLogChannel();
@@ -79,7 +63,7 @@ export default class messageEVENT extends Event<"message"> {
 			msg.mentions.users.size > 0 &&
 			msg.content.includes(`${client.user!.id}>`)
 		)
-			msg.channel.send("my prefix in this server is: " + prefix);
+			msg.channel.send(`my prefix in this server is: ${prefix}`);
 		if (!msg.content.startsWith(prefix)) return false;
 		if (!msg.permissions().has("EMBED_LINKS"))
 			return msg.channel.send("I need the `Embed Links` permission.");
