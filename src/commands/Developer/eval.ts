@@ -41,20 +41,39 @@ export default (client: clientClass) =>
 
 				return Input;
 			}
+			console.log([msg.args.join(" ")]);
 			try {
-				const Input = transpile(
-					msg.args
-						.join(" ")
-						.replace(/```j?s?\n?(.*)\n?```/s, "$1")
-						.replace(/[“”‘’]/g, '"'),
-				);
-				const AsyncInput = Input.includes("await" || "return");
+				const Input = msg.args
+					.join(" ")
+					.replace(/^```([tj]s)?\n(.*)\n```$/s, "$1\n$2")
+					.replace(/[“”‘’]/g, '"');
+
+				const language = Input.slice(0, Input.indexOf("\n"));
+				let toEval = "";
+				switch (language) {
+					case "ts":
+						toEval = transpile(Input);
+						break;
+					case "js":
+						toEval;
+						break;
+				}
+
+				switch (true) {
+					case Input.includes("await"):
+						toEval = `(async() => {${Input}})()`;
+						break;
+					case Input.includes("return"):
+						toEval = `(() => {${Input}})()`;
+						break;
+					default:
+						toEval = Input;
+						break;
+				}
 
 				const StartTime = process.hrtime();
 
-				let evaledOutput = await eval(
-					AsyncInput ? `(async() => {${Input}})()` : Input,
-				);
+				let evaledOutput = await eval(toEval);
 				evaledOutput = await clean(evaledOutput);
 
 				const EvalTime = process.hrtime(StartTime);
