@@ -41,56 +41,50 @@ export default (client: clientClass) =>
 
 				return Input;
 			}
-			console.log([msg.args.join(" ")]);
-			try {
-				const Input = msg.args
-					.join(" ")
-					.replace(/^```([tj]s)?\n(.*)\n```$/s, "$1\n$2")
-					.replace(/[“”‘’]/g, '"');
 
-				const language = Input.slice(0, Input.indexOf("\n"));
-				let toEval = "";
-				switch (language) {
-					case "ts":
-						toEval = transpile(Input);
-						break;
-					case "js":
-						toEval;
-						break;
-				}
+			const Input = msg.args
+				.join(" ")
+				.replace(/.*```\w*\s*(.*)\s*```.*/s, "$1")
+				.replace(/[“”‘’]/g, '"')
+				.trim();
 
-				switch (true) {
-					case Input.includes("await"):
-						toEval = `(async() => {${Input}})()`;
-						break;
-					case Input.includes("return"):
-						toEval = `(() => {${Input}})()`;
-						break;
-					default:
-						toEval = Input;
-						break;
-				}
-
-				const StartTime = process.hrtime();
-
-				let evaledOutput = await eval(toEval);
-				evaledOutput = await clean(evaledOutput);
-
-				const EvalTime = process.hrtime(StartTime);
-				const FormattedTime = `${(
-					EvalTime[0] * 1e9 +
-					EvalTime[1] / 1e6
-				).toFixed(2)}ms`;
-
-				return msg.channel.send(
-					`**Output:**\n\`\`\`js\n${
-						evaledOutput.length < 1950
-							? evaledOutput
-							: evaledOutput.slice(1950)
-					}\`\`\`Time: **- ${FormattedTime}**`,
-				);
-			} catch (err) {
-				return msg.channel.send(`\`\`\`js\n${err}\n\`\`\``);
+			const language = msg.args
+				.join(" ")
+				.replace(/.*```(ts|js)?\n.*\s*```.*/s, "$1")
+				.trim();
+			let toEval: string;
+			switch (true) {
+				case Input.includes("await"):
+					toEval = `(async() => {${Input}})()`;
+					break;
+				case Input.includes("return"):
+					toEval = `(() => {${Input}})()`;
+					break;
+				default:
+					toEval = Input;
+					break;
 			}
+			if (language === "ts") toEval = transpile(Input);
+			let evaledOutput;
+			const StartTime = process.hrtime();
+			try {
+				evaledOutput = await eval(toEval);
+				evaledOutput = await clean(evaledOutput);
+			} catch (e) {
+				return msg.channel.send(`error:${e.message}`);
+			}
+			const EvalTime = process.hrtime(StartTime);
+			const FormattedTime = `${(
+				EvalTime[0] * 1e9 +
+				EvalTime[1] / 1e6
+			).toFixed(2)}ms`;
+
+			return msg.channel.send(
+				`**Output:**\n\`\`\`js\n${
+					evaledOutput.length < 1950
+						? evaledOutput
+						: evaledOutput.slice(1950)
+				}\`\`\`Time: **- ${FormattedTime}**`,
+			);
 		},
 	);
