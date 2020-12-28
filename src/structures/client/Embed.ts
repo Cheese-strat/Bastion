@@ -1,12 +1,28 @@
+import { EmbedField, MessageEmbedOptions } from "discord.js";
+
 export default class DoggoEmbed {
-	embed: embedResult;
+	embed: MessageEmbedOptions;
+	/**
+	 * @param colour The Colour of the embed
+	 * @constructor
+	 */
 	constructor(colour: colourResolveable) {
-		this.embed = { colour: this.resolveColor(colour) };
+		this.embed = { color: this.resolveColor(colour) };
 	}
+	/**
+	 * @method setTitle Set the title of the embed
+	 * @param title the text to set
+	 */
 	public setTitle(title: string): DoggoEmbed {
 		this.embed.title = title;
 		return this;
 	}
+	/**
+	 * @method resolveColor Resolves the colourResolvable to an integer
+	 * @param input the colour to resolve
+	 * @private
+	 * @returns an integer
+	 */
 	private resolveColor(input: colourResolveable): number {
 		if (typeof input === "string") {
 			if (input === "RANDOM")
@@ -21,8 +37,92 @@ export default class DoggoEmbed {
 		if (input < 0 || input > 0xffffff) throw new RangeError("COLOR_RANGE");
 		return 0;
 	}
+	/**
+	 *@method resolveUrl Resolves the string to a url
+	 * @param url the string to resolve
+	 * @private
+	 * @returns the input string
+	 */
+	private resolveUrl(url: string): string {
+		if (typeof url !== "string")
+			throw new TypeError(
+				`Invalid Type, expected typeof String, recieved ${typeof url}`,
+			);
+		if (
+			!/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/.test(
+				url,
+			)
+		)
+			throw new Error("not a valid url");
+		return url;
+	}
+	/**
+	 * @description Sets the URL the user goes to when clicking on the title
+	 * @param url String
+	 */
+	public setUrl(url: string): DoggoEmbed {
+		if (!this.embed.title)
+			throw new Error("Incorrect Use, you need to set the title first");
+		this.embed.url = this.resolveUrl(url);
+		return this;
+	}
+	public setAuthor(
+		name: string,
+		pictureURL?: string,
+		url?: string,
+	): DoggoEmbed {
+		if (typeof this.embed.author === "undefined") this.embed.author = {};
+		this.embed.author.name = name;
+		if (pictureURL) this.embed.author.icon_url = pictureURL;
+		if (url) this.embed.author.url = url;
+		return this;
+	}
+	public setDescription(desc: string) {
+		if (desc.length > 2048)
+			throw new Error(
+				`Passed string was too long in length (${desc.length} > 2048)`,
+			);
+		this.embed.description = desc;
+		return this;
+	}
+	public setThumbnail(url: string) {
+		this.embed.thumbnail = { url: this.resolveUrl(url) };
+	}
+	public setFields(fields: EmbedField[]) {
+		this.embed.fields = fields.map(field => {
+			if (field.name.length > 1024) {
+				throw new Error(
+					`Passed string was too long in length (${field.name.length} > 1024)`,
+				);
+			}
+			if (field.name.length > 1024) {
+				throw new Error(
+					`Passed string was too long in length (${field.name.length} > 1024)`,
+				);
+			}
+			return field;
+		});
+	}
+	public setImage(url: string): DoggoEmbed {
+		this.embed.image = { url: this.resolveUrl(url) };
+		return this;
+	}
+	public setTimestamp(time: Date | number): DoggoEmbed {
+		this.embed.timestamp = new Date(time);
+		return this;
+	}
+	public setFooter(text: string, icon: string): DoggoEmbed {
+		if (text.length > 1024) {
+			throw new Error(
+				`Passed string was too long in length (${text.length} > 1024)`,
+			);
+		}
+		this.embed.footer = { text: text };
+		if (icon) this.embed.footer.icon_url = this.resolveUrl(icon);
+		return this;
+	}
 }
-var Colors = {
+const Colors = {
 	WHITE: 0xffffff,
 	AQUA: 0x1abc9c,
 	GREEN: 0x2ecc71,
@@ -52,34 +152,6 @@ var Colors = {
 	DARK_BUT_NOT_BLACK: 0x2c2f33,
 	NOT_QUITE_BLACK: 0x23272a,
 };
-interface embedResult {
-	colour: colourResolveable;
-	title?: string;
-	url?: string;
-	author?: {
-		name?: string;
-		icon_url?: string;
-		url?: string;
-	};
-	description?: string;
-	thumbnail?: {
-		url?: string;
-	};
-	fields?: Array<{
-		name: string;
-		value: string;
-		inline?: boolean;
-	}>;
-
-	image?: {
-		url: string;
-	};
-	timestamp?: Date;
-	footer?: {
-		text?: string;
-		icon_url?: string;
-	};
-}
 type colourResolveable =
 	| keyof typeof Colors
 	| "RANDOM"
