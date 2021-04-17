@@ -18,15 +18,13 @@ export default class DoggoEmbed {
 		return this;
 	}
 	/**
-	 * @method resolveColor Resolves the colourResolvable to an integer
-	 * @param input the colour to resolve
 	 * @private
-	 * @returns an integer
 	 */
 	private resolveColor(input: colourResolveable): number {
 		if (typeof input === "string") {
 			if (input === "RANDOM")
 				return Math.floor(Math.random() * (0xffffff + 1));
+			///@ts-expect-error
 			const hex = Colors[input] as number | undefined;
 			if (hex) return hex;
 			if (input.startsWith("#"))
@@ -34,6 +32,7 @@ export default class DoggoEmbed {
 		} else if (Array.isArray(input)) {
 			return (input[0] << 16) + (input[1] << 8) + input[2];
 		}
+		input = input as number;
 		if (input < 0 || input > 0xffffff) throw new RangeError("COLOR_RANGE");
 		return 0;
 	}
@@ -111,7 +110,7 @@ export default class DoggoEmbed {
 		this.embed.timestamp = new Date(time);
 		return this;
 	}
-	public setFooter(text: string, icon: string): DoggoEmbed {
+	public setFooter(text: string, icon?: string): DoggoEmbed {
 		if (text.length > 1024) {
 			throw new Error(
 				`Passed string was too long in length (${text.length} > 1024)`,
@@ -156,4 +155,5 @@ type colourResolveable =
 	| keyof typeof Colors
 	| "RANDOM"
 	| [number, number, number]
-	| number;
+	| number
+	| string;

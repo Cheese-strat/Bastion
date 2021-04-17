@@ -34,12 +34,18 @@ export default () =>
 					}
 					if (toFind.startsWith("<#") && toFind.endsWith(">")) {
 						const str = toFind.slice(2, -1);
-						member = await this.members.fetch(str);
+						member = await this.members
+							.fetch(str)
+							.catch(() => null);
 						if (member) return member;
 					}
-					return this.members.cache.find(
+					const nick = this.members.cache.find(
+						m => m.nickname === toFind,
+					);
+					const username = this.members.cache.find(
 						m => m.user.username === toFind,
 					);
+					return nick || username;
 				}
 			},
 	);

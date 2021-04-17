@@ -1,13 +1,7 @@
 /** Export base classes */
 export * from "./client/types";
 export * from "./base/Command";
-
 export * from "./base/Event";
-
-/** Export the client, objects and obj types */
-export * from "./client/Object";
-export * from "./library";
-export * from "./client/client";
 
 /** Export extenstions */
 export * from "./extended/Guild";
@@ -24,8 +18,8 @@ export * from "./base/Event";
 
 /** Export the client, objects and obj types */
 export * from "./client/Object";
-export * from "./library";
 export * from "./client/client";
+export * from "./client/Embed";
 
 /** Export extenstions */
 export * from "./extended/Guild";
