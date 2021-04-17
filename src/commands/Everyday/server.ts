@@ -40,12 +40,13 @@ export default (client: clientClass) =>
 				.addFields(
 					{
 						name: "Amount of humans:",
-						value: guild.members.cache.filter(m => !m.user.bot),
+						value: guild.members.cache.filter(m => !m.user.bot)
+							.size,
 						inline: true,
 					},
 					{
 						name: "Number of bots:",
-						value: guild.members.cache.filter(m => m.user.bot),
+						value: guild.members.cache.filter(m => m.user.bot).size,
 						inline: true,
 					},
 					{

@@ -1,5 +1,6 @@
 import { MessageEmbed, User } from "discord.js";
 import { Command, clientClass, MessageTYPE } from "../../structures/library";
+import DoggoEmbed from "../../structures/client/Embed";
 
 export default (client: clientClass) =>
 	new Command(
@@ -26,48 +27,49 @@ export default (client: clientClass) =>
 		},
 		async function run(client: clientClass, msg: MessageTYPE) {
 			const str = msg.args.join(" ");
-			let user = await client.getUser(str);
 			const member = await msg.guild.getMember(str);
-			const Embed = new MessageEmbed();
-			if (!user && !member)
-				return msg.channel.send("I could not find that user");
-			else user = member!.user as User;
+			let user;
+			if (member) {
+				user = member.user;
+			} else {
+				user = await client.getUser(str);
+				if (!user)
+					return msg.channel.send("I could not find that user");
+			}
+			const Embed = new DoggoEmbed(
+				member ? member.displayHexColor.slice(1) : "RANDOM",
+			);
 			const rego = `${user.createdAt.getUTCDate()}/${
 				user.createdAt.getUTCMonth() + 1
 			}/${user.createdAt.getUTCFullYear()}`;
-			if (user && !member) {
-				Embed.setColor("RANDOM");
-				Embed.setTitle(user.tag);
-				Embed.setThumbnail(
-					user.displayAvatarURL({ dynamic: true, format: "png" }),
-				);
-				Embed.setFooter(`ID: ${user.id}`);
-				Embed.addField("registered", `${rego}`, true);
-			}
-			if (user && member) {
-				/* let arr = msg.guild.members.cache.array()
-            arr.sort((a, b) => a.joinedTimestamp - b.joinedTimestamp)
-            let joinpos: number = 0
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i].id == user.id) joinpos = i + 1
-            } */
-				//const join = `${member.joinedAt.getUTCDate()}/${member.joinedAt.getUTCMonth() + 1}/${member.joinedAt.getUTCFullYear()}`
-				Embed.setColor(member.displayHexColor.slice(1));
-				Embed.setTitle(user.tag);
+
+			// only certain data can be obtained if they are/arent in the server
+
+			Embed.setFields([
+				{
+					name: "registered",
+					value: `${rego}`,
+					inline: true,
+				},
+			]);
+			if (member) {
 				Embed.setDescription(`Nickname: ${member.nickname}`);
-				Embed.setThumbnail(
-					user.displayAvatarURL({ dynamic: true, format: "png" }),
-				);
-				Embed.setFooter(`ID: ${user.id}`);
-				//Embed.addField('Joined', `${join}`, true)
+				//Embed.addField('Joined on', `${join}`, true)
 				//Embed.addField('join position', `${joinpos}`, true)
-				Embed.addField("registered", `${rego}`, true);
-				Embed.addField(
-					"roles",
-					member.roles.cache.map(r => r.toString()),
-					true,
-				);
+				Embed.embed.fields!.push({
+					name: "roles",
+					value: member.roles.cache.map(r => r.toString()).join("\n"),
+					inline: true,
+				});
 			}
+
+			//set properties of the embed out here because it doesnt matter if they are in the server or not
+			Embed.setTitle(user.tag);
+			Embed.setThumbnail(
+				user.displayAvatarURL({ dynamic: true, format: "png" }),
+			);
+			Embed.setFooter(`ID: ${user.id}`);
+
 			return msg.channel.send(Embed);
 		},
 	);
